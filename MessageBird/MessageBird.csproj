@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Net\HttpStatusCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   <ItemGroup>
     <None Include="packages.config" />
