@@ -47,6 +47,7 @@
     <Compile Include="Json\Converters\DirectionEnumConverter.cs" />
     <Compile Include="Net\HttpStatusCode.cs" />
     <Compile Include="Net\RestClient.cs" />
+    <Compile Include="Objects\Error.cs" />
     <Compile Include="Objects\Message.cs" />
     <Compile Include="Objects\Recipient.cs" />
     <Compile Include="Objects\Recipients.cs" />
