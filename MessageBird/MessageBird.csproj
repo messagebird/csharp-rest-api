@@ -55,6 +55,7 @@
     <Compile Include="Resources\Messages.cs" />
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Utilities\ReflectionUtils.cs" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
