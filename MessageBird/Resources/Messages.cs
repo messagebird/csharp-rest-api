@@ -73,7 +73,9 @@ namespace MessageBird.Resources
 
         public string Serialize()
         {
-            return JsonConvert.SerializeObject(Message);
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            return JsonConvert.SerializeObject(Message, settings);
         }
     }
 }
