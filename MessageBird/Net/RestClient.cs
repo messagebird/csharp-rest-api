@@ -124,7 +124,6 @@ namespace MessageBird.Net
             request.UserAgent = UserAgent;
             request.Accept = "application/json";
             request.ContentType = "application/json";
-            request.TransferEncoding = "utf-8";
             request.Method = method;
 
             WebHeaderCollection headers = new WebHeaderCollection();
