@@ -2,12 +2,12 @@
 {
     public class Recipients
     {
-        public int TotalCount;
-        public int TotalSentCount;
-        public int TotalDeliveredCount;
-        public int TotalDeliveryFailedCount;
-        public Recipient[] Items;
+        public int TotalCount { get; private set; }
 
+        public int TotalSentCount { get; private set; }
+        public int TotalDeliveredCount { get; private set; }
+        public int TotalDeliveryFailedCount { get; private set; }
+        public Recipient[] Items {get; set;}
         public Recipients(Recipient[] items)
         {
             Items = items;
