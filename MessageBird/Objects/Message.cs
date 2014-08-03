@@ -90,7 +90,7 @@ namespace MessageBird.Objects
         [JsonProperty("createdDatetime"), JsonConverter(typeof(RFC3339DateTimeConverter))]
         public DateTime? Created { get; set; }
 
-        [JsonProperty("recipients")]
+        [JsonProperty("recipients"), JsonConverter(typeof(RecipientsConverter))]
         public Recipients Recipients {get; set;}
 
         public Message()
