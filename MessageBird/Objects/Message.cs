@@ -64,6 +64,10 @@ namespace MessageBird.Objects
         [JsonProperty("recipients")]
         public Recipients Recipients {get; set;}
 
+        public Message()
+        {
+        }
+
         public Message(string id)
         {
             Id = id;
