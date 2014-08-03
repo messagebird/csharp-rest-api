@@ -12,7 +12,7 @@ namespace MessageBird.Resources
         string Id { get; }
         string Name { get; }
 
-        void FromResource(string resource);
-        string ToResource();
+        void Deserialize(string resource);
+        string Serialize();
     }
 }

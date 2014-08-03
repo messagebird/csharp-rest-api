@@ -57,7 +57,7 @@ namespace MessageBird.Net
 
                             using (StreamReader responseReader = new StreamReader(responseStream, encode))
                             {
-                                resource.FromResource(responseReader.ReadToEnd());
+                                resource.Deserialize(responseReader.ReadToEnd());
                                 return resource;
                             }
                         default:
@@ -79,7 +79,7 @@ namespace MessageBird.Net
             {
                 using (StreamWriter requestWriter = new StreamWriter(request.GetRequestStream()))
                 {
-                    requestWriter.Write(resource.ToResource());
+                    requestWriter.Write(resource.Serialize());
                 }
 
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -93,7 +93,7 @@ namespace MessageBird.Net
 
                             using (StreamReader responseReader = new StreamReader(responseStream, encode))
                             {
-                                resource.FromResource(responseReader.ReadToEnd());
+                                resource.Deserialize(responseReader.ReadToEnd());
                                 return resource;
                             }
                         default:

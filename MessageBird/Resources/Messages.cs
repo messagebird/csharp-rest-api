@@ -66,12 +66,12 @@ namespace MessageBird.Resources
             }
         }
 
-        public void FromResource(string resource)
+        public void Deserialize(string resource)
         {
             Message = JsonConvert.DeserializeObject<Message>(resource);
         }
 
-        public string ToResource()
+        public string Serialize()
         {
             return JsonConvert.SerializeObject(Message);
         }
