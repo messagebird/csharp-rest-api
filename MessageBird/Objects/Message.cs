@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace MessageBird.Objects
 {
@@ -28,8 +29,38 @@ namespace MessageBird.Objects
         [JsonConverter(typeof(StringEnumConverter))]
         public MessageType Type { get; set; }
 
+        private string originator;
         [JsonProperty("originator")]
-        public string Originator { get; set; }
+        public string Originator {
+            get
+            {
+                return originator;
+            }
+            set
+            {
+                Regex numeric = new Regex("^[0-9]+$");
+                Regex alphanumeric = new Regex("^[A-Za-z0-9]+$");
+                if (string.IsNullOrEmpty(value) || numeric.IsMatch(value))
+                {
+                    originator = value;
+                }
+                else if (alphanumeric.IsMatch(value))
+                {
+                    if (value.Length <= 11)
+                    {
+                        originator = value;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Alphanumeric originator is limted to 11 characters.");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Originator can only contain alphanumeric characters.");
+                }
+            }
+        }
 
         [JsonProperty("body")]
         public string Body {get; set;}
