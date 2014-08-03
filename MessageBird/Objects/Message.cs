@@ -4,13 +4,36 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections;
 using System.Text.RegularExpressions;
+using System.Runtime.Serialization;
 
 namespace MessageBird.Objects
 {
     // XXX: Find a better location for these enums.
-    public enum Direction { MobileTerminated, MobileOriginated };
-    public enum MessageType { Sms, Binary, Premium, Flash };
-    public enum DataEncoding { Plain, Unicode };
+    public enum Direction 
+    {
+        [EnumMember(Value = "mt")]
+        MobileTerminated,
+        [EnumMember(Value = "mo")]
+        MobileOriginated 
+    };
+    public enum MessageType 
+    {
+        [EnumMember(Value = "sms")]
+        Sms,
+        [EnumMember(Value = "binary")]
+        Binary,
+        [EnumMember(Value = "premium")]
+        Premium,
+        [EnumMember(Value = "flash")]
+        Flash 
+    };
+    public enum DataEncoding 
+    {
+        [EnumMember(Value = "plain")]
+        Plain,
+        [EnumMember(Value = "unicode")]
+        Unicode 
+    };
     public enum MessageClass { Flash = 0, Normal };
 
     public class Message
@@ -22,7 +45,7 @@ namespace MessageBird.Objects
         public string Href {get; set;}
 
         [JsonProperty("direction")]
-        [JsonConverter(typeof(DirectionEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Direction? Direction { get; set; }
 
         [JsonProperty("type")]
