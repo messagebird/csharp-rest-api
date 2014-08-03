@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MessageBird.Objects
 {
@@ -17,12 +18,24 @@ namespace MessageBird.Objects
         public int TotalDeliveryFailedCount { get; private set; }
 
         [JsonProperty("items")]
-        public Recipient[] Items {get; set;}
+        public List<Recipient> Items {get; set;}
 
-        public Recipients(Recipient[] items)
+        public Recipients()
         {
-            Items = items;
-            TotalCount = items.Length;
+            Items = new List<Recipient>();
+        }
+
+        public Recipients(long[] msisdns) : this()
+        {
+            foreach (long msisdn in msisdns)
+            {
+                AddRecipient(msisdn);
+            }
+        }
+
+        public void AddRecipient(long msisdn)
+        {
+            Items.Add(new Recipient(msisdn));
         }
 
     }

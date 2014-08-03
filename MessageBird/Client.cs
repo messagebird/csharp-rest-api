@@ -31,6 +31,17 @@ namespace MessageBird
             return result.Message;
         }
 
+        public Message SendMessage(string originator, string body, long[] msisdns)
+        {
+            Recipients recipients = new Recipients(msisdns);
+            Message message = new Message(originator, body, recipients);
+
+            Messages messages = new Messages(message);
+            Messages result = (Messages)restClient.Create(messages);
+
+            return result.Message;
+        }
+
         public Message ViewMessage(string id)
         {
             Messages messageToView = new Messages(id);
