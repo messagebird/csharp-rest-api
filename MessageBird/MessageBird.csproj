@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Json\Converters\DirectionEnumConverter.cs" />
+    <Compile Include="Json\Converters\RFC3339DateTimeConverter.cs" />
     <Compile Include="Net\HttpStatusCode.cs" />
     <Compile Include="Net\RestClient.cs" />
     <Compile Include="Objects\Error.cs" />

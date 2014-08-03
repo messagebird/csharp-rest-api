@@ -84,12 +84,10 @@ namespace MessageBird.Objects
         [JsonProperty("mclass")]
         public MessageClass Class {get; set;}
 
-        // XXX: Add  RFC3339 format (Y-m-d\TH:i:sP) serialization.
-        [JsonProperty("scheduledDatetime")]
+        [JsonProperty("scheduledDatetime"), JsonConverter(typeof(RFC3339DateTimeConverter))]
         public DateTime? Scheduled { get; set; }
 
-        // XXX: Add  RFC3339 format (Y-m-d\TH:i:sP) serialization.
-        [JsonProperty("createdDatetime")]
+        [JsonProperty("createdDatetime"), JsonConverter(typeof(RFC3339DateTimeConverter))]
         public DateTime? Created { get; set; }
 
         [JsonProperty("recipients")]
