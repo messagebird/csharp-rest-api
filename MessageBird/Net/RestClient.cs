@@ -126,9 +126,8 @@ namespace MessageBird.Net
             request.ContentType = "application/json";
             request.Method = method;
 
-            WebHeaderCollection headers = new WebHeaderCollection();
+            WebHeaderCollection headers = request.Headers;
             headers.Add("Authorization", String.Format("AccessKey {0}", AccessKey));
-            request.Headers = headers;
 
             return request;
         }
