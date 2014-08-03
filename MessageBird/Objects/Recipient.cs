@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MessageBird.Objects
 {
@@ -10,8 +8,14 @@ namespace MessageBird.Objects
     {
         public enum RecipientStatus { Scheduled, Sent, Buffered, Delivered, DeliveryFailed };
 
+        [JsonProperty("recipient")]
         public long Msisdn {get; set;}
+
+        [JsonProperty("status")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public RecipientStatus? Status {get; set;}
+
+        [JsonProperty("statusDatetime")]
         public DateTime? StatusDatetime {get; set;}
 
         public Recipient(long msisdn)
