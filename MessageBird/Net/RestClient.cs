@@ -36,7 +36,7 @@ namespace MessageBird.Net
             AccessKey = accessKey;
         }
 
-        public RestClient(string accessKey) : this("https://rest.messagebird.com/", accessKey)
+        public RestClient(string accessKey) : this("https://rest.messagebird.com", accessKey)
         {
         }
 
