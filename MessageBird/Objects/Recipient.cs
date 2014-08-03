@@ -10,11 +10,11 @@ namespace MessageBird.Objects
     {
         public enum RecipientStatus { Scheduled, Sent, Buffered, Delivered, DeliveryFailed };
 
-        public string Msisdn {get; set;}
+        public long Msisdn {get; set;}
         public RecipientStatus? Status {get; set;}
         public DateTime? StatusDatetime {get; set;}
 
-        public Recipient(string msisdn)
+        public Recipient(long msisdn)
         {
             Msisdn = msisdn;
         }
