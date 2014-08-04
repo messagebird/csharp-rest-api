@@ -20,6 +20,18 @@ namespace MessageBird.Objects
             Delivered,
             [EnumMember(Value = "delivery_failed")]
             DeliveryFailed,
+            // Voice message status
+            [EnumMember(Value = "calling")]
+            Calling,
+            [EnumMember(Value = "answered")]
+            Answered,
+            [EnumMember(Value = "failed")]
+            Failed,
+            // reserved for future use
+            [EnumMember(Value = "busy")]
+            Busy,
+            [EnumMember(Value = "machine")]
+            Machine
         };
 
         [JsonProperty("recipient")]

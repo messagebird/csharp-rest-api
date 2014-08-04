@@ -54,9 +54,11 @@
     <Compile Include="Objects\Message.cs" />
     <Compile Include="Objects\Recipient.cs" />
     <Compile Include="Objects\Recipients.cs" />
+    <Compile Include="Objects\VoiceMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Messages.cs" />
     <Compile Include="Resources\Resource.cs" />
+    <Compile Include="Resources\VoiceMessages.cs" />
     <Compile Include="Utilities\ReflectionUtils.cs" />
   </ItemGroup>
   <ItemGroup>

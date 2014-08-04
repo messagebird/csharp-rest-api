@@ -41,5 +41,25 @@ namespace MessageBird
 
             return result.Message;
         }
+
+        public VoiceMessage SendVoiceMessage(string body, long[] msisdns, VoiceMessageOptionalArguments optionalArguments = null)
+        {
+            Recipients recipients = new Recipients(msisdns);
+            VoiceMessage voiceMessage = new VoiceMessage(body, recipients, optionalArguments);
+
+            VoiceMessages voiceMessages = new VoiceMessages(voiceMessage);
+            VoiceMessages result = (VoiceMessages)restClient.Create(voiceMessages);
+
+            return result.VoiceMessage;
+        }
+
+        public VoiceMessage ViewVoiceMessage(string id)
+        {
+            VoiceMessages voiceMessageToView = new VoiceMessages(id);
+            VoiceMessages result = (VoiceMessages)restClient.Retrieve(voiceMessageToView);
+
+            return result.VoiceMessage;
+        }
+
     }
 }
