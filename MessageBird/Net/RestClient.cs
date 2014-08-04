@@ -1,13 +1,12 @@
 ﻿using System.Net;
 using MessageBird.Resources;
+using MessageBird.Exceptions;
 using System;
 using System.IO;
 using System.Text;
 
 namespace MessageBird.Net
 {
-    public class UnexpectedStatusCodeException : Exception {}
-
     public interface IRestClient
     {
         string Endpoint { get; set; }
@@ -48,7 +47,8 @@ namespace MessageBird.Net
             {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    switch ((MessageBird.Net.HttpStatusCode)response.StatusCode)
+                    HttpStatusCode statusCode = (HttpStatusCode)response.StatusCode;
+                    switch (statusCode)
                     {
                         case MessageBird.Net.HttpStatusCode.OK:
                             Stream responseStream = response.GetResponseStream();
@@ -61,14 +61,17 @@ namespace MessageBird.Net
                                 return resource;
                             }
                         default:
-                            throw new UnexpectedStatusCodeException();
+                            throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
                     }
                 }
             }
-            catch (InvalidOperationException e)
+            catch (WebException e)
             {
-                // XXX: Need to handle this exception properly.
-                throw e;
+                throw ErrorExceptionFromWebException(e);
+            }
+            catch (Exception e)
+            {
+                throw new ErrorException(String.Format("Unhandled exception {0}", e));
             }
         }
 
@@ -84,7 +87,8 @@ namespace MessageBird.Net
 
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    switch ((MessageBird.Net.HttpStatusCode)response.StatusCode)
+                    HttpStatusCode statusCode = (HttpStatusCode)response.StatusCode;
+                    switch (statusCode)
                     {
                         case MessageBird.Net.HttpStatusCode.Created:
                             Stream responseStream = response.GetResponseStream();
@@ -97,14 +101,17 @@ namespace MessageBird.Net
                                 return resource;
                             }
                         default:
-                            throw new UnexpectedStatusCodeException();
+                            throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
                     }
                 }
             }
-            catch (InvalidOperationException e)
+            catch (WebException e)
             {
-                // XXX: Need to handle this exception properly.
-                throw e;
+                throw ErrorExceptionFromWebException(e);
+            }
+            catch (Exception e)
+            {
+                throw new ErrorException(String.Format("Unhandled exception {0}", e));
             }
         }
 
@@ -130,6 +137,47 @@ namespace MessageBird.Net
             headers.Add("Authorization", String.Format("AccessKey {0}", AccessKey));
 
             return request;
+        }
+
+        private ErrorException ErrorExceptionFromWebException(WebException e)
+        {
+            HttpStatusCode statusCode = (HttpStatusCode)((HttpWebResponse)e.Response).StatusCode;
+            switch (statusCode)
+            {
+                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.NotFound:
+                case HttpStatusCode.MethodNotAllowed:
+                case HttpStatusCode.UnprocessableEntity:
+                    using (StreamReader responseReader = new StreamReader(e.Response.GetResponseStream()))
+                    {
+                        ErrorException errorException = ErrorException.FromResponse(responseReader.ReadToEnd());
+                        if (errorException != null)
+                        {
+                            return errorException;
+                        }
+                        else
+                        {
+                            return new ErrorException(String.Format("Unknown error for {0}", statusCode));
+                        }
+                    }
+                case HttpStatusCode.InternalServerError:
+                case HttpStatusCode.NotImplemented:
+                case HttpStatusCode.BadGateway:
+                case HttpStatusCode.ServiceUnavailable:
+                case HttpStatusCode.GatewayTimeout:
+                case HttpStatusCode.HttpVersionNotSupported:
+                case HttpStatusCode.VariantAlsoNegotiates:
+                case HttpStatusCode.InsufficientStorage:
+                case HttpStatusCode.LoopDetected:
+                case HttpStatusCode.BandwidthLimitExceeded:
+                case HttpStatusCode.NotExtended:
+                case HttpStatusCode.NetworkAuthenticationRequired:
+                case HttpStatusCode.NetworkReadTimeoutError:
+                case HttpStatusCode.NetworkConnectTimeoutError:
+                    return new ErrorException("Something went wrong on our end, please try again");
+                default:
+                    return new ErrorException(String.Format("Unhandled status code {0}", statusCode));
+            }
         }
     }
 }
