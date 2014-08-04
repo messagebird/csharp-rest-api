@@ -8,69 +8,42 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources
 {
-    public class Hlr : IResource
+    public class Hlr : Resource
     {
-        private MessageBird.Objects.Hlr hlr;
-        public MessageBird.Objects.Hlr HlrObject
+        public Hlr()
+            : base("hlr")
+        {
+        }
+
+        public Hlr(string id)
+            : this()
+        {
+            Id = id;
+        }
+
+        public Hlr(Objects.Hlr hlr)
+            : this()
+        {
+            Object = hlr;
+        }
+
+        private Objects.Hlr hlr;
+        public override object Object
         {
             get
             {
                 return hlr;
             }
-            set
+            protected set
             {
-                if (id == null)
-                {
-                    id = value.Id;
-                }
-                hlr = value;
-            }
-        }
-        public string Name { get { return "hlr"; } }
-        private string id;
-        public string Id
-        {
-            get
-            {
-                if (id != null)
-                {
-                    return id;
-                }
-                else
-                {
-                    throw new InvalidResource("Requested an id of a hlr without an id!");
-                }
+                hlr = (Objects.Hlr)value;
+                Id = hlr.Id;
             }
         }
 
-        public Hlr()
+        public override void Deserialize(string resource)
         {
-        }
-
-        public Hlr(string id)
-        {
-            this.id = id;
-        }
-
-        public Hlr(MessageBird.Objects.Hlr hlr)
-        {
-            HlrObject = hlr;
-            if (hlr.Id != null)
-            {
-                id = hlr.Id;
-            }
-        }
-
-        public void Deserialize(string resource)
-        {
-            HlrObject = JsonConvert.DeserializeObject<MessageBird.Objects.Hlr>(resource);
-        }
-
-        public string Serialize()
-        {
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            return JsonConvert.SerializeObject(HlrObject, settings);
+            Object = JsonConvert.DeserializeObject<Objects.Hlr>(resource);
         }
     }
 }

@@ -13,69 +13,39 @@ namespace MessageBird.Resources
         }
     }
 
-    public class Messages : IResource
+    public class Messages : Resource
     {
         private Message message;
-        public Message Message 
+        public override object Object 
         {
             get
             {
                 return message;
             }
-            set
+            protected set
             {
-                if (id == null)
-                {
-                    id = value.Id;
-                }
-                message = value;
-            }
-        }
-        public string Name { get { return "messages"; } }
-        private string id;
-        public string Id 
-        {
-            get
-            {
-                if (id != null)
-                {
-                    return id;
-                }
-                else
-                {
-                    throw new InvalidResource("Requested an id of a message without an id!");
-                }
+                message = (Message)value;
+                Id = message.Id;
             }
         }
 
-        public Messages()
+        public Messages() : base("messages")
         {
         }
 
-        public Messages(string id)
+        public Messages(string id) : this()
         {
-            this.id = id;
+            Id = id;
         }
 
-        public Messages(Message message)
+        public Messages(Message message) : this()
         {
-            Message = message;
-            if (message.Id != null)
-            {
-                id = message.Id;
-            }
+           Object = message;
         }
 
-        public void Deserialize(string resource)
+        public override void Deserialize(string resource)
         {
-            Message = JsonConvert.DeserializeObject<Message>(resource);
-        }
-
-        public string Serialize()
-        {
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            return JsonConvert.SerializeObject(Message, settings);
+            Object = JsonConvert.DeserializeObject<Message>(resource);
         }
     }
 }

@@ -15,10 +15,10 @@ namespace MessageBird.Net
         string UserAgent { get; }
         string AccessKey { get; set; }
 
-        IResource Create(IResource resource);
-        IResource Retrieve(IResource resource);
-        void Update(IResource resource);
-        void Delete(IResource resource);
+        Resource Create(Resource resource);
+        Resource Retrieve(Resource resource);
+        void Update(Resource resource);
+        void Delete(Resource resource);
     }
 
     public class RestClient : IRestClient
@@ -39,7 +39,7 @@ namespace MessageBird.Net
         {
         }
 
-        public IResource Retrieve(IResource resource)
+        public Resource Retrieve(Resource resource)
         {
             string uri = String.Format("{0}/{1}", resource.Name, resource.Id);
             HttpWebRequest request = PrepareRequest(uri, "GET");
@@ -75,7 +75,7 @@ namespace MessageBird.Net
             }
         }
 
-        public IResource Create(IResource resource)
+        public Resource Create(Resource resource)
         {
             HttpWebRequest request = PrepareRequest(resource.Name, "POST");
             try
@@ -115,12 +115,12 @@ namespace MessageBird.Net
             }
         }
 
-        public void Update(IResource resource)
+        public void Update(Resource resource)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(IResource resource)
+        public void Delete(Resource resource)
         {
             throw new NotImplementedException();
         }

@@ -9,69 +9,39 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources
 {
-    public class VoiceMessages : IResource
+    public class VoiceMessages : Resource
     {
         private VoiceMessage voiceMessage;
-        public VoiceMessage VoiceMessage
+        public override object Object
         {
             get
             {
                 return voiceMessage;
             }
-            set
+            protected set
             {
-                if (id == null)
-                {
-                    id = value.Id;
-                }
-                voiceMessage = value;
-            }
-        }
-        public string Name { get { return "voicemessages"; } }
-        private string id;
-        public string Id
-        {
-            get
-            {
-                if (id != null)
-                {
-                    return id;
-                }
-                else
-                {
-                    throw new InvalidResource("Requested an id of a voice message without an id!");
-                }
+                voiceMessage = (VoiceMessage)value;
+                Id = voiceMessage.Id;
             }
         }
 
-        public VoiceMessages()
+        public VoiceMessages() : base("voicemessages")
         {
         }
 
-        public VoiceMessages(string id)
+        public VoiceMessages(string id) : this()
         {
-            this.id = id;
+            Id = id;
         }
 
-        public VoiceMessages(VoiceMessage voiceMessage)
+        public VoiceMessages(VoiceMessage voiceMessage) : this ()
         {
-            VoiceMessage = voiceMessage;
-            if (voiceMessage.Id != null)
-            {
-                id = voiceMessage.Id;
-            }
+            Object = voiceMessage;
         }
 
-        public void Deserialize(string resource)
+        public override void Deserialize(string resource)
         {
-            VoiceMessage = JsonConvert.DeserializeObject<VoiceMessage>(resource);
-        }
-
-        public string Serialize()
-        {
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            return JsonConvert.SerializeObject(VoiceMessage, settings);
+            Object = JsonConvert.DeserializeObject<VoiceMessage>(resource);
         }
     }
 }

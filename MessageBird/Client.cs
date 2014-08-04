@@ -31,7 +31,7 @@ namespace MessageBird
             Messages messages = new Messages(message);
             Messages result = (Messages)restClient.Create(messages);
 
-            return result.Message;
+            return result.Object as Message;
         }
 
         public Message ViewMessage(string id)
@@ -39,7 +39,7 @@ namespace MessageBird
             Messages messageToView = new Messages(id);
             Messages result = (Messages)restClient.Retrieve(messageToView);
 
-            return result.Message;
+            return result.Object as Message;
         }
 
         public VoiceMessage SendVoiceMessage(string body, long[] msisdns, VoiceMessageOptionalArguments optionalArguments = null)
@@ -50,7 +50,7 @@ namespace MessageBird
             VoiceMessages voiceMessages = new VoiceMessages(voiceMessage);
             VoiceMessages result = (VoiceMessages)restClient.Create(voiceMessages);
 
-            return result.VoiceMessage;
+            return result.Object as VoiceMessage;
         }
 
         public VoiceMessage ViewVoiceMessage(string id)
@@ -58,7 +58,7 @@ namespace MessageBird
             VoiceMessages voiceMessageToView = new VoiceMessages(id);
             VoiceMessages result = (VoiceMessages)restClient.Retrieve(voiceMessageToView);
 
-            return result.VoiceMessage;
+            return result.Object as VoiceMessage;
         }
 
         public MessageBird.Objects.Hlr RequestHlr(long msisdn, string reference)
@@ -68,7 +68,7 @@ namespace MessageBird
 
             MessageBird.Resources.Hlr result = (MessageBird.Resources.Hlr)restClient.Create(hlrToRequest);
 
-            return result.HlrObject;
+            return result.Object as Objects.Hlr;
         }
 
         public MessageBird.Objects.Hlr ViewHlr(string id)
@@ -78,7 +78,7 @@ namespace MessageBird
 
             MessageBird.Resources.Hlr result = (MessageBird.Resources.Hlr)restClient.Retrieve(hlrToView);
 
-            return result.HlrObject;
+            return result.Object as Objects.Hlr;
         }
     }
 }
