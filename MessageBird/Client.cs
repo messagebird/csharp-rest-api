@@ -31,10 +31,10 @@ namespace MessageBird
             return result.Message;
         }
 
-        public Message SendMessage(string originator, string body, long[] msisdns)
+        public Message SendMessage(string originator, string body, long[] msisdns, MessageOptionalArguments optionalArguments = null)
         {
             Recipients recipients = new Recipients(msisdns);
-            Message message = new Message(originator, body, recipients);
+            Message message = new Message(originator, body, recipients, optionalArguments);
 
             Messages messages = new Messages(message);
             Messages result = (Messages)restClient.Create(messages);

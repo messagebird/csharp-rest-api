@@ -36,6 +36,25 @@ namespace MessageBird.Objects
     };
     public enum MessageClass { Flash = 0, Normal };
 
+    public class MessageOptionalArguments
+    {
+        public MessageType Type { get; set; }
+        public string Reference { get; set; }
+        public int? Validity { get; set; }
+        public int? Gateway { get; set; }
+        public Hashtable TypeDetails { get; set; }
+        public DataEncoding Encoding { get; set; }
+        public MessageClass Class { get; set; }
+        public DateTime? Scheduled { get; set; }
+
+        public MessageOptionalArguments()
+        {
+            Type = MessageType.Sms;
+            Encoding = DataEncoding.Plain;
+            Class = MessageClass.Normal;
+        }
+    }
+
     public class Message
     {
         [JsonProperty("id")]
@@ -125,15 +144,22 @@ namespace MessageBird.Objects
             Id = id;
         }
 
-        public Message(string originator, string body, Recipients recipients)
+        public Message(string originator, string body, Recipients recipients, MessageOptionalArguments optionalArguments = null)
         {
             Originator = originator;
             Body = body;
             Recipients = recipients;
 
-            Type = MessageType.Sms;
-            Encoding = DataEncoding.Plain;
-            Class = MessageClass.Normal;
+            optionalArguments = optionalArguments ?? new MessageOptionalArguments();
+
+            Type = optionalArguments.Type;
+            Reference = optionalArguments.Reference;
+            Validity = optionalArguments.Validity;
+            Gateway = optionalArguments.Gateway;
+            TypeDetails = optionalArguments.TypeDetails;
+            Encoding = optionalArguments.Encoding;
+            Class = optionalArguments.Class;
+            Scheduled = optionalArguments.Scheduled;
         }
     }
 }
