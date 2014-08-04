@@ -4,15 +4,6 @@ using System;
 
 namespace MessageBird.Resources
 {
-    public class InvalidResource : Exception 
-    {
-        public string Reason {get; set;}
-        public InvalidResource(string reason)
-        {
-            Reason = reason;
-        }
-    }
-
     public class Messages : Resource
     {
         private Message message;
