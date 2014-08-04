@@ -41,7 +41,7 @@ namespace MessageBird.Net
 
         public Resource Retrieve(Resource resource)
         {
-            string uri = String.Format("{0}/{1}", resource.Name, resource.Id);
+            string uri = resource.HasId ? String.Format("{0}/{1}", resource.Name, resource.Id) : resource.Name;
             HttpWebRequest request = PrepareRequest(uri, "GET");
             try
             {

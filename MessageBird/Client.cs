@@ -80,5 +80,13 @@ namespace MessageBird
 
             return result.Object as Objects.Hlr;
         }
+
+        public Objects.Balance Balance()
+        {
+            Resources.Balance balance = new Resources.Balance();
+            Resources.Balance result = (Resources.Balance)restClient.Retrieve(balance);
+
+            return result.Object as Objects.Balance;
+        }
     }
 }
