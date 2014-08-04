@@ -36,19 +36,6 @@ namespace MessageBird.Json.Converters
             {
                 return reader.Value;
             }
-
-            if (reader.TokenType == JsonToken.String)
-            {
-                DateTime dateTime;
-                if (DateTime.TryParseExact((string)existingValue, format, CultureInfo.CurrentCulture, DateTimeStyles.None, out dateTime))
-                {
-                    return dateTime;
-                }
-                else
-                {
-                    throw new JsonSerializationException("Invalid date time format.");
-                }
-            }
             else
             {
                 throw new JsonSerializationException(String.Format("Unexpected token '{0}' when parsing date.", reader.TokenType));
