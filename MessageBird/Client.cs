@@ -61,5 +61,24 @@ namespace MessageBird
             return result.VoiceMessage;
         }
 
+        public MessageBird.Objects.Hlr RequestHlr(long msisdn, string reference)
+        {
+            MessageBird.Objects.Hlr hlr = new MessageBird.Objects.Hlr(msisdn, reference);
+            MessageBird.Resources.Hlr hlrToRequest = new MessageBird.Resources.Hlr(hlr);
+
+            MessageBird.Resources.Hlr result = (MessageBird.Resources.Hlr)restClient.Create(hlrToRequest);
+
+            return result.HlrObject;
+        }
+
+        public MessageBird.Objects.Hlr ViewHlr(string id)
+        {
+            MessageBird.Objects.Hlr hlr = new MessageBird.Objects.Hlr(id);
+            MessageBird.Resources.Hlr hlrToView = new MessageBird.Resources.Hlr(hlr);
+
+            MessageBird.Resources.Hlr result = (MessageBird.Resources.Hlr)restClient.Retrieve(hlrToView);
+
+            return result.HlrObject;
+        }
     }
 }
