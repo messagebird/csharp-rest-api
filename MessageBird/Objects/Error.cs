@@ -1,16 +1,20 @@
-﻿namespace MessageBird.Objects
+﻿using Newtonsoft.Json;
+
+namespace MessageBird.Objects
 {
     public class Error
     {
-        private int code;
-        private string description;
-        private string parameter;
+        [JsonProperty("code")]
+        public int Code { get; set; }
 
-        public Error(int code, string description, string parameter)
+        [JsonProperty("description")]
+        public string Description {get; set;}
+
+        [JsonProperty("parameter")]
+        public string Parameter {get; set;}
+
+        public Error()
         {
-            this.code = code;
-            this.description = description;
-            this.parameter = parameter;
         }
     }
 }
