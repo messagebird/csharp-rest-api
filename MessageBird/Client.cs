@@ -61,22 +61,22 @@ namespace MessageBird
             return result.Object as VoiceMessage;
         }
 
-        public MessageBird.Objects.Hlr RequestHlr(long msisdn, string reference)
+        public Objects.Hlr RequestHlr(long msisdn, string reference)
         {
-            MessageBird.Objects.Hlr hlr = new MessageBird.Objects.Hlr(msisdn, reference);
-            MessageBird.Resources.Hlr hlrToRequest = new MessageBird.Resources.Hlr(hlr);
+            Objects.Hlr hlr = new Objects.Hlr(msisdn, reference);
+            Resources.Hlr hlrToRequest = new Resources.Hlr(hlr);
 
-            MessageBird.Resources.Hlr result = (MessageBird.Resources.Hlr)restClient.Create(hlrToRequest);
+            Resources.Hlr result = (Resources.Hlr)restClient.Create(hlrToRequest);
 
             return result.Object as Objects.Hlr;
         }
 
-        public MessageBird.Objects.Hlr ViewHlr(string id)
+        public Objects.Hlr ViewHlr(string id)
         {
-            MessageBird.Objects.Hlr hlr = new MessageBird.Objects.Hlr(id);
-            MessageBird.Resources.Hlr hlrToView = new MessageBird.Resources.Hlr(hlr);
+            Objects.Hlr hlr = new Objects.Hlr(id);
+            Resources.Hlr hlrToView = new Resources.Hlr(hlr);
 
-            MessageBird.Resources.Hlr result = (MessageBird.Resources.Hlr)restClient.Retrieve(hlrToView);
+            MessageBird.Resources.Hlr result = (Resources.Hlr)restClient.Retrieve(hlrToView);
 
             return result.Object as Objects.Hlr;
         }
