@@ -4,7 +4,7 @@ using System;
 
 namespace MessageBird.Resources
 {
-    public class Messages : Resource
+    class Messages : Resource
     {
         private Message message;
         public override object Object 

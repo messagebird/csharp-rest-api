@@ -21,7 +21,7 @@ namespace MessageBird.Net
         void Delete(Resource resource);
     }
 
-    public class RestClient : IRestClient
+    class RestClient : IRestClient
     {
         public string Endpoint {get; set;}
         public string ClientVersion { get { return "1.0"; } }

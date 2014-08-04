@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources
 {
-    public class Hlr : Resource
+    class Hlr : Resource
     {
         public Hlr()
             : base("hlr")

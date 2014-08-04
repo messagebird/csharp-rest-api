@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace MessageBird.Json.Converters
 {
-    public class RFC3339DateTimeConverter : JsonConverter
+    class RFC3339DateTimeConverter : JsonConverter
     {
         // XXX: Format should be "yyyy-MM-dd'T'THH:mm:ssK".
         // However, due to bug the endpoint expects the current used format.

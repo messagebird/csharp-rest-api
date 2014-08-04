@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources
 {
-    public class VoiceMessages : Resource
+    class VoiceMessages : Resource
     {
         private VoiceMessage voiceMessage;
         public override object Object
