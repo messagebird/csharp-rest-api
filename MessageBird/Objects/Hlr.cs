@@ -64,5 +64,10 @@ namespace MessageBird.Objects
             Msisdn = msisdn;
             Reference = reference;
         }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
     }
 }

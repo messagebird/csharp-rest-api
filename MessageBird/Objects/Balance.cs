@@ -40,5 +40,10 @@ namespace MessageBird.Objects
         public Balance()
         {
         }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
     }
 }

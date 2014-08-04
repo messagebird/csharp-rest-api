@@ -160,5 +160,10 @@ namespace MessageBird.Objects
             Class = optionalArguments.Class;
             Scheduled = optionalArguments.Scheduled;
         }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
     }
 }

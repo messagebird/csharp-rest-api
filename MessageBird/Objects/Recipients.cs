@@ -38,5 +38,9 @@ namespace MessageBird.Objects
             Items.Add(new Recipient(msisdn));
         }
 
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
     }
 }

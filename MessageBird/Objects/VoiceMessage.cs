@@ -131,5 +131,10 @@ namespace MessageBird.Objects
             IfMachine = optionalArguments.IfMachine;
             Scheduled = optionalArguments.Scheduled;
         }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
     }
 }
