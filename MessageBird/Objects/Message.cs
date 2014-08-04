@@ -8,7 +8,6 @@ using System.Runtime.Serialization;
 
 namespace MessageBird.Objects
 {
-    // XXX: Find a better location for these enums.
     public enum Direction 
     {
         [EnumMember(Value = "mt")]
