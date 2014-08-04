@@ -1,12 +1,26 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace MessageBird.Objects
 {
     public class Recipient
     {
-        public enum RecipientStatus { Scheduled, Sent, Buffered, Delivered, DeliveryFailed };
+        public enum RecipientStatus 
+        {
+            // Message status
+            [EnumMember(Value = "scheduled")]
+            Scheduled,
+            [EnumMember(Value = "sent")]
+            Sent,
+            [EnumMember(Value = "buffered")]
+            Buffered,
+            [EnumMember(Value = "delivered")]
+            Delivered,
+            [EnumMember(Value = "delivery_failed")]
+            DeliveryFailed,
+        };
 
         [JsonProperty("recipient")]
         public long Msisdn {get; set;}
