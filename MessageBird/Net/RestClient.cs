@@ -1,9 +1,10 @@
-﻿using System.Net;
-using MessageBird.Resources;
-using MessageBird.Exceptions;
-using System;
+﻿using System;
+using System.Net;
 using System.IO;
 using System.Text;
+
+using MessageBird.Resources;
+using MessageBird.Exceptions;
 
 namespace MessageBird.Net
 {

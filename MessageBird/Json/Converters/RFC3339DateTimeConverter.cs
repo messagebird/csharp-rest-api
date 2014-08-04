@@ -1,7 +1,7 @@
 ﻿using System;
+
 using MessageBird.Utilities;
 using Newtonsoft.Json;
-using System.Globalization;
 
 namespace MessageBird.Json.Converters
 {

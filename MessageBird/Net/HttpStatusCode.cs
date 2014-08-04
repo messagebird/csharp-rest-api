@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MessageBird.Net
+﻿namespace MessageBird.Net
 {
     // A more complete list of http status codes from http://httpstatus.es/
     enum HttpStatusCode

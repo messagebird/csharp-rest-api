@@ -1,6 +1,5 @@
-﻿using MessageBird.Objects;
-using Newtonsoft.Json;
-using System;
+﻿using Newtonsoft.Json;
+using MessageBird.Objects;
 
 namespace MessageBird.Resources
 {
