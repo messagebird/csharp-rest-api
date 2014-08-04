@@ -23,14 +23,6 @@ namespace MessageBird
             return new Client(new RestClient(accessKey));
         }
 
-        public Message SendMessage(Message message)
-        {
-            Messages messageToSend = new Messages(message);
-            Messages result = (Messages)restClient.Create(messageToSend);
-
-            return result.Message;
-        }
-
         public Message SendMessage(string originator, string body, long[] msisdns, MessageOptionalArguments optionalArguments = null)
         {
             Recipients recipients = new Recipients(msisdns);
