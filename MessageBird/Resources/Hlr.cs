@@ -2,7 +2,7 @@
 
 namespace MessageBird.Resources
 {
-    class Hlr : Resource
+    sealed class Hlr : Resource
     {
         public Hlr()
             : base("hlr")

@@ -3,7 +3,7 @@ using MessageBird.Objects;
 
 namespace MessageBird.Resources
 {
-    class Messages : Resource
+    sealed class Messages : Resource
     {
         private Message message;
         public override object Object 
