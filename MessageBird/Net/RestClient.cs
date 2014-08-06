@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Net;
 using System.IO;
+using System.Net;
 using System.Text;
 
 using MessageBird.Exceptions;
@@ -77,7 +77,7 @@ namespace MessageBird.Net
                                 return resource;
                             }
                         default:
-                            throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
+                            throw new ErrorException(String.Format("Unexpected status code {0}", statusCode), null);
                     }
                 }
             }
@@ -87,7 +87,7 @@ namespace MessageBird.Net
             }
             catch (Exception e)
             {
-                throw new ErrorException(String.Format("Unhandled exception {0}", e));
+                throw new ErrorException(String.Format("Unhandled exception {0}", e), e);
             }
         }
 
@@ -117,7 +117,7 @@ namespace MessageBird.Net
                                 return resource;
                             }
                         default:
-                            throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
+                            throw new ErrorException(String.Format("Unexpected status code {0}", statusCode), null);
                     }
                 }
             }
@@ -127,7 +127,7 @@ namespace MessageBird.Net
             }
             catch (Exception e)
             {
-                throw new ErrorException(String.Format("Unhandled exception {0}", e));
+                throw new ErrorException(String.Format("Unhandled exception {0}", e), e);
             }
         }
 
@@ -166,7 +166,7 @@ namespace MessageBird.Net
             if (null == httpWebResponse)
             {
                 // some kind of network error: didn't even make a connection
-                return new ErrorException(e.Message);
+                return new ErrorException(e.Message, e);
             }
 
             HttpStatusCode statusCode = (HttpStatusCode)httpWebResponse.StatusCode;
@@ -178,14 +178,14 @@ namespace MessageBird.Net
                 case HttpStatusCode.UnprocessableEntity:
                     using (StreamReader responseReader = new StreamReader(httpWebResponse.GetResponseStream()))
                     {
-                        ErrorException errorException = ErrorException.FromResponse(responseReader.ReadToEnd());
+                        ErrorException errorException = ErrorException.FromResponse(responseReader.ReadToEnd(), e);
                         if (errorException != null)
                         {
                             return errorException;
                         }
                         else
                         {
-                            return new ErrorException(String.Format("Unknown error for {0}", statusCode));
+                            return new ErrorException(String.Format("Unknown error for {0}", statusCode), e);
                         }
                     }
                 case HttpStatusCode.InternalServerError:
@@ -202,9 +202,9 @@ namespace MessageBird.Net
                 case HttpStatusCode.NetworkAuthenticationRequired:
                 case HttpStatusCode.NetworkReadTimeoutError:
                 case HttpStatusCode.NetworkConnectTimeoutError:
-                    return new ErrorException("Something went wrong on our end, please try again");
+                    return new ErrorException("Something went wrong on our end, please try again", e);
                 default:
-                    return new ErrorException(String.Format("Unhandled status code {0}", statusCode));
+                    return new ErrorException(String.Format("Unhandled status code {0}", statusCode), e);
             }
         }
     }

@@ -14,7 +14,7 @@ namespace MessageBird.Exceptions
 
         public bool HasErrors
         {
-            get {return Errors != null && Errors.Count > 0;}
+            get { return Errors != null && Errors.Count > 0; }
         }
 
         public bool HasReason
@@ -22,23 +22,26 @@ namespace MessageBird.Exceptions
             get { return !String.IsNullOrEmpty(Reason); }
         }
 
-        public ErrorException(string reason)
+        public ErrorException(string reason, Exception innerException)
+            : base(reason, innerException)
         {
             Reason = reason;
         }
 
-        public ErrorException(List<Error> errors)
+        // TODO: refactor from `List` to `IEnumerable`
+        public ErrorException(List<Error> errors, Exception innerException)
+            : base("multiple errors", innerException)
         {
             Errors = errors;
         }
 
-       // XXX: Solve explicit use of json deserialation, needs to be more generic!
-        public static ErrorException FromResponse(string response)
+        // XXX: Solve explicit use of json deserialation, needs to be more generic!
+        public static ErrorException FromResponse(string response, Exception innerException)
         {
             try
             {
                 Dictionary<string, List<Error>> errors = JsonConvert.DeserializeObject<Dictionary<string, List<Error>>>(response);
-                return new ErrorException(errors["errors"]);
+                return new ErrorException(errors["errors"], innerException);
             }
             catch (JsonSerializationException)
             {

@@ -16,11 +16,11 @@ namespace MessageBird.Resources
         {
             get
             {
-                throw new ErrorException("A balance has no id");
+                throw CreateABalanceHasNoIdErrorException();
             }
             protected set
             {
-                throw new ErrorException("A balance has no id");
+                throw CreateABalanceHasNoIdErrorException();
             }
         }
 
@@ -35,6 +35,11 @@ namespace MessageBird.Resources
         public override void Deserialize(string resource)
         {
             Object = JsonConvert.DeserializeObject<MessageBird.Objects.Balance>(resource);
+        }
+
+        private static ErrorException CreateABalanceHasNoIdErrorException()
+        {
+            return new ErrorException("A balance has no id", null);
         }
     }
 }
