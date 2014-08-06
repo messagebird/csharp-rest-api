@@ -29,7 +29,7 @@ namespace MessageBird
             Message message = new Message(originator, body, recipients, optionalArguments);
 
             Messages messages = new Messages(message);
-            Messages result = (Messages)restClient.Create(messages);
+            Messages result = restClient.Create(messages);
 
             return result.Object as Message;
         }
@@ -37,7 +37,7 @@ namespace MessageBird
         public Message ViewMessage(string id)
         {
             Messages messageToView = new Messages(id);
-            Messages result = (Messages)restClient.Retrieve(messageToView);
+            Messages result = restClient.Retrieve(messageToView);
 
             return result.Object as Message;
         }
@@ -48,7 +48,7 @@ namespace MessageBird
             VoiceMessage voiceMessage = new VoiceMessage(body, recipients, optionalArguments);
 
             VoiceMessages voiceMessages = new VoiceMessages(voiceMessage);
-            VoiceMessages result = (VoiceMessages)restClient.Create(voiceMessages);
+            VoiceMessages result = restClient.Create(voiceMessages);
 
             return result.Object as VoiceMessage;
         }
@@ -56,7 +56,7 @@ namespace MessageBird
         public VoiceMessage ViewVoiceMessage(string id)
         {
             VoiceMessages voiceMessageToView = new VoiceMessages(id);
-            VoiceMessages result = (VoiceMessages)restClient.Retrieve(voiceMessageToView);
+            VoiceMessages result = restClient.Retrieve(voiceMessageToView);
 
             return result.Object as VoiceMessage;
         }
@@ -66,7 +66,7 @@ namespace MessageBird
             Objects.Hlr hlr = new Objects.Hlr(msisdn, reference);
             Resources.Hlr hlrToRequest = new Resources.Hlr(hlr);
 
-            Resources.Hlr result = (Resources.Hlr)restClient.Create(hlrToRequest);
+            Resources.Hlr result = restClient.Create(hlrToRequest);
 
             return result.Object as Objects.Hlr;
         }
@@ -76,7 +76,7 @@ namespace MessageBird
             Objects.Hlr hlr = new Objects.Hlr(id);
             Resources.Hlr hlrToView = new Resources.Hlr(hlr);
 
-            MessageBird.Resources.Hlr result = (Resources.Hlr)restClient.Retrieve(hlrToView);
+            MessageBird.Resources.Hlr result = restClient.Retrieve(hlrToView);
 
             return result.Object as Objects.Hlr;
         }
@@ -84,7 +84,7 @@ namespace MessageBird
         public Objects.Balance Balance()
         {
             Resources.Balance balance = new Resources.Balance();
-            Resources.Balance result = (Resources.Balance)restClient.Retrieve(balance);
+            Resources.Balance result = restClient.Retrieve(balance);
 
             return result.Object as Objects.Balance;
         }

@@ -16,8 +16,8 @@ namespace MessageBird.Net
         string UserAgent { get; }
         string AccessKey { get; set; }
 
-        Resource Create(Resource resource);
-        Resource Retrieve(Resource resource);
+        T Create<T> (T resource) where T : Resource;
+        T Retrieve<T>(T resource) where T : Resource;
         void Update(Resource resource);
         void Delete(Resource resource);
     }
@@ -40,7 +40,7 @@ namespace MessageBird.Net
         {
         }
 
-        public Resource Retrieve(Resource resource)
+        public T Retrieve<T>(T resource) where T : Resource
         {
             string uri = resource.HasId ? String.Format("{0}/{1}", resource.Name, resource.Id) : resource.Name;
             HttpWebRequest request = PrepareRequest(uri, "GET");
@@ -76,7 +76,7 @@ namespace MessageBird.Net
             }
         }
 
-        public Resource Create(Resource resource)
+        public T Create<T>(T resource) where T : Resource
         {
             HttpWebRequest request = PrepareRequest(resource.Name, "POST");
             try
