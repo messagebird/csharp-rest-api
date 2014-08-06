@@ -5,7 +5,7 @@ using Newtonsoft.Json.Converters;
 
 namespace MessageBird.Objects
 {
-    public enum PaymentMethod 
+    public enum PaymentMethod
     {
         [EnumMember(Value = "prepaid")]
         Prepaid,
@@ -27,14 +27,10 @@ namespace MessageBird.Objects
         public PaymentMethod Payment { get; set; }
 
         [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
-        public PaymentType Type {get; set;}
+        public PaymentType Type { get; set; }
 
         [JsonProperty("amount")]
-        public string Amount {get; set;}
-
-        public Balance()
-        {
-        }
+        public string Amount { get; set; }
 
         public override string ToString()
         {

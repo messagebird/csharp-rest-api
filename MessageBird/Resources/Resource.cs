@@ -6,7 +6,7 @@ namespace MessageBird.Resources
     public abstract class Resource
     {
         public virtual string Id { get; protected set; }
-        public virtual object Object { get; protected set; } 
+        public virtual object Object { get; protected set; }
         public virtual bool HasId { get { return !String.IsNullOrEmpty(Id); } }
 
         public string Name { get; private set; }
@@ -20,7 +20,7 @@ namespace MessageBird.Resources
             return JsonConvert.SerializeObject(Object, settings);
         }
 
-        public Resource(string name)
+        protected Resource(string name)
         {
             Name = name;
         }

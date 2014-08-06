@@ -19,16 +19,19 @@ namespace MessageBird.Resources
             }
         }
 
-        public VoiceMessages() : base("voicemessages")
+        public VoiceMessages()
+            : base("voicemessages")
         {
         }
 
-        public VoiceMessages(string id) : this()
+        public VoiceMessages(string id)
+            : this()
         {
             Id = id;
         }
 
-        public VoiceMessages(VoiceMessage voiceMessage) : this ()
+        public VoiceMessages(VoiceMessage voiceMessage)
+            : this()
         {
             Object = voiceMessage;
         }

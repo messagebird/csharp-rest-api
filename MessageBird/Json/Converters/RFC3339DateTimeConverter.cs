@@ -9,14 +9,14 @@ namespace MessageBird.Json.Converters
     {
         // XXX: Format should be "yyyy-MM-dd'T'THH:mm:ssK".
         // However, due to bug the endpoint expects the current used format.
-        // Need to be changed when the endpoint is updated!
-        private const string format = "yyyy-MM-dd'T'HH:mm";
+        // TODO: Need to be changed when the endpoint is updated!
+        private const string Format = "yyyy-MM-dd'T'HH:mm";
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if (value is DateTime)
             {
                 DateTime dateTime = (DateTime)value;
-                writer.WriteValue(dateTime.ToString(format));
+                writer.WriteValue(dateTime.ToString(Format));
             }
             else
             {
@@ -32,7 +32,7 @@ namespace MessageBird.Json.Converters
 
             if (reader.TokenType == JsonToken.Null)
             {
-              return null;
+                return null;
             }
 
             if (reader.TokenType == JsonToken.Date)

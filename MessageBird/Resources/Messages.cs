@@ -6,7 +6,7 @@ namespace MessageBird.Resources
     sealed class Messages : Resource
     {
         private Message message;
-        public override object Object 
+        public override object Object
         {
             get
             {
@@ -19,18 +19,21 @@ namespace MessageBird.Resources
             }
         }
 
-        public Messages() : base("messages")
+        public Messages()
+            : base("messages")
         {
         }
 
-        public Messages(string id) : this()
+        public Messages(string id)
+            : this()
         {
             Id = id;
         }
 
-        public Messages(Message message) : this()
+        public Messages(Message message)
+            : this()
         {
-           Object = message;
+            Object = message;
         }
 
         public override void Deserialize(string resource)

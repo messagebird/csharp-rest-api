@@ -11,14 +11,14 @@ using MessageBird.Json.Converters;
 
 namespace MessageBird.Objects
 {
-    public enum Direction 
+    public enum Direction
     {
         [EnumMember(Value = "mt")]
         MobileTerminated,
         [EnumMember(Value = "mo")]
-        MobileOriginated 
+        MobileOriginated
     };
-    public enum MessageType 
+    public enum MessageType
     {
         [EnumMember(Value = "sms")]
         Sms,
@@ -27,14 +27,14 @@ namespace MessageBird.Objects
         [EnumMember(Value = "premium")]
         Premium,
         [EnumMember(Value = "flash")]
-        Flash 
+        Flash
     };
-    public enum DataEncoding 
+    public enum DataEncoding
     {
         [EnumMember(Value = "plain")]
         Plain,
         [EnumMember(Value = "unicode")]
-        Unicode 
+        Unicode
     };
     public enum MessageClass { Flash = 0, Normal };
 
@@ -63,7 +63,7 @@ namespace MessageBird.Objects
         public string Id { get; set; }
 
         [JsonProperty("href")]
-        public string Href {get; set;}
+        public string Href { get; set; }
 
         [JsonProperty("direction")]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -75,7 +75,8 @@ namespace MessageBird.Objects
 
         private string originator;
         [JsonProperty("originator")]
-        public string Originator {
+        public string Originator
+        {
             get
             {
                 return originator;
@@ -107,7 +108,7 @@ namespace MessageBird.Objects
         }
 
         [JsonProperty("body")]
-        public string Body {get; set;}
+        public string Body { get; set; }
 
         [JsonProperty("reference")]
         public string Reference { get; set; }
@@ -126,7 +127,7 @@ namespace MessageBird.Objects
         public DataEncoding Encoding { get; set; }
 
         [JsonProperty("mclass")]
-        public MessageClass Class {get; set;}
+        public MessageClass Class { get; set; }
 
         [JsonProperty("scheduledDatetime"), JsonConverter(typeof(RFC3339DateTimeConverter))]
         public DateTime? Scheduled { get; set; }
@@ -135,7 +136,7 @@ namespace MessageBird.Objects
         public DateTime? Created { get; set; }
 
         [JsonProperty("recipients"), JsonConverter(typeof(RecipientsConverter))]
-        public Recipients Recipients {get; set;}
+        public Recipients Recipients { get; set; }
 
         public Message()
         {
