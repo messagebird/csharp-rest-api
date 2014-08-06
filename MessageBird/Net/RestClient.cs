@@ -162,14 +162,21 @@ namespace MessageBird.Net
 
         private ErrorException ErrorExceptionFromWebException(WebException e)
         {
-            HttpStatusCode statusCode = (HttpStatusCode)((HttpWebResponse)e.Response).StatusCode;
+            HttpWebResponse httpWebResponse = (HttpWebResponse)e.Response;
+            if (null == httpWebResponse)
+            {
+                // some kind of network error: didn't even make a connection
+                return new ErrorException(e.Message);
+            }
+
+            HttpStatusCode statusCode = (HttpStatusCode)httpWebResponse.StatusCode;
             switch (statusCode)
             {
                 case HttpStatusCode.Unauthorized:
                 case HttpStatusCode.NotFound:
                 case HttpStatusCode.MethodNotAllowed:
                 case HttpStatusCode.UnprocessableEntity:
-                    using (StreamReader responseReader = new StreamReader(e.Response.GetResponseStream()))
+                    using (StreamReader responseReader = new StreamReader(httpWebResponse.GetResponseStream()))
                     {
                         ErrorException errorException = ErrorException.FromResponse(responseReader.ReadToEnd());
                         if (errorException != null)
