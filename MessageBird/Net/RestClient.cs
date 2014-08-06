@@ -3,18 +3,20 @@ using System.Net;
 using System.IO;
 using System.Text;
 
-using MessageBird.Resources;
 using MessageBird.Exceptions;
+using MessageBird.Resources;
 
 namespace MessageBird.Net
 {
+    // immutable, so no read/write properties
     public interface IRestClient
     {
-        string Endpoint { get; set; }
-        string ClientVersion { get; }
+        string AccessKey { get; }
+        string Endpoint { get; }
+
         string ApiVersion { get; }
+        string ClientVersion { get; }
         string UserAgent { get; }
-        string AccessKey { get; set; }
 
         Resource Create(Resource resource);
         Resource Retrieve(Resource resource);
@@ -22,14 +24,27 @@ namespace MessageBird.Net
         void Delete(Resource resource);
     }
 
-    class RestClient : IRestClient
+    internal class RestClient : IRestClient
     {
-        public string Endpoint {get; set;}
-        public string ClientVersion { get { return "1.0"; } }
-        public string ApiVersion { get { return "2.0";  } }
-        public string UserAgent { get { return string.Format("MessageBird/ApiClient/{0} DotNet/{1}", ApiVersion, ClientVersion); } }
-        public string AccessKey { get; set; }
-        
+        public string AccessKey { get; private set; }
+
+        public string Endpoint { get; private set; }
+
+        public string ClientVersion
+        {
+            get { return "1.0"; }
+        }
+
+        public string ApiVersion
+        {
+            get { return "2.0"; }
+        }
+
+        public string UserAgent
+        {
+            get { return string.Format("MessageBird/ApiClient/{0} DotNet/{1}", ApiVersion, ClientVersion); }
+        }
+
         public RestClient(string endpoint, string accessKey)
         {
             Endpoint = endpoint;
