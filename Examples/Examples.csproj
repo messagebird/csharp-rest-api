@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Examples.ViewBalance</StartupObject>
+    <StartupObject>Examples.Balance.ViewBalance</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />

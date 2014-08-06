@@ -1,27 +1,30 @@
 ﻿using System;
-
+using System.Net;
 using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Objects;
 
-namespace Examples
+namespace Examples.VoiceMessage
 {
     class CreateVoiceMessage
     {
+        const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+        const long Msisdn = 31612345678; // your phone number here.
+
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault("YOUR_ACCESS_KEY");
+            Client client = Client.CreateDefault(YourAccessKey);
 
             try
             {
-                VoiceMessageOptionalArguments optionalArguments = new VoiceMessageOptionalArguments()
+                VoiceMessageOptionalArguments optionalArguments = new VoiceMessageOptionalArguments
                 {
                     Language = Language.English,
                     Voice = Voice.Female,
                     IfMachine = IfMachineOptions.Continue
 
                 };
-                VoiceMessage voiceMessage = client.SendVoiceMessage("This is a test message. The message is converted to speech and the recipient is called on his mobile.", new long[] { 31612345678 }, optionalArguments);
+                MessageBird.Objects.VoiceMessage voiceMessage = client.SendVoiceMessage("This is a test message. The message is converted to speech and the recipient is called on his mobile.", new long[] { Msisdn }, optionalArguments);
                 Console.WriteLine("{0}", voiceMessage);
             }
             catch (ErrorException e)

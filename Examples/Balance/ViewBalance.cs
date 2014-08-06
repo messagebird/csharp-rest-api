@@ -1,20 +1,22 @@
 ﻿using System;
-
+using System.Net;
 using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Objects;
 
-namespace Examples
+namespace Examples.Balance
 {
     class ViewBalance
     {
+        const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault("YOUR_ACCESS_KEY");
+            Client client = Client.CreateDefault(YourAccessKey);
 
             try
             {
-                Balance balance = client.Balance();
+                MessageBird.Objects.Balance balance = client.Balance();
                 Console.WriteLine("{0}", balance);
             }
             catch (ErrorException e)

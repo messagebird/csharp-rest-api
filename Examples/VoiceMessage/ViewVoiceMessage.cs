@@ -1,20 +1,22 @@
 ﻿using System;
-
+using System.Net;
 using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Objects;
 
-namespace Examples
+namespace Examples.VoiceMessage
 {
     class ViewVoiceMessage
     {
+        const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault("YOUR_ACCESS_KEY");
+            Client client = Client.CreateDefault(YourAccessKey);
 
             try
             {
-                VoiceMessage voiceMessage = client.ViewVoiceMessage("ca0a8220453bc36ddeb3115a37400870");
+                MessageBird.Objects.VoiceMessage voiceMessage = client.ViewVoiceMessage("ca0a8220453bc36ddeb3115a37400870");
                 Console.WriteLine("{0}", voiceMessage);
             }
             catch (ErrorException e)

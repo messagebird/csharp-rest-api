@@ -1,20 +1,22 @@
 ﻿using System;
-
+using System.Net;
 using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Objects;
 
-namespace Examples
+namespace Examples.Message
 {
     class ViewMessage
     {
+        const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault("YOUR_ACCESS_KEY");
+            Client client = Client.CreateDefault(YourAccessKey);
 
             try
             {
-                Message message = client.ViewMessage("ad86c8c0153a194a59a17e2b71578856");
+                MessageBird.Objects.Message message = client.ViewMessage("ad86c8c0153a194a59a17e2b71578856");
                 Console.WriteLine("{0}", message);
             }
             catch (ErrorException e)

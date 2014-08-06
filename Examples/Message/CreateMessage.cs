@@ -1,20 +1,23 @@
 ﻿using System;
-
+using System.Net;
 using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Objects;
 
-namespace Examples
+namespace Examples.Message
 {
     class CreateMessage
     {
+        const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+        const long Msisdn = 31612345678; // your phone number here.
+
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault("YOUR_ACCESS_KEY");
+            Client client = Client.CreateDefault(YourAccessKey);
 
             try
             {
-                Message message = client.SendMessage("MessageBird", "Tjirp tjirp", new long[] { 31612345678 });
+                MessageBird.Objects.Message message = client.SendMessage("MessageBird", "Tjirp tjirp", new long[] { Msisdn });
                 Console.WriteLine("{0}", message);
             }
             catch (ErrorException e)
