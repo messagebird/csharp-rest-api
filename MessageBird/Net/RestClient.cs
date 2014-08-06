@@ -64,25 +64,47 @@ namespace MessageBird.Net
         {
             string uri = resource.HasId ? String.Format("{0}/{1}", resource.Name, resource.Id) : resource.Name;
             HttpWebRequest request = PrepareRequest(uri, "GET");
+
+            return PerformRoundTrip(request, resource, HttpStatusCode.OK, () => { }
+            );
+        }
+
+        public Resource Create(Resource resource)
+        {
+            HttpWebRequest request = PrepareRequest(resource.Name, "POST");
+            return PerformRoundTrip(request, resource, HttpStatusCode.Created, () =>
+            {
+                using (StreamWriter requestWriter = new StreamWriter(request.GetRequestStream()))
+                {
+                    requestWriter.Write(resource.Serialize());
+                }
+            }
+            );
+        }
+
+        private Resource PerformRoundTrip(HttpWebRequest request, Resource resource, HttpStatusCode expectedHttpStatusCode, Action requestAction)
+        {
             try
             {
+                requestAction();
+
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
                     HttpStatusCode statusCode = (HttpStatusCode)response.StatusCode;
-                    switch (statusCode)
+                    if (statusCode == expectedHttpStatusCode)
                     {
-                        case MessageBird.Net.HttpStatusCode.OK:
-                            Stream responseStream = response.GetResponseStream();
-                            // XXX: Makes this conditional on the encoding of the response.
-                            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+                        Stream responseStream = response.GetResponseStream();
+                        Encoding encoding = GetEncoding(response);
 
-                            using (StreamReader responseReader = new StreamReader(responseStream, encode))
-                            {
-                                resource.Deserialize(responseReader.ReadToEnd());
-                                return resource;
-                            }
-                        default:
-                            throw new ErrorException(String.Format("Unexpected status code {0}", statusCode), null);
+                        using (StreamReader responseReader = new StreamReader(responseStream, encoding))
+                        {
+                            resource.Deserialize(responseReader.ReadToEnd());
+                            return resource;
+                        }
+                    }
+                    else
+                    {
+                        throw new ErrorException(String.Format("Unexpected status code {0}", statusCode), null);
                     }
                 }
             }
@@ -96,44 +118,11 @@ namespace MessageBird.Net
             }
         }
 
-        public Resource Create(Resource resource)
+        private static Encoding GetEncoding(HttpWebResponse response)
         {
-            HttpWebRequest request = PrepareRequest(resource.Name, "POST");
-            try
-            {
-                using (StreamWriter requestWriter = new StreamWriter(request.GetRequestStream()))
-                {
-                    requestWriter.Write(resource.Serialize());
-                }
-
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    HttpStatusCode statusCode = (HttpStatusCode)response.StatusCode;
-                    switch (statusCode)
-                    {
-                        case MessageBird.Net.HttpStatusCode.Created:
-                            Stream responseStream = response.GetResponseStream();
-                            // XXX: Makes this conditional on the encoding of the response.
-                            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
-
-                            using (StreamReader responseReader = new StreamReader(responseStream, encode))
-                            {
-                                resource.Deserialize(responseReader.ReadToEnd());
-                                return resource;
-                            }
-                        default:
-                            throw new ErrorException(String.Format("Unexpected status code {0}", statusCode), null);
-                    }
-                }
-            }
-            catch (WebException e)
-            {
-                throw ErrorExceptionFromWebException(e);
-            }
-            catch (Exception e)
-            {
-                throw new ErrorException(String.Format("Unhandled exception {0}", e), e);
-            }
+            // XXX: Makes this conditional on the encoding of the response.
+            Encoding encode = Encoding.UTF8; // GetEncoding("utf-8"); // Encoding.GetEncoding(response.CharacterSet);
+            return encode;
         }
 
         public void Update(Resource resource)
