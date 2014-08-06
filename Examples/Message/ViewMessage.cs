@@ -9,6 +9,7 @@ namespace Examples.Message
     class ViewMessage
     {
         const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+        const string MessageId = "ad86c8c0153a194a59a17e2b71578856"; // ID of message you sent before. When not found, you will not get a http StatusCode 404, but an exception `code: 20 description: 'message not found' parameter: ''`
 
         static void Main(string[] args)
         {
@@ -19,7 +20,7 @@ namespace Examples.Message
 
             try
             {
-                MessageBird.Objects.Message message = client.ViewMessage("ad86c8c0153a194a59a17e2b71578856");
+                MessageBird.Objects.Message message = client.ViewMessage(MessageId);
                 Console.WriteLine("{0}", message);
             }
             catch (ErrorException e)
