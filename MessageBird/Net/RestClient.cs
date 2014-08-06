@@ -13,6 +13,7 @@ namespace MessageBird.Net
     {
         string AccessKey { get; }
         string Endpoint { get; }
+        ICredentials ProxyCredentials { get; }
 
         string ApiVersion { get; }
         string ClientVersion { get; }
@@ -30,6 +31,8 @@ namespace MessageBird.Net
 
         public string Endpoint { get; private set; }
 
+        public ICredentials ProxyCredentials { get; private set; }
+
         public string ClientVersion
         {
             get { return "1.0"; }
@@ -45,13 +48,15 @@ namespace MessageBird.Net
             get { return string.Format("MessageBird/ApiClient/{0} DotNet/{1}", ApiVersion, ClientVersion); }
         }
 
-        public RestClient(string endpoint, string accessKey)
+        public RestClient(string endpoint, string accessKey, ICredentials proxyCredentials)
         {
             Endpoint = endpoint;
             AccessKey = accessKey;
+            ProxyCredentials = proxyCredentials;
         }
 
-        public RestClient(string accessKey) : this("https://rest.messagebird.com", accessKey)
+        public RestClient(string accessKey, ICredentials proxyCredentials)
+            : this("https://rest.messagebird.com", accessKey, proxyCredentials)
         {
         }
 
@@ -156,6 +161,15 @@ namespace MessageBird.Net
 
             WebHeaderCollection headers = request.Headers;
             headers.Add("Authorization", String.Format("AccessKey {0}", AccessKey));
+
+            Uri proxy = WebRequest.DefaultWebProxy.GetProxy(uri);
+            if (uri != proxy) // request goes through proxy
+            {
+                IWebProxy webProxy = request.Proxy;
+                // webProxy.UseDefaultCredentials = true; // not accessible through IWebProxy
+                // webProxy.Credentials = CredentialCache.DefaultCredentials; // same as setting `webProxy.UseDefaultCredentials = true`
+                webProxy.Credentials = ProxyCredentials; // better to pass it as a dependency
+            }
 
             return request;
         }

@@ -12,7 +12,10 @@ namespace Examples.VoiceMessage
 
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault(YourAccessKey);
+            ICredentials proxyCredentials = null; // for no web proxies, or web proxies not requiring authentication
+            //proxyCredentials = CredentialCache.DefaultCredentials; // for NTLM based web proxies
+            //proxyCredentials = new NetworkCredential("domain\\user", "password"); // for username/password based web proxies
+            Client client = Client.CreateDefault(YourAccessKey, proxyCredentials);
 
             try
             {
