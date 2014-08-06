@@ -126,12 +126,17 @@ namespace MessageBird.Net
             throw new NotImplementedException();
         }
 
-        private HttpWebRequest PrepareRequest(string requestUri, string method)
+        private HttpWebRequest PrepareRequest(string requestUriString, string method)
         {
-            HttpWebRequest request = WebRequest.CreateHttp(String.Format("{0}/{1}",Endpoint, requestUri));
+            string uriString = String.Format("{0}/{1}", Endpoint, requestUriString);
+            Uri uri = new Uri(uriString);
+            // TODO: ##jwp; need to find out why .NET 4.0 under VS2013 refuses to recognize `WebRequest.CreateHttp`.
+            // HttpWebRequest request = WebRequest.CreateHttp(uri);
+            HttpWebRequest request = WebRequest.Create(uri) as HttpWebRequest;
             request.UserAgent = UserAgent;
-            request.Accept = "application/json";
-            request.ContentType = "application/json";
+            const string ApplicationJsonContentType = "application/json"; // http://tools.ietf.org/html/rfc4627
+            request.Accept = ApplicationJsonContentType;
+            request.ContentType = ApplicationJsonContentType;
             request.Method = method;
 
             WebHeaderCollection headers = request.Headers;
