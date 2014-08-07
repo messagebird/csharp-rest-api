@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Net;
 using MessageBird.Objects;
 using MessageBird.Resources;
 using MessageBird.Net;
@@ -7,7 +7,8 @@ namespace MessageBird
 {
     public class Client
     {
-        private IRestClient restClient;
+        private readonly IRestClient restClient;
+
         private Client(IRestClient restClient)
         {
             this.restClient = restClient;
@@ -18,9 +19,9 @@ namespace MessageBird
             return new Client(restClient);
         }
 
-        public static Client CreateDefault(string accessKey)
+        public static Client CreateDefault(string accessKey, ICredentials proxyCredentials)
         {
-            return new Client(new RestClient(accessKey));
+            return new Client(new RestClient(accessKey, proxyCredentials));
         }
 
         public Message SendMessage(string originator, string body, long[] msisdns, MessageOptionalArguments optionalArguments = null)

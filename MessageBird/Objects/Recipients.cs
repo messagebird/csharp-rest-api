@@ -18,14 +18,15 @@ namespace MessageBird.Objects
         public int TotalDeliveryFailedCount { get; private set; }
 
         [JsonProperty("items")]
-        public List<Recipient> Items {get; set;}
+        public List<Recipient> Items { get; set; }
 
         public Recipients()
         {
             Items = new List<Recipient>();
         }
 
-        public Recipients(long[] msisdns) : this()
+        public Recipients(IEnumerable<long> msisdns)
+            : this()
         {
             foreach (long msisdn in msisdns)
             {

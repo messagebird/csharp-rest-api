@@ -8,13 +8,9 @@ namespace MessageBird.Objects
         public int Code { get; set; }
 
         [JsonProperty("description")]
-        public string Description {get; set;}
+        public string Description { get; set; }
 
         [JsonProperty("parameter")]
-        public string Parameter {get; set;}
-
-        public Error()
-        {
-        }
+        public string Parameter { get; set; }
     }
 }

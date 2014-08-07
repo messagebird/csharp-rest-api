@@ -60,7 +60,7 @@ namespace MessageBird.Resources
             return JsonConvert.SerializeObject(Object, settings);
         }
 
-        public Resource(string name)
+        protected Resource(string name)
         {
             Name = name;
         }

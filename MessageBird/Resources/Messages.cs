@@ -5,19 +5,20 @@ namespace MessageBird.Resources
 {
     sealed class Messages : Resource
     {
-       
         public Messages() : base("messages")
         {
         }
 
-        public Messages(string id) : this()
+        public Messages(string id)
+            : this()
         {
             Id = id;
         }
 
-        public Messages(Message message) : this()
+        public Messages(Message message)
+            : this()
         {
-           Object = message;
+            Object = message;
         }
     }
 }

@@ -21,12 +21,12 @@ namespace MessageBird.Json.Converters
             writer.WriteEndArray();
         }
 
-        
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             return serializer.Deserialize<Recipients>(reader);
         }
-        
+
 
         public override bool CanConvert(Type objectType)
         {

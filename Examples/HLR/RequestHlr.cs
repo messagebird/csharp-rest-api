@@ -1,22 +1,28 @@
 ﻿using System;
-
+using System.Net;
 using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Objects;
 
-namespace Examples
+namespace Examples.HLR
 {
     class RequestHlr
     {
+        const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+        const long Msisdn = 31612345678; // your phone number here.
+
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault("YOUR_ACCESS_KEY");
+            ICredentials proxyCredentials = null; // for no web proxies, or web proxies not requiring authentication
+            //proxyCredentials = CredentialCache.DefaultCredentials; // for NTLM based web proxies
+            //proxyCredentials = new NetworkCredential("domain\\user", "password"); // for username/password based web proxies
+            Client client = Client.CreateDefault(YourAccessKey, proxyCredentials);
 
             try
             {
-                Hlr hlr = client.RequestHlr(31612345678, "Custom reference");
+                Hlr hlr = client.RequestHlr(Msisdn, "Custom reference");
                 Console.WriteLine("{0}", hlr);
-                
+
             }
             catch (ErrorException e)
             {
