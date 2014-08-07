@@ -37,7 +37,7 @@ namespace MessageBird
 
         public Message ViewMessage(string id)
         {
-            Messages messageToView = new Messages(id);
+            Messages messageToView = new Messages(new Message(id));
             Messages result = restClient.Retrieve(messageToView);
 
             return result.Object as Message;
@@ -56,7 +56,7 @@ namespace MessageBird
 
         public VoiceMessage ViewVoiceMessage(string id)
         {
-            VoiceMessages voiceMessageToView = new VoiceMessages(id);
+            VoiceMessages voiceMessageToView = new VoiceMessages(new VoiceMessage(id));
             VoiceMessages result = restClient.Retrieve(voiceMessageToView);
 
             return result.Object as VoiceMessage;
@@ -74,8 +74,7 @@ namespace MessageBird
 
         public Objects.Hlr ViewHlr(string id)
         {
-            Objects.Hlr hlr = new Objects.Hlr(id);
-            Resources.Hlr hlrToView = new Resources.Hlr(hlr);
+            Resources.Hlr hlrToView = new Resources.Hlr(new Objects.Hlr(id));
 
             MessageBird.Resources.Hlr result = restClient.Retrieve(hlrToView);
 
