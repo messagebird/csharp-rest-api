@@ -103,10 +103,7 @@ namespace MessageBird.Net
                             return resource;
                         }
                     }
-                    else
-                    {
-                        throw new ErrorException(String.Format("Unexpected status code {0}", statusCode), null);
-                    }
+                    throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
                 }
             }
             catch (WebException e)
@@ -187,10 +184,7 @@ namespace MessageBird.Net
                         {
                             return errorException;
                         }
-                        else
-                        {
-                            return new ErrorException(String.Format("Unknown error for {0}", statusCode), e);
-                        }
+                        return new ErrorException(String.Format("Unknown error for {0}", statusCode), e);
                     }
                 case HttpStatusCode.InternalServerError:
                 case HttpStatusCode.NotImplemented:

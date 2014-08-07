@@ -27,7 +27,7 @@ namespace Examples.VoiceMessage
                     IfMachine = IfMachineOptions.Continue
 
                 };
-                MessageBird.Objects.VoiceMessage voiceMessage = client.SendVoiceMessage("This is a test message. The message is converted to speech and the recipient is called on his mobile.", new long[] { Msisdn }, optionalArguments);
+                MessageBird.Objects.VoiceMessage voiceMessage = client.SendVoiceMessage("This is a test message. The message is converted to speech and the recipient is called on his mobile.", new[] { Msisdn }, optionalArguments);
                 Console.WriteLine("{0}", voiceMessage);
             }
             catch (ErrorException e)

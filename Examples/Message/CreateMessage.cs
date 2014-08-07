@@ -20,7 +20,7 @@ namespace Examples.Message
 
             try
             {
-                MessageBird.Objects.Message message = client.SendMessage("MessageBird", "Tjirp tjirp", new long[] { Msisdn });
+                MessageBird.Objects.Message message = client.SendMessage("MessageBird", "Tjirp tjirp", new[] { Msisdn });
                 Console.WriteLine("{0}", message);
             }
             catch (ErrorException e)

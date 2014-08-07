@@ -15,10 +15,7 @@ namespace MessageBird.Resources
                 {
                    return Object.Id;
                 }
-                else
-                {
-                    throw new ErrorException(String.Format("Resource {0} has no id", Name));
-                }
+                throw new ErrorException(String.Format("Resource {0} has no id", Name));
             }
         }
 

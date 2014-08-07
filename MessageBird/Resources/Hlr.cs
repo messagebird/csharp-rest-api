@@ -1,7 +1,4 @@
-﻿using MessageBird.Objects;
-using Newtonsoft.Json;
-
-namespace MessageBird.Resources
+﻿namespace MessageBird.Resources
 {
     sealed class Hlr : Resource
     {

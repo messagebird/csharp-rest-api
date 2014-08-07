@@ -26,65 +26,61 @@ namespace MessageBird
 
         public Message SendMessage(string originator, string body, long[] msisdns, MessageOptionalArguments optionalArguments = null)
         {
-            Recipients recipients = new Recipients(msisdns);
-            Message message = new Message(originator, body, recipients, optionalArguments);
+            var recipients = new Recipients(msisdns);
+            var message = new Message(originator, body, recipients, optionalArguments);
 
-            Messages messages = new Messages(message);
-            Messages result = restClient.Create(messages);
+            var messages = new Messages(message);
+            var result = restClient.Create(messages);
 
             return result.Object as Message;
         }
 
         public Message ViewMessage(string id)
         {
-            Messages messageToView = new Messages(new Message(id));
-            Messages result = restClient.Retrieve(messageToView);
+            var messageToView = new Messages(new Message(id));
+            var result = restClient.Retrieve(messageToView);
 
             return result.Object as Message;
         }
 
         public VoiceMessage SendVoiceMessage(string body, long[] msisdns, VoiceMessageOptionalArguments optionalArguments = null)
         {
-            Recipients recipients = new Recipients(msisdns);
-            VoiceMessage voiceMessage = new VoiceMessage(body, recipients, optionalArguments);
-
-            VoiceMessages voiceMessages = new VoiceMessages(voiceMessage);
-            VoiceMessages result = restClient.Create(voiceMessages);
+            var recipients = new Recipients(msisdns);
+            var voiceMessage = new VoiceMessage(body, recipients, optionalArguments);
+            var voiceMessages = new VoiceMessages(voiceMessage);
+            var result = restClient.Create(voiceMessages);
 
             return result.Object as VoiceMessage;
         }
 
         public VoiceMessage ViewVoiceMessage(string id)
         {
-            VoiceMessages voiceMessageToView = new VoiceMessages(new VoiceMessage(id));
-            VoiceMessages result = restClient.Retrieve(voiceMessageToView);
+            var voiceMessageToView = new VoiceMessages(new VoiceMessage(id));
+            var result = restClient.Retrieve(voiceMessageToView);
 
             return result.Object as VoiceMessage;
         }
 
         public Objects.Hlr RequestHlr(long msisdn, string reference)
         {
-            Objects.Hlr hlr = new Objects.Hlr(msisdn, reference);
-            Resources.Hlr hlrToRequest = new Resources.Hlr(hlr);
-
-            Resources.Hlr result = restClient.Create(hlrToRequest);
+            var hlrToRequest = new Resources.Hlr(new Objects.Hlr(msisdn, reference));
+            var result = restClient.Create(hlrToRequest);
 
             return result.Object as Objects.Hlr;
         }
 
         public Objects.Hlr ViewHlr(string id)
         {
-            Resources.Hlr hlrToView = new Resources.Hlr(new Objects.Hlr(id));
-
-            MessageBird.Resources.Hlr result = restClient.Retrieve(hlrToView);
+            var hlrToView = new Resources.Hlr(new Objects.Hlr(id));
+            var result = restClient.Retrieve(hlrToView);
 
             return result.Object as Objects.Hlr;
         }
 
         public Objects.Balance Balance()
         {
-            Resources.Balance balance = new Resources.Balance();
-            Resources.Balance result = restClient.Retrieve(balance);
+            var balance = new Resources.Balance();
+            var result = restClient.Retrieve(balance);
 
             return result.Object as Objects.Balance;
         }
