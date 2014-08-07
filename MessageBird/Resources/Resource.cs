@@ -35,8 +35,7 @@ namespace MessageBird.Resources
 
         public virtual string Serialize()
         {
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
+            var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
             return JsonConvert.SerializeObject(Object, settings);
         }
 

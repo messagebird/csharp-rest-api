@@ -20,7 +20,7 @@ namespace Examples.VoiceMessage
 
             try
             {
-                VoiceMessageOptionalArguments optionalArguments = new VoiceMessageOptionalArguments
+                var optionalArguments = new VoiceMessageOptionalArguments
                 {
                     Language = Language.English,
                     Voice = Voice.Female,

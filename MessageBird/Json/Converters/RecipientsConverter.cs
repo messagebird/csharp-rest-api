@@ -12,7 +12,7 @@ namespace MessageBird.Json.Converters
          */
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            Recipients recipients = value as Recipients;
+            var recipients = value as Recipients;
             writer.WriteStartArray();
             foreach (Recipient recipient in recipients.Items)
             {

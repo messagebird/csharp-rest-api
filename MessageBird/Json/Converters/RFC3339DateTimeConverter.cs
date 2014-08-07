@@ -15,7 +15,7 @@ namespace MessageBird.Json.Converters
         {
             if (value is DateTime)
             {
-                DateTime dateTime = (DateTime)value;
+                var dateTime = (DateTime)value;
                 writer.WriteValue(dateTime.ToString(Format));
             }
             else

@@ -83,8 +83,8 @@ namespace MessageBird.Objects
             }
             set
             {
-                Regex numeric = new Regex("^[0-9]+$");
-                Regex alphanumeric = new Regex("^[A-Za-z0-9]+$");
+                var numeric = new Regex("^[0-9]+$");
+                var alphanumeric = new Regex("^[A-Za-z0-9]+$");
                 if (string.IsNullOrEmpty(value) || numeric.IsMatch(value))
                 {
                     originator = value;

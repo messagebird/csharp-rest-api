@@ -74,7 +74,7 @@ namespace MessageBird.Net
             HttpWebRequest request = PrepareRequest(resource.Name, "POST");
             return PerformRoundTrip(request, resource, HttpStatusCode.Created, () =>
             {
-                using (StreamWriter requestWriter = new StreamWriter(request.GetRequestStream()))
+                using (var requestWriter = new StreamWriter(request.GetRequestStream()))
                 {
                     requestWriter.Write(resource.Serialize());
                 }
@@ -89,15 +89,15 @@ namespace MessageBird.Net
             {
                 requestAction();
 
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (var response = request.GetResponse() as HttpWebResponse)
                 {
-                    HttpStatusCode statusCode = (HttpStatusCode)response.StatusCode;
+                    var statusCode = (HttpStatusCode)response.StatusCode;
                     if (statusCode == expectedHttpStatusCode)
                     {
                         Stream responseStream = response.GetResponseStream();
                         Encoding encoding = GetEncoding(response);
 
-                        using (StreamReader responseReader = new StreamReader(responseStream, encoding))
+                        using (var responseReader = new StreamReader(responseStream, encoding))
                         {
                             resource.Deserialize(responseReader.ReadToEnd());
                             return resource;
@@ -136,10 +136,10 @@ namespace MessageBird.Net
         private HttpWebRequest PrepareRequest(string requestUriString, string method)
         {
             string uriString = String.Format("{0}/{1}", Endpoint, requestUriString);
-            Uri uri = new Uri(uriString);
+            var uri = new Uri(uriString);
             // TODO: ##jwp; need to find out why .NET 4.0 under VS2013 refuses to recognize `WebRequest.CreateHttp`.
             // HttpWebRequest request = WebRequest.CreateHttp(uri);
-            HttpWebRequest request = WebRequest.Create(uri) as HttpWebRequest;
+            var request = WebRequest.Create(uri) as HttpWebRequest;
             request.UserAgent = UserAgent;
             const string ApplicationJsonContentType = "application/json"; // http://tools.ietf.org/html/rfc4627
             request.Accept = ApplicationJsonContentType;
@@ -163,21 +163,21 @@ namespace MessageBird.Net
 
         private ErrorException ErrorExceptionFromWebException(WebException e)
         {
-            HttpWebResponse httpWebResponse = (HttpWebResponse)e.Response;
+            var httpWebResponse = e.Response as HttpWebResponse;
             if (null == httpWebResponse)
             {
                 // some kind of network error: didn't even make a connection
                 return new ErrorException(e.Message, e);
             }
 
-            HttpStatusCode statusCode = (HttpStatusCode)httpWebResponse.StatusCode;
+            var statusCode = (HttpStatusCode)httpWebResponse.StatusCode;
             switch (statusCode)
             {
                 case HttpStatusCode.Unauthorized:
                 case HttpStatusCode.NotFound:
                 case HttpStatusCode.MethodNotAllowed:
                 case HttpStatusCode.UnprocessableEntity:
-                    using (StreamReader responseReader = new StreamReader(httpWebResponse.GetResponseStream()))
+                    using (var responseReader = new StreamReader(httpWebResponse.GetResponseStream()))
                     {
                         ErrorException errorException = ErrorException.FromResponse(responseReader.ReadToEnd(), e);
                         if (errorException != null)

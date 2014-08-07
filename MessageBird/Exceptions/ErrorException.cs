@@ -46,7 +46,7 @@ namespace MessageBird.Exceptions
         {
             try
             {
-                Dictionary<string, List<Error>> errors = JsonConvert.DeserializeObject<Dictionary<string, List<Error>>>(response);
+                var errors = JsonConvert.DeserializeObject<Dictionary<string, List<Error>>>(response);
                 return new ErrorException(errors["errors"], innerException);
             }
             catch (JsonSerializationException)
