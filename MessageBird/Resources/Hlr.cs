@@ -21,23 +21,5 @@ namespace MessageBird.Resources
             Object = hlr;
         }
 
-        private Objects.Hlr hlr;
-        public override object Object
-        {
-            get
-            {
-                return hlr;
-            }
-            protected set
-            {
-                hlr = (Objects.Hlr)value;
-                Id = hlr.Id;
-            }
-        }
-
-        public override void Deserialize(string resource)
-        {
-            Object = JsonConvert.DeserializeObject<Objects.Hlr>(resource);
-        }
     }
 }

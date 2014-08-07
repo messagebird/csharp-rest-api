@@ -57,7 +57,7 @@ namespace MessageBird.Objects
         }
     }
 
-    public class Message
+    public class Message : IIdentifiable<string>
     {
         [JsonProperty("id")]
         public string Id { get; set; }

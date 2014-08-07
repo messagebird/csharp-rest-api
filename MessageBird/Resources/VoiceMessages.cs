@@ -5,20 +5,6 @@ namespace MessageBird.Resources
 {
     sealed class VoiceMessages : Resource
     {
-        private VoiceMessage voiceMessage;
-        public override object Object
-        {
-            get
-            {
-                return voiceMessage;
-            }
-            protected set
-            {
-                voiceMessage = (VoiceMessage)value;
-                Id = voiceMessage.Id;
-            }
-        }
-
         public VoiceMessages() : base("voicemessages")
         {
         }
@@ -31,11 +17,6 @@ namespace MessageBird.Resources
         public VoiceMessages(VoiceMessage voiceMessage) : this ()
         {
             Object = voiceMessage;
-        }
-
-        public override void Deserialize(string resource)
-        {
-            Object = JsonConvert.DeserializeObject<VoiceMessage>(resource);
         }
     }
 }

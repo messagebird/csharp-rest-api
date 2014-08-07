@@ -12,29 +12,12 @@ namespace MessageBird.Resources
 
         }
 
-        public override string Id
-        {
-            get
-            {
-                throw new ErrorException("A balance has no id");
-            }
-            protected set
-            {
-                throw new ErrorException("A balance has no id");
-            }
-        }
-
         public override bool HasId
         {
             get
             {
                 return false;
             }
-        }
-
-        public override void Deserialize(string resource)
-        {
-            Object = JsonConvert.DeserializeObject<MessageBird.Objects.Balance>(resource);
         }
     }
 }

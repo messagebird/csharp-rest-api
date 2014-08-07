@@ -20,7 +20,7 @@ namespace MessageBird.Objects
         Failed,
     }
 
-    public class Hlr
+    public class Hlr : IIdentifiable<string>
     {
         [JsonProperty("id")]
         public string Id { get; set; }

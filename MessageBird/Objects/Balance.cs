@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -21,8 +22,16 @@ namespace MessageBird.Objects
         Euros
     }
 
-    public class Balance
+    public class Balance : IIdentifiable<string>
     {
+        public string Id
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
+
         [JsonProperty("payment"), JsonConverter(typeof(StringEnumConverter))]
         public PaymentMethod Payment { get; set; }
 
