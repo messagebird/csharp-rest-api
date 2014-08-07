@@ -28,7 +28,7 @@ namespace MessageBird.Objects
         {
             get
             {
-                throw new NotSupportedException();
+                return null;
             }
         }
 

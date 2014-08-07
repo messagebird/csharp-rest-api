@@ -7,44 +7,27 @@ namespace MessageBird.Resources
 {
     public abstract class Resource
     {
-        private string _id;
-
         public string Id
         {
             get
             {
                 if (HasId)
                 {
-                    if (!String.IsNullOrEmpty(_id))
-                    {
-                        return _id;
-                    }
-
-                    if (Object != null)
-                    {
-                        return Object.Id;
-                    }
-                    throw new ErrorException(String.Format("Expected an id for resource {0}", Name));
+                   return Object.Id;
                 }
                 else
                 {
                     throw new ErrorException(String.Format("Resource {0} has no id", Name));
                 }
             }
-            protected set { _id = value; }
         }
 
-        private IIdentifiable<string> _object;
-        public IIdentifiable<string> Object
+        public IIdentifiable<string> Object { get; protected set; }
+
+        public bool HasId
         {
-            get { return _object; }
-            protected set
-            {
-                _object = value;
-                Id = _object.Id;
-            }
-        } 
-        public virtual bool HasId { get { return true; } }
+            get { return (Object != null) && !String.IsNullOrEmpty(Object.Id); }
+        }
 
         public string Name { get; private set; }
 
@@ -60,9 +43,10 @@ namespace MessageBird.Resources
             return JsonConvert.SerializeObject(Object, settings);
         }
 
-        protected Resource(string name)
+        protected Resource(string name, IIdentifiable<string> attachedObject)
         {
             Name = name;
+            Object = attachedObject;
         }
     }
 }
