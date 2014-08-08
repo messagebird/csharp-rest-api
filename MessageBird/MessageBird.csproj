@@ -59,6 +59,7 @@
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\VoiceMessages.cs" />
     <Compile Include="Utilities\ReflectionUtils.cs" />
+    <Compile Include="Utilities\Validation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
