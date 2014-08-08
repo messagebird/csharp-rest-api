@@ -30,6 +30,10 @@ namespace MessageBird.Resources
 
         public virtual void Deserialize(string resource)
         {
+            if (Object == null)
+            {
+                throw new ErrorException("Invalid resource, has no attached object", new NullReferenceException());
+            }
             JsonConvert.PopulateObject(resource, Object);
         }
 
