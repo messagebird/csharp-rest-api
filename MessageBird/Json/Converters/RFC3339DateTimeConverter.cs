@@ -7,10 +7,7 @@ namespace MessageBird.Json.Converters
 {
     class RFC3339DateTimeConverter : JsonConverter
     {
-        // XXX: Format should be "yyyy-MM-dd'T'THH:mm:ssK".
-        // However, due to bug the endpoint expects the current used format.
-        // TODO: Need to be changed when the endpoint is updated!
-        private const string Format = "yyyy-MM-dd'T'HH:mm";
+        private const string Format = "yyyy-MM-dd'T'HH:mm:ssK";
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if (value is DateTime)
