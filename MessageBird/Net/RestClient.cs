@@ -99,7 +99,8 @@ namespace MessageBird.Net
 
                         using (var responseReader = new StreamReader(responseStream, encoding))
                         {
-                            resource.Deserialize(responseReader.ReadToEnd());
+                            string responseContent = responseReader.ReadToEnd();
+                            resource.Deserialize(responseContent);
                             return resource;
                         }
                     }
