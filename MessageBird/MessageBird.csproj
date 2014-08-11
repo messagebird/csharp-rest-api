@@ -43,6 +43,11 @@
     <Compile Include="Json\Converters\RecipientsConverter.cs" />
     <Compile Include="Json\Converters\RFC3339DateTimeConverter.cs" />
     <Compile Include="Net\HttpStatusCode.cs" />
+    <Compile Include="Net\IRestClient.cs" />
+    <Compile Include="Net\ProxyConfigurationInjector\InjectCredentialsForProxiedUris.cs" />
+    <Compile Include="Net\ProxyConfigurationInjector\InjectWebProxy.cs" />
+    <Compile Include="Net\ProxyConfigurationInjector\IProxyConfigurationInjector.cs" />
+    <Compile Include="Net\ProxyConfigurationInjector\InjectDefaultCredentialsForProxiedUris.cs" />
     <Compile Include="Net\RestClient.cs" />
     <Compile Include="Objects\Balance.cs" />
     <Compile Include="Objects\Error.cs" />

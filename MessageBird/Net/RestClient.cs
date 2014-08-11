@@ -4,34 +4,21 @@ using System.Net;
 using System.Text;
 
 using MessageBird.Exceptions;
+using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Resources;
 
 namespace MessageBird.Net
 {
     // immutable, so no read/write properties
-    public interface IRestClient
+    public class RestClient : IRestClient
     {
-        string AccessKey { get; }
-        string Endpoint { get; }
-        ICredentials ProxyCredentials { get; }
+        public static readonly string HttpsRestMessagebirdComEndpoint = "https://rest.messagebird.com";
 
-        string ApiVersion { get; }
-        string ClientVersion { get; }
-        string UserAgent { get; }
-
-        T Create<T> (T resource) where T : Resource;
-        T Retrieve<T>(T resource) where T : Resource;
-        void Update(Resource resource);
-        void Delete(Resource resource);
-    }
-
-    internal class RestClient : IRestClient
-    {
         public string AccessKey { get; private set; }
 
         public string Endpoint { get; private set; }
 
-        public ICredentials ProxyCredentials { get; private set; }
+        public IProxyConfigurationInjector ProxyConfigurationInjector { get; private set; }
 
         public string ClientVersion
         {
@@ -48,15 +35,15 @@ namespace MessageBird.Net
             get { return string.Format("MessageBird/ApiClient/{0} DotNet/{1}", ApiVersion, ClientVersion); }
         }
 
-        public RestClient(string endpoint, string accessKey, ICredentials proxyCredentials)
+        public RestClient(string endpoint, string accessKey, IProxyConfigurationInjector proxyConfigurationInjector)
         {
             Endpoint = endpoint;
             AccessKey = accessKey;
-            ProxyCredentials = proxyCredentials;
+            ProxyConfigurationInjector = proxyConfigurationInjector;
         }
 
-        public RestClient(string accessKey, ICredentials proxyCredentials)
-            : this("https://rest.messagebird.com", accessKey, proxyCredentials)
+        public RestClient(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector)
+            : this(HttpsRestMessagebirdComEndpoint, accessKey, proxyConfigurationInjector)
         {
         }
 
@@ -150,15 +137,10 @@ namespace MessageBird.Net
             WebHeaderCollection headers = request.Headers;
             headers.Add("Authorization", String.Format("AccessKey {0}", AccessKey));
 
-            Uri proxy = WebRequest.DefaultWebProxy.GetProxy(uri);
-            if (uri != proxy) // request goes through proxy
+            if (null != ProxyConfigurationInjector)
             {
-                IWebProxy webProxy = request.Proxy;
-                // webProxy.UseDefaultCredentials = true; // not accessible through IWebProxy
-                // webProxy.Credentials = CredentialCache.DefaultCredentials; // same as setting `webProxy.UseDefaultCredentials = true`
-                webProxy.Credentials = ProxyCredentials; // better to pass it as a dependency
+                request.Proxy = ProxyConfigurationInjector.InjectProxyConfiguration(request.Proxy, uri);
             }
-
             return request;
         }
 
