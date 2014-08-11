@@ -34,7 +34,15 @@ namespace MessageBird.Resources
             {
                 throw new ErrorException("Invalid resource, has no attached object", new NullReferenceException());
             }
-            JsonConvert.PopulateObject(resource, Object);
+
+            try
+            {
+                JsonConvert.PopulateObject(resource, Object);
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new ErrorException("Received response in an unexpected format!", e);
+            }
         }
 
         public virtual string Serialize()
