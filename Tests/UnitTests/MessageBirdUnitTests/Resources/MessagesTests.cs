@@ -5,10 +5,10 @@ using Newtonsoft.Json;
 
 namespace MessageBirdTests.Resources
 {
-    [TestClass()]
+    [TestClass]
     public class MessagesTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void DeserializeAndSerialize()
         {
             const string JsonResultFromCreateMessage = @"{
@@ -54,7 +54,7 @@ namespace MessageBirdTests.Resources
             JsonConvert.DeserializeObject<Message>(messageResultString); // check if Deserialize/Serialize cycle works.
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeserializeRecipientsAsMsisdnsArray()
         {
             var recipients = new Recipients();

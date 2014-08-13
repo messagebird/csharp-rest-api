@@ -107,7 +107,7 @@ namespace MessageBird.Net
 
         private static Encoding GetEncoding(HttpWebResponse response)
         {
-            // XXX: Makes this conditional on the encoding of the response.
+            // TODO: Make this conditional on the encoding of the response.
             Encoding encode = Encoding.UTF8; // GetEncoding("utf-8"); // Encoding.GetEncoding(response.CharacterSet);
             return encode;
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using MessageBird.Exceptions;
+﻿using MessageBird.Exceptions;
 using MessageBird.Objects;
 using MessageBird.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

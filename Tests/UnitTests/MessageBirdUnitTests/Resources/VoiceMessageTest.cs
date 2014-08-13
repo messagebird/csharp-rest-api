@@ -9,7 +9,7 @@ namespace MessageBirdTests.Resources
     [TestClass]
     public class VoiceMessageTest
     {
-        [TestMethod()]
+        [TestMethod]
         public void DeserializeAndSerialize()
         {
             const string JsonResultFromCreateVoiceMessageExample = @"{
