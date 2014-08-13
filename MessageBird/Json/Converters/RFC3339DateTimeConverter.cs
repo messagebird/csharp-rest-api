@@ -13,7 +13,12 @@ namespace MessageBird.Json.Converters
             if (value is DateTime)
             {
                 var dateTime = (DateTime)value;
-                writer.WriteValue(dateTime.ToString(Format));
+                if (dateTime.Kind == DateTimeKind.Unspecified)
+                {
+                    throw new JsonSerializationException("Cannot convert date time with an unspecified kind");
+                }
+                string convertedDateTime = dateTime.ToString(Format);
+                writer.WriteValue(convertedDateTime);
             }
             else
             {
