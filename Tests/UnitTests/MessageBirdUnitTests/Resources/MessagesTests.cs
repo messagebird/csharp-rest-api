@@ -53,7 +53,21 @@ namespace MessageBirdTests.Resources
             string messageResultString = messageResult.ToString();
            
             JsonConvert.DeserializeObject<Message>(messageResultString); // check if Deserialize/Serialize cycle works.
-
         }
+
+        [TestMethod()]
+        public void DeserializeRecipientsAsMsisdnsArray()
+        {
+            var recipients = new Recipients();
+            recipients.AddRecipient(31612345678);
+
+            var message = new Message("MsgBirdSms", "Welcome to MessageBird", recipients);
+            var messages = new Messages(message);
+
+            string serializedMessage = messages.Serialize();
+
+            messages.Deserialize(serializedMessage);
+        }
+
     }
 }
