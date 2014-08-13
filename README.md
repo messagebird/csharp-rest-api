@@ -44,6 +44,7 @@ That's easy enough. Now we can query the server for information. Lets use gettin
 // Get your balance
 Balance balance = client.Balance();
 ```
+
 #### Error handling
 In case of an error the *client* throws an *ErrorException*.
 The *ErrorException* objects contains either:
