@@ -2,7 +2,7 @@
 
 namespace MessageBird.Resources
 {
-    sealed class Messages : Resource
+    public sealed class Messages : Resource
     {
        public Messages(Message message)
             : base("messages", message)

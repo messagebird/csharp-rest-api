@@ -167,7 +167,18 @@ namespace MessageBird.Objects
 
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            // When converting a message object to json via the ToString method,
+            // we serialize the entire object and do not apply conversions required by the
+            // MessageBird endpoint.
+            Recipients.SerializeMsisdnsOnly = false;
+            var settings = new JsonSerializerSettings
+            {
+                Formatting =  Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            string serializedMessage = JsonConvert.SerializeObject(this, settings);
+            Recipients.SerializeMsisdnsOnly = true;
+            return serializedMessage;
         }
     }
 }

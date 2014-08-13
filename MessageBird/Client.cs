@@ -1,4 +1,4 @@
-﻿using System.Net;
+﻿using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Objects;
 using MessageBird.Resources;
 using MessageBird.Net;
@@ -22,11 +22,11 @@ namespace MessageBird
             return new Client(restClient);
         }
 
-        public static Client CreateDefault(string accessKey, ICredentials proxyCredentials)
+        public static Client CreateDefault(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(accessKey, "accessKey");
 
-            return new Client(new RestClient(accessKey, proxyCredentials));
+            return new Client(new RestClient(accessKey, proxyConfigurationInjector));
         }
 
         public Message SendMessage(string originator, string body, long[] msisdns, MessageOptionalArguments optionalArguments = null)

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Net;
 using MessageBird;
 using MessageBird.Exceptions;
+using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Objects;
 
 namespace Examples.Balance
@@ -12,10 +12,11 @@ namespace Examples.Balance
 
         static void Main(string[] args)
         {
-            ICredentials proxyCredentials = null; // for no web proxies, or web proxies not requiring authentication
-            //proxyCredentials = CredentialCache.DefaultCredentials; // for NTLM based web proxies
-            //proxyCredentials = new NetworkCredential("domain\\user", "password"); // for username/password based web proxies
-            Client client = Client.CreateDefault(YourAccessKey, proxyCredentials);
+            IProxyConfigurationInjector proxyConfigurationInjector = null; // for no web proxies, or web proxies not requiring authentication
+            //proxyConfigurationInjector = new InjectDefaultCredentialsForProxiedUris(); // for NTLM based web proxies
+            //proxyConfigurationInjector = new InjectCredentialsForProxiedUris(new NetworkCredential("domain\\user", "password")); // for username/password based web proxies
+
+            Client client = Client.CreateDefault(YourAccessKey, proxyConfigurationInjector);
 
             try
             {
