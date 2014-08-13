@@ -5,6 +5,9 @@ namespace MessageBird.Objects
 {
     public class Recipients
     {
+        [JsonIgnore]
+        public bool SerializeMsisdnsOnly { get; set; }
+
         [JsonProperty("totalCount")]
         public int TotalCount { get; private set; }
 
@@ -23,6 +26,7 @@ namespace MessageBird.Objects
         public Recipients()
         {
             Items = new List<Recipient>();
+            SerializeMsisdnsOnly = true;
         }
 
         public Recipients(IEnumerable<long> msisdns)
