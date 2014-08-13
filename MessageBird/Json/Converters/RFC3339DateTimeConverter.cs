@@ -39,7 +39,12 @@ namespace MessageBird.Json.Converters
 
             if (reader.TokenType == JsonToken.Date)
             {
-                return reader.Value;
+                var dateTime = (DateTime)reader.Value;
+                if (dateTime.Kind == DateTimeKind.Unspecified)
+                {
+                    throw new JsonSerializationException("Parsed date time is not in the expected RFC3339 format");
+                }
+                return dateTime;
             }
             throw new JsonSerializationException(String.Format("Unexpected token '{0}' when parsing date.", reader.TokenType));
         }
