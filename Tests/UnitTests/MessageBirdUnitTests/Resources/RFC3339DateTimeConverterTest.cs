@@ -1,4 +1,6 @@
-﻿using MessageBird.Objects;
+﻿using System;
+using MessageBird.Exceptions;
+using MessageBird.Objects;
 using MessageBird.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -9,7 +11,6 @@ namespace MessageBirdTests.Resources
     public class RFC3339DateTimeConverterTest
     {
         [TestMethod]
-        [ExpectedException(typeof(JsonSerializationException), "A date time other than RFC3339 format was inappropriately allowed.")]
         public void InvalidRFC3339DateTime()
         {
             // The following message has an invalid createDateTime format.
@@ -47,7 +48,18 @@ namespace MessageBirdTests.Resources
             var recipients = new Recipients();
             var message = new Message("", "", recipients);
             var messages = new Messages(message);
-            messages.Deserialize(JsonResultFromCreateMessage);
+            try
+            {
+                messages.Deserialize(JsonResultFromCreateMessage);
+                Assert.Fail("Expected an error exception, because there is an invalid rfc3339 datetime.");
+            }
+            catch (ErrorException e)
+            {
+                // The exception is thrown by the RFC3339DateTimeConverter, so the inner exception
+                // must be of type JsonSerializationException.
+                Assert.IsInstanceOfType(e.InnerException, typeof(JsonSerializationException));
+            }
+            
         }
     }
 }
