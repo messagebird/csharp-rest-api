@@ -1,5 +1,4 @@
-﻿using System.Net;
-using MessageBird.Net.ProxyConfigurationInjector;
+﻿using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Objects;
 using MessageBird.Resources;
 using MessageBird.Net;
