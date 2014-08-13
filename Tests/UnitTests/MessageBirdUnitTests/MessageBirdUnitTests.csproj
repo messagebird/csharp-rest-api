@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Resources\MessagesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\RFC3339DateTimeConverterTest.cs" />
     <Compile Include="Resources\VoiceMessageTest.cs" />
   </ItemGroup>
   <ItemGroup>
