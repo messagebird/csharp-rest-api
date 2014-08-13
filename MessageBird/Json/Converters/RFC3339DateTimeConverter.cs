@@ -28,11 +28,6 @@ namespace MessageBird.Json.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            // TODO: resolve "Local variable 't' is never used"
-            Type t = (ReflectionUtils.IsNullable(objectType))
-                ? Nullable.GetUnderlyingType(objectType)
-                : objectType;
-
             if (reader.TokenType == JsonToken.Null)
             {
                 return null;
