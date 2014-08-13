@@ -22,7 +22,8 @@ Usage
 
 We have put some self-explanatory examples in the *Examples* project, but here is a quick breakdown on how it works. First, you need to set up a **MessageBird.Client**. Be sure to replace **YOUR_ACCESS_KEY** with something real.
 
-```c#
+```
+#!csharp
 using System;
 using MessageBird;
 using MessageBird.Objects;
@@ -38,10 +39,12 @@ class Example
 
 That's easy enough. Now we can query the server for information. Lets use getting your balance overview as an example:
 
-```c#
+```
+#!csharp
 // Get your balance
 Balance balance = client.Balance();
 ```
+
 #### Error handling
 In case of an error the *client* throws an *ErrorException*.
 The *ErrorException* objects contains either:
