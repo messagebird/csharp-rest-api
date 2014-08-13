@@ -1,20 +1,26 @@
 ﻿using System;
-
 using MessageBird;
 using MessageBird.Exceptions;
+using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Objects;
 
-namespace Examples
+namespace Examples.Balance
 {
     class ViewBalance
     {
+        const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault("YOUR_ACCESS_KEY");
+            IProxyConfigurationInjector proxyConfigurationInjector = null; // for no web proxies, or web proxies not requiring authentication
+            //proxyConfigurationInjector = new InjectDefaultCredentialsForProxiedUris(); // for NTLM based web proxies
+            //proxyConfigurationInjector = new InjectCredentialsForProxiedUris(new NetworkCredential("domain\\user", "password")); // for username/password based web proxies
+
+            Client client = Client.CreateDefault(YourAccessKey, proxyConfigurationInjector);
 
             try
             {
-                Balance balance = client.Balance();
+                MessageBird.Objects.Balance balance = client.Balance();
                 Console.WriteLine("{0}", balance);
             }
             catch (ErrorException e)

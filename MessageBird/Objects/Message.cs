@@ -11,14 +11,14 @@ using MessageBird.Json.Converters;
 
 namespace MessageBird.Objects
 {
-    public enum Direction 
+    public enum Direction
     {
         [EnumMember(Value = "mt")]
         MobileTerminated,
         [EnumMember(Value = "mo")]
-        MobileOriginated 
+        MobileOriginated
     };
-    public enum MessageType 
+    public enum MessageType
     {
         [EnumMember(Value = "sms")]
         Sms,
@@ -27,14 +27,14 @@ namespace MessageBird.Objects
         [EnumMember(Value = "premium")]
         Premium,
         [EnumMember(Value = "flash")]
-        Flash 
+        Flash
     };
-    public enum DataEncoding 
+    public enum DataEncoding
     {
         [EnumMember(Value = "plain")]
         Plain,
         [EnumMember(Value = "unicode")]
-        Unicode 
+        Unicode
     };
     public enum MessageClass { Flash = 0, Normal };
 
@@ -57,13 +57,13 @@ namespace MessageBird.Objects
         }
     }
 
-    public class Message
+    public class Message : IIdentifiable<string>
     {
         [JsonProperty("id")]
         public string Id { get; set; }
 
         [JsonProperty("href")]
-        public string Href {get; set;}
+        public string Href { get; set; }
 
         [JsonProperty("direction")]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -75,15 +75,16 @@ namespace MessageBird.Objects
 
         private string originator;
         [JsonProperty("originator")]
-        public string Originator {
+        public string Originator
+        {
             get
             {
                 return originator;
             }
             set
             {
-                Regex numeric = new Regex("^[0-9]+$");
-                Regex alphanumeric = new Regex("^[A-Za-z0-9]+$");
+                var numeric = new Regex("^[0-9]+$");
+                var alphanumeric = new Regex("^[A-Za-z0-9]+$");
                 if (string.IsNullOrEmpty(value) || numeric.IsMatch(value))
                 {
                     originator = value;
@@ -107,7 +108,7 @@ namespace MessageBird.Objects
         }
 
         [JsonProperty("body")]
-        public string Body {get; set;}
+        public string Body { get; set; }
 
         [JsonProperty("reference")]
         public string Reference { get; set; }
@@ -126,7 +127,7 @@ namespace MessageBird.Objects
         public DataEncoding Encoding { get; set; }
 
         [JsonProperty("mclass")]
-        public MessageClass Class {get; set;}
+        public MessageClass Class { get; set; }
 
         [JsonProperty("scheduledDatetime"), JsonConverter(typeof(RFC3339DateTimeConverter))]
         public DateTime? Scheduled { get; set; }
@@ -135,7 +136,7 @@ namespace MessageBird.Objects
         public DateTime? Created { get; set; }
 
         [JsonProperty("recipients"), JsonConverter(typeof(RecipientsConverter))]
-        public Recipients Recipients {get; set;}
+        public Recipients Recipients { get; set; }
 
         public Message()
         {
@@ -166,7 +167,18 @@ namespace MessageBird.Objects
 
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            // When converting a message object to json via the ToString method,
+            // we serialize the entire object and do not apply conversions required by the
+            // MessageBird endpoint.
+            Recipients.SerializeMsisdnsOnly = false;
+            var settings = new JsonSerializerSettings
+            {
+                Formatting =  Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            string serializedMessage = JsonConvert.SerializeObject(this, settings);
+            Recipients.SerializeMsisdnsOnly = true;
+            return serializedMessage;
         }
     }
 }

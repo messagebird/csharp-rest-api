@@ -8,13 +8,20 @@ namespace MessageBird.Exceptions
 {
     public class ErrorException : Exception
     {
-        public List<Error> Errors { get; private set; }
+        private readonly ICollection<Error> errors;
+
+        // IEnumerable to be immitable.
+        // TODO: should these really be based on the JSON Errors class, and not a resource translation of it?
+        public IEnumerable<Error> Errors
+        {
+            get { return errors; }
+        }
 
         public string Reason { get; private set; }
 
         public bool HasErrors
         {
-            get {return Errors != null && Errors.Count > 0;}
+            get { return (Errors != null) && (errors.Count > 0); }
         }
 
         public bool HasReason
@@ -22,23 +29,25 @@ namespace MessageBird.Exceptions
             get { return !String.IsNullOrEmpty(Reason); }
         }
 
-        public ErrorException(string reason)
+        public ErrorException(string reason, Exception innerException = null)
+            : base(reason, innerException)
         {
             Reason = reason;
         }
 
-        public ErrorException(List<Error> errors)
+        public ErrorException(ICollection<Error> errors, Exception innerException)
+            : base("multiple errors", innerException)
         {
-            Errors = errors;
+            this.errors = errors;
         }
 
-       // XXX: Solve explicit use of json deserialation, needs to be more generic!
-        public static ErrorException FromResponse(string response)
+        // XXX: Solve explicit use of json deserialation, needs to be more generic!
+        public static ErrorException FromResponse(string response, Exception innerException)
         {
             try
             {
-                Dictionary<string, List<Error>> errors = JsonConvert.DeserializeObject<Dictionary<string, List<Error>>>(response);
-                return new ErrorException(errors["errors"]);
+                var errors = JsonConvert.DeserializeObject<Dictionary<string, List<Error>>>(response);
+                return new ErrorException(errors["errors"], innerException);
             }
             catch (JsonSerializationException)
             {

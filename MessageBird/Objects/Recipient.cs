@@ -9,7 +9,7 @@ namespace MessageBird.Objects
 {
     public class Recipient
     {
-        public enum RecipientStatus 
+        public enum RecipientStatus
         {
             // Message status
             [EnumMember(Value = "scheduled")]
@@ -37,14 +37,14 @@ namespace MessageBird.Objects
         };
 
         [JsonProperty("recipient")]
-        public long Msisdn {get; set;}
+        public long Msisdn { get; set; }
 
         [JsonProperty("status")]
         [JsonConverter(typeof(StringEnumConverter))]
-        public RecipientStatus? Status {get; set;}
+        public RecipientStatus? Status { get; set; }
 
         [JsonProperty("statusDatetime")]
-        public DateTime? StatusDatetime {get; set;}
+        public DateTime? StatusDatetime { get; set; }
 
         public Recipient(long msisdn)
         {

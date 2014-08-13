@@ -1,41 +1,12 @@
-﻿using Newtonsoft.Json;
-using MessageBird.Objects;
+﻿using MessageBird.Objects;
 
 namespace MessageBird.Resources
 {
-    class Messages : Resource
+    public sealed class Messages : Resource
     {
-        private Message message;
-        public override object Object 
+       public Messages(Message message)
+            : base("messages", message)
         {
-            get
-            {
-                return message;
-            }
-            protected set
-            {
-                message = (Message)value;
-                Id = message.Id;
-            }
-        }
-
-        public Messages() : base("messages")
-        {
-        }
-
-        public Messages(string id) : this()
-        {
-            Id = id;
-        }
-
-        public Messages(Message message) : this()
-        {
-           Object = message;
-        }
-
-        public override void Deserialize(string resource)
-        {
-            Object = JsonConvert.DeserializeObject<Message>(resource);
         }
     }
 }

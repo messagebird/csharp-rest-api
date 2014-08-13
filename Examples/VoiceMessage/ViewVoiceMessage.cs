@@ -1,20 +1,27 @@
 ﻿using System;
-
 using MessageBird;
 using MessageBird.Exceptions;
+using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Objects;
 
-namespace Examples
+namespace Examples.VoiceMessage
 {
     class ViewVoiceMessage
     {
+        const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+        const string MessageId = "ca0a8220453bc36ddeb3115a37400870"; // ID of message that you sent before (otherwise you get http statuscode 404: not found)
+
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault("YOUR_ACCESS_KEY");
+            IProxyConfigurationInjector proxyConfigurationInjector = null; // for no web proxies, or web proxies not requiring authentication
+            //proxyConfigurationInjector = new InjectDefaultCredentialsForProxiedUris(); // for NTLM based web proxies
+            //proxyConfigurationInjector = new InjectCredentialsForProxiedUris(new NetworkCredential("domain\\user", "password")); // for username/password based web proxies
+
+            Client client = Client.CreateDefault(YourAccessKey, proxyConfigurationInjector);
 
             try
             {
-                VoiceMessage voiceMessage = client.ViewVoiceMessage("ca0a8220453bc36ddeb3115a37400870");
+                MessageBird.Objects.VoiceMessage voiceMessage = client.ViewVoiceMessage(MessageId);
                 Console.WriteLine("{0}", voiceMessage);
             }
             catch (ErrorException e)

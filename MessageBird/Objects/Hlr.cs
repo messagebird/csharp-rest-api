@@ -20,7 +20,7 @@ namespace MessageBird.Objects
         Failed,
     }
 
-    public class Hlr
+    public class Hlr : IIdentifiable<string>
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -35,7 +35,7 @@ namespace MessageBird.Objects
         public int? Network { get; set; }
 
         [JsonProperty("reference")]
-        public string Reference {get; set;}
+        public string Reference { get; set; }
 
         [JsonProperty("status"), JsonConverter(typeof(StringEnumConverter))]
         public HlrStatus? Status { get; set; }

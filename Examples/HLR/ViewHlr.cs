@@ -1,20 +1,27 @@
 ﻿using System;
-
 using MessageBird;
 using MessageBird.Exceptions;
+using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Objects;
 
-namespace Examples
+namespace Examples.HLR
 {
     class ViewHlr
     {
+        const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
+        const string HlrId = "c8143db0152a58755c80492h61377581"; // ID of HLR you obtained before (seems to require also "in the same session"). When not found, you will not get a http StatusCode 404, but an exception `code: 20 description: 'hlr not found' parameter: ''`
+
         static void Main(string[] args)
         {
-            Client client = Client.CreateDefault("YOUR_ACCESS_KEY");
+            IProxyConfigurationInjector proxyConfigurationInjector = null; // for no web proxies, or web proxies not requiring authentication
+            //proxyConfigurationInjector = new InjectDefaultCredentialsForProxiedUris(); // for NTLM based web proxies
+            //proxyConfigurationInjector = new InjectCredentialsForProxiedUris(new NetworkCredential("domain\\user", "password")); // for username/password based web proxies
+
+            Client client = Client.CreateDefault(YourAccessKey, proxyConfigurationInjector);
 
             try
             {
-                Hlr hlr = client.ViewHlr("c8143db0152a58755c80492h61377581");
+                Hlr hlr = client.ViewHlr(HlrId);
                 Console.WriteLine("{0}", hlr);
 
             }

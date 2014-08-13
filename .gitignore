@@ -1,0 +1,4 @@
+obj/
+debug/
+packages/
+*.suo
