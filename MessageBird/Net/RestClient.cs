@@ -63,7 +63,8 @@ namespace MessageBird.Net
             {
                 using (var requestWriter = new StreamWriter(request.GetRequestStream()))
                 {
-                    requestWriter.Write(resource.Serialize());
+                    string serializedResource = resource.Serialize();
+                    requestWriter.Write(serializedResource);
                 }
             }
             );
