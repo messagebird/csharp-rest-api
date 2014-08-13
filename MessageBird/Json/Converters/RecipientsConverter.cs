@@ -50,14 +50,11 @@ namespace MessageBird.Json.Converters
                 var msisdns = serializer.Deserialize<List<long>>(reader);
                 return new Recipients(msisdns);
             }
-            else if (reader.TokenType == JsonToken.StartObject)
+            if (reader.TokenType == JsonToken.StartObject)
             {
                 return serializer.Deserialize<Recipients>(reader);
             }
-            else
-            {
-                throw new JsonSerializationException(String.Format("Unexpected token '{0}' when parsing recipients.", reader.TokenType));
-            }
+            throw new JsonSerializationException(String.Format("Unexpected token '{0}' when parsing recipients.", reader.TokenType));
         }
 
 
