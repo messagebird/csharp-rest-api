@@ -22,7 +22,7 @@ namespace MessageBird
             return new Client(restClient);
         }
 
-        public static Client CreateDefault(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector)
+        public static Client CreateDefault(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector = null)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(accessKey, "accessKey");
 
