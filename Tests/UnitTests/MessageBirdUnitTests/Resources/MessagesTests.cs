@@ -1,7 +1,9 @@
-﻿using MessageBird.Objects;
+﻿using MessageBird.Exceptions;
+using MessageBird.Objects;
 using MessageBird.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System;
 
 namespace MessageBirdTests.Resources
 {
@@ -66,6 +68,35 @@ namespace MessageBirdTests.Resources
             string serializedMessage = messages.Serialize();
 
             messages.Deserialize(serializedMessage);
+        }
+
+        [TestMethod]
+        public void OriginatorFormat()
+        {
+            var recipients = new Recipients();
+            recipients.AddRecipient(31612345678);
+
+            new Message("Orignator", "This is a message from an originator", recipients);
+            var message = new Message("Or igna tor", "This is a message from an originator with whitespace", recipients);
+            try
+            {
+                message = new Message("Orignator ", "This is a message from an originator with trailing whitespace", recipients);
+                Assert.Fail("Expected an error exception, because the originator contains trailing whitespace!");
+            }
+            catch (Exception e)
+            {
+                Assert.IsInstanceOfType(e, typeof(ArgumentException));
+            }
+
+            try
+            {
+                message = new Message(" Orignator", "This is a message from an originator with leading whitespace", recipients);
+                Assert.Fail("Expected an error exception, because the originator contains leading whitespace!");
+            }
+            catch (Exception e)
+            {
+                Assert.IsInstanceOfType(e, typeof(ArgumentException));
+            }
         }
 
     }
