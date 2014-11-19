@@ -97,7 +97,7 @@ namespace MessageBird.Objects
                     }
                     else
                     {
-                        throw new ArgumentException("Alphanumeric originator is limted to 11 characters.");
+                        throw new ArgumentException("Alphanumeric originator is limited to 11 characters.");
                     }
                 }
                 else
