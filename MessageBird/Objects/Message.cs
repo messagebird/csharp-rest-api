@@ -84,12 +84,12 @@ namespace MessageBird.Objects
             set
             {
                 var numeric = new Regex("^[0-9]+$");
-                var alphanumeric = new Regex("^[A-Za-z0-9]+$");
+                var alphanumericWithWhitespace = new Regex("^[A-Za-z0-9]+(?:\\s[A-Za-z0-9]+)*$");
                 if (string.IsNullOrEmpty(value) || numeric.IsMatch(value))
                 {
                     originator = value;
                 }
-                else if (alphanumeric.IsMatch(value))
+                else if (alphanumericWithWhitespace.IsMatch(value))
                 {
                     if (value.Length <= 11)
                     {
@@ -97,12 +97,12 @@ namespace MessageBird.Objects
                     }
                     else
                     {
-                        throw new ArgumentException("Alphanumeric originator is limted to 11 characters.");
+                        throw new ArgumentException("Alphanumeric originator is limited to 11 characters.");
                     }
                 }
                 else
                 {
-                    throw new ArgumentException("Originator can only contain alphanumeric characters.");
+                    throw new ArgumentException("Originator can only contain numeric or whitespace separated alphanumeric characters.");
                 }
             }
         }
