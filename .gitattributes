@@ -1,0 +1,2 @@
+# Set the default behavior, in case people edit files on OSX/*nix.
+* text eol=crlf
