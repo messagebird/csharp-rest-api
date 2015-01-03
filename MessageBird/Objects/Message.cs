@@ -83,11 +83,11 @@ namespace MessageBird.Objects
             }
             set
             {
-                var numeric = new Regex("^[0-9]+$");
+                var numeric = new Regex("^\\+?[0-9]+$");
                 var alphanumericWithWhitespace = new Regex("^[A-Za-z0-9]+(?:\\s[A-Za-z0-9]+)*$");
                 if (string.IsNullOrEmpty(value) || numeric.IsMatch(value))
                 {
-                    originator = value;
+                    originator = value.TrimStart(new [] {'+'});
                 }
                 else if (alphanumericWithWhitespace.IsMatch(value))
                 {

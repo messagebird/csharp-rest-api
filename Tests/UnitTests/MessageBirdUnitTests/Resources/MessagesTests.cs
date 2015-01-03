@@ -13,12 +13,12 @@ namespace MessageBirdTests.Resources
         [TestMethod]
         public void DeserializeAndSerialize()
         {
-            const string JsonResultFromCreateMessage = @"{
+            const string CreateMessageResponseTemplate = @"{
   'id':'e7028180453e8a69d318686b17179500',
   'href':'https:\/\/rest.messagebird.com\/messages\/e7028180453e8a69d318686b17179500',
   'direction':'mt',
   'type':'sms',
-  'originator':'MsgBirdSms',
+  'originator':'$ORIGINATOR',
   'body':'Welcome to MessageBird',
   'reference':null,
   'validity':null,
@@ -47,13 +47,15 @@ namespace MessageBirdTests.Resources
             Recipients recipients = new Recipients();
             Message message = new Message("", "", recipients);
             Messages messages = new Messages(message);
-            messages.Deserialize(JsonResultFromCreateMessage);
 
-            Message messageResult = messages.Object as Message;
+            messages.Deserialize(CreateMessageResponseTemplate.Replace("$ORIGINATOR", "Messagebird"));
+            JsonConvert.DeserializeObject<Message>(messages.Object.ToString());
 
-            string messageResultString = messageResult.ToString();
-           
-            JsonConvert.DeserializeObject<Message>(messageResultString); // check if Deserialize/Serialize cycle works.
+            messages.Deserialize(CreateMessageResponseTemplate.Replace("$ORIGINATOR", "3112345678"));
+            JsonConvert.DeserializeObject<Message>(messages.Object.ToString());
+
+            messages.Deserialize(CreateMessageResponseTemplate.Replace("$ORIGINATOR", "+3112345678"));
+            JsonConvert.DeserializeObject<Message>(messages.Object.ToString());
         }
 
         [TestMethod]
