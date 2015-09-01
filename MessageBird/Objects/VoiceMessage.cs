@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -67,6 +68,28 @@ namespace MessageBird.Objects
 
         [JsonProperty("reference")]
         public string Reference { get; set; }
+
+        private string originator;
+        [JsonProperty("originator")]
+        public string Originator
+        {
+            get
+            {
+                return originator;
+            }
+            set
+            {
+                var numeric = new Regex("^\\+?[0-9]+$");
+                if (string.IsNullOrEmpty(value) || numeric.IsMatch(value))
+                {
+                    originator = value.TrimStart(new[] { '+' });
+                }
+                else
+                {
+                    throw new ArgumentException("Originator can only contain numeric characters.");
+                }
+            }
+        }
 
         private string body;
         [JsonProperty("body")]
