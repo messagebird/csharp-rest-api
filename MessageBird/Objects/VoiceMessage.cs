@@ -43,6 +43,7 @@ namespace MessageBird.Objects
     public class VoiceMessageOptionalArguments
     {
         public string Reference { get; set; }
+        public string Originator { get; set; }
         public Language Language { get; set; }
         public Voice Voice { get; set; }
         public int Repeat { get; set; }
@@ -145,6 +146,7 @@ namespace MessageBird.Objects
             optionalArguments = optionalArguments ?? new VoiceMessageOptionalArguments();
 
             Reference = optionalArguments.Reference;
+            Originator = optionalArguments.Originator;
             Language = optionalArguments.Language;
             Voice = optionalArguments.Voice;
             Repeat = optionalArguments.Repeat;
