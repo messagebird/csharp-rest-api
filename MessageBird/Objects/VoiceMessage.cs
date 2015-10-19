@@ -81,13 +81,19 @@ namespace MessageBird.Objects
             set
             {
                 var numeric = new Regex("^\\+?[0-9]+$");
-                if (string.IsNullOrEmpty(value) || numeric.IsMatch(value))
+                if (!String.IsNullOrEmpty(value) && !numeric.IsMatch(value))
+                {
+                    throw new ArgumentException("Originator can only contain numeric characters.");
+                }
+
+                // Only trim the '+' sign value if it's not empty or null
+                if (!String.IsNullOrEmpty(value))
                 {
                     originator = value.TrimStart(new[] { '+' });
                 }
                 else
                 {
-                    throw new ArgumentException("Originator can only contain numeric characters.");
+                    originator = value;
                 }
             }
         }
