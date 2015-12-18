@@ -19,7 +19,9 @@ namespace MessageBird.Objects
         [EnumMember(Value = "en-gb")]
         English,
         [EnumMember(Value = "fr-fr")]
-        French
+        French,
+        [EnumMember(Value = "es-es")]
+        Spanish,
     };
 
     public enum Voice
