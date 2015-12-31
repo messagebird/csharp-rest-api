@@ -49,16 +49,19 @@ namespace MessageBird.Net
 
         public T Retrieve<T>(T resource) where T : Resource
         {
-            string uri = resource.HasId ? String.Format("{0}/{1}", resource.Name, resource.Id) : resource.Name;
+            var uri = resource.Uri;
+            if (resource.HasQueryString)
+            {
+                uri += "?" + resource.QueryString;
+            }
             HttpWebRequest request = PrepareRequest(uri, "GET");
 
-            return PerformRoundTrip(request, resource, HttpStatusCode.OK, () => { }
-            );
+            return PerformRoundTrip(request, resource, HttpStatusCode.OK, () => { });
         }
 
         public T Create<T>(T resource) where T : Resource
         {
-            HttpWebRequest request = PrepareRequest(resource.Name, "POST");
+            HttpWebRequest request = PrepareRequest(resource.Uri, "POST");
             return PerformRoundTrip(request, resource, HttpStatusCode.Created, () =>
             {
                 using (var requestWriter = new StreamWriter(request.GetRequestStream()))
