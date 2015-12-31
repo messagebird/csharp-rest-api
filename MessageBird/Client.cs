@@ -104,5 +104,36 @@ namespace MessageBird
 
             return result.Object as Objects.Balance;
         }
+
+        public Objects.Lookup DoLookup(long phonenumber, LookupOptionalArguments optionalArguments = null)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(phonenumber.ToString(), "phonenumber");
+
+            var lookup = new Resources.Lookup(new Objects.Lookup(phonenumber, optionalArguments));
+            var result = restClient.Retrieve(lookup);
+
+            return result.Object as Objects.Lookup;
+        }
+
+        public Objects.LookupHlr RequestLookupHlr(long phonenumber, string reference, LookupHlrOptionalArguments optionalArguments = null)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(phonenumber.ToString(), "phonenumber");
+            ParameterValidator.IsNotNullOrWhiteSpace(reference, "reference");
+
+            var lookupHlr = new Resources.LookupHlr(new Objects.LookupHlr(phonenumber, reference, optionalArguments));
+            var result = restClient.Create(lookupHlr);
+
+            return result.Object as Objects.LookupHlr;
+        }
+
+        public Objects.LookupHlr ViewLookupHlr(long phonenumber, LookupHlrOptionalArguments optionalArguments = null)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(phonenumber.ToString(), "phonenumber");
+
+            var lookupHlr = new Resources.LookupHlr(new Objects.LookupHlr(phonenumber, optionalArguments));
+            var result = restClient.Retrieve(lookupHlr);
+
+            return result.Object as Objects.LookupHlr;
+        }
     }
 }
