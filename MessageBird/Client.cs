@@ -107,8 +107,6 @@ namespace MessageBird
 
         public Objects.Lookup ViewLookup(long phonenumber, LookupOptionalArguments optionalArguments = null)
         {
-            ParameterValidator.IsNotNullOrWhiteSpace(phonenumber.ToString(), "phonenumber");
-
             var lookup = new Resources.Lookup(new Objects.Lookup(phonenumber, optionalArguments));
             var result = restClient.Retrieve(lookup);
 
@@ -117,7 +115,6 @@ namespace MessageBird
 
         public Objects.LookupHlr RequestLookupHlr(long phonenumber, string reference, LookupHlrOptionalArguments optionalArguments = null)
         {
-            ParameterValidator.IsNotNullOrWhiteSpace(phonenumber.ToString(), "phonenumber");
             ParameterValidator.IsNotNullOrWhiteSpace(reference, "reference");
 
             var lookupHlr = new Resources.LookupHlr(new Objects.LookupHlr(phonenumber, reference, optionalArguments));
@@ -128,8 +125,6 @@ namespace MessageBird
 
         public Objects.LookupHlr ViewLookupHlr(long phonenumber, LookupHlrOptionalArguments optionalArguments = null)
         {
-            ParameterValidator.IsNotNullOrWhiteSpace(phonenumber.ToString(), "phonenumber");
-
             var lookupHlr = new Resources.LookupHlr(new Objects.LookupHlr(phonenumber, optionalArguments));
             var result = restClient.Retrieve(lookupHlr);
 
