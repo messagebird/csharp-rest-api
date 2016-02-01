@@ -1,10 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
-
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 
 namespace MessageBird.Objects
 {
