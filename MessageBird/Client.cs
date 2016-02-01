@@ -105,7 +105,7 @@ namespace MessageBird
             return result.Object as Objects.Balance;
         }
 
-        public Objects.Lookup DoLookup(long phonenumber, LookupOptionalArguments optionalArguments = null)
+        public Objects.Lookup ViewLookup(long phonenumber, LookupOptionalArguments optionalArguments = null)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(phonenumber.ToString(), "phonenumber");
 

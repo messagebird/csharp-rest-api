@@ -6,7 +6,7 @@ using MessageBird.Objects;
 
 namespace Examples.Lookup
 {
-    class DoLookup
+    class ViewLookup
     {
         const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
         const long PhoneNumber = 31612345678; // your phone number here.
@@ -24,7 +24,7 @@ namespace Examples.Lookup
                 LookupOptionalArguments optionalArguments = new LookupOptionalArguments(); 
                 //optionalArguments.CountryCode = "NL"; // When using a national format, make sure a country code is also sent
 
-                MessageBird.Objects.Lookup lookup = client.DoLookup(PhoneNumber, optionalArguments);
+                MessageBird.Objects.Lookup lookup = client.ViewLookup(PhoneNumber, optionalArguments);
                 Console.WriteLine("{0}", lookup);
 
             }
