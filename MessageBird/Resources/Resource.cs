@@ -13,7 +13,7 @@ namespace MessageBird.Resources
             {
                 if (HasId)
                 {
-                   return Object.Id;
+                    return Object.Id;
                 }
                 throw new ErrorException(String.Format("Resource {0} has no id", Name));
             }
@@ -55,6 +55,30 @@ namespace MessageBird.Resources
         {
             Name = name;
             Object = attachedObject;
+        }
+
+        public virtual string Uri
+        {
+            get
+            {
+                return HasId ? String.Format("{0}/{1}", Name, Id) : Name;
+            }
+        }
+
+        public virtual string QueryString
+        {
+            get
+            {
+                return String.Empty;
+            }
+        }
+
+        public bool HasQueryString
+        {
+            get
+            {
+                return QueryString.Length > 0;
+            }
         }
     }
 }

@@ -45,9 +45,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HLR\RequestHlr.cs" />
     <Compile Include="Balance\ViewBalance.cs" />
+    <Compile Include="HLR\RequestHlr.cs" />
     <Compile Include="HLR\ViewHlr.cs" />
+    <Compile Include="Lookup\RequestLookupHlr.cs" />
+    <Compile Include="Lookup\ViewLookup.cs" />
+    <Compile Include="Lookup\ViewLookupHlr.cs" />
     <Compile Include="Message\CreateMessage.cs" />
     <Compile Include="Message\ViewMessage.cs" />
     <Compile Include="VoiceMessage\CreateVoiceMessage.cs" />
