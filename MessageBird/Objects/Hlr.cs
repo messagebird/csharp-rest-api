@@ -34,6 +34,9 @@ namespace MessageBird.Objects
         [JsonProperty("network")]
         public int? Network { get; set; }
 
+        [JsonProperty("details")]
+        public HlrDetails Details { get; set; }
+
         [JsonProperty("reference")]
         public string Reference { get; set; }
 
