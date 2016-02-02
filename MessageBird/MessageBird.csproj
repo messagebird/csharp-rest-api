@@ -53,6 +53,7 @@
     <Compile Include="Net\RestClient.cs" />
     <Compile Include="Objects\Balance.cs" />
     <Compile Include="Objects\Error.cs" />
+    <Compile Include="Objects\HlrDetails.cs" />
     <Compile Include="Objects\Hlr.cs" />
     <Compile Include="Objects\IIdentifiable.cs" />
     <Compile Include="Objects\Message.cs" />
