@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 
 namespace MessageBird.Utilities
 {
@@ -35,6 +36,25 @@ namespace MessageBird.Utilities
             if (param.Length < n)
             {
                 throw new ArgumentException(String.Format("The array contains {0} elements, but at least {1} were expected", param.Length, n), paramName);  
+            }
+        }
+
+        public static void IsValidOriginator(string originator)
+        {
+            if (!string.IsNullOrEmpty(originator))
+            {
+                var numeric = new Regex("^\\+?[0-9]+$");
+                var alphanumericWithWhitespace = new Regex("^[A-Za-z0-9]+(?:\\s[A-Za-z0-9]+)*$");
+                var isNumeric = numeric.IsMatch(originator);
+                var isAlphanumericWithWhitespace = alphanumericWithWhitespace.IsMatch(originator);
+
+                if (!isNumeric && !isAlphanumericWithWhitespace) 
+                {
+                    throw new ArgumentException("Originator can only contain numeric or whitespace separated alphanumeric characters.");
+                } else if (isAlphanumericWithWhitespace && originator.Length > 11)
+                {
+                    throw new ArgumentException("Alphanumeric originator is limited to 11 characters.");
+                }
             }
         }
     }

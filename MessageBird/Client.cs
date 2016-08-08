@@ -44,6 +44,51 @@ namespace MessageBird
             return result.Object as Message;
         }
 
+        public Objects.Verify SendVerifyToken(string id, string token)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+            ParameterValidator.IsNotNullOrWhiteSpace(token, "token");
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var verify = new Objects.Verify(id, token);
+            var verifyResource = new Resources.Verify(verify);
+            var result = restClient.Retrieve(verifyResource);
+
+            return result.Object as Objects.Verify;
+        }
+
+        public Objects.Verify CreateVerify(string recipient, VerifyOptionalArguments arguments = null)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(recipient, "recipient");
+
+            var verify = new Objects.Verify(recipient, arguments);
+            var verifyResource = new Resources.Verify(verify);
+            var result = restClient.Create(verifyResource);
+
+            return result.Object as Objects.Verify;
+        }
+
+        public void DeleteVerify(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var verify = new Objects.Verify(id);
+            var verifyResource = new Resources.Verify(verify);
+
+            restClient.Delete(verifyResource);
+        }
+
+        public Objects.Verify ViewVerify(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var verify = new Objects.Verify(id);
+            var verifyResource = new Resources.Verify(verify);
+            var result = restClient.Retrieve(verifyResource);
+
+            return result.Object as Objects.Verify;
+        }
+
         public Message ViewMessage(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");

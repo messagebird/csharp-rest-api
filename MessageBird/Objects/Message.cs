@@ -56,7 +56,7 @@ namespace MessageBird.Objects
             Class = MessageClass.Normal;
         }
     }
-
+    
     public class Message : IIdentifiable<string>
     {
         [JsonProperty("id")]
@@ -83,27 +83,15 @@ namespace MessageBird.Objects
             }
             set
             {
+                Utilities.ParameterValidator.IsValidOriginator(value);
+
                 var numeric = new Regex("^\\+?[0-9]+$");
-                var alphanumericWithWhitespace = new Regex("^[A-Za-z0-9]+(?:\\s[A-Za-z0-9]+)*$");
                 if (string.IsNullOrEmpty(value) || numeric.IsMatch(value))
                 {
-                    originator = value.TrimStart(new [] {'+'});
+                    value = value.TrimStart(new[] { '+' });
                 }
-                else if (alphanumericWithWhitespace.IsMatch(value))
-                {
-                    if (value.Length <= 11)
-                    {
-                        originator = value;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Alphanumeric originator is limited to 11 characters.");
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException("Originator can only contain numeric or whitespace separated alphanumeric characters.");
-                }
+
+                originator = value;
             }
         }
 
