@@ -140,9 +140,14 @@ namespace MessageBird.Objects
             Token = token;
         }
 
-        public Verify(string originator, VerifyOptionalArguments arguments = null)
+        // Alias for the old constructor so that it remains backwards compatible
+        public Verify(string recipient, VerifyOptionalArguments arguments = null) : this(Convert.ToInt64(recipient), arguments)
         {
-            Originator = originator;
+        }
+
+        public Verify(long recipient, VerifyOptionalArguments arguments = null)
+        {
+            Recipient = recipient;
 
             arguments = arguments ?? new VerifyOptionalArguments();
 
