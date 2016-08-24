@@ -3,6 +3,7 @@ using MessageBird.Objects;
 using MessageBird.Resources;
 using MessageBird.Net;
 using MessageBird.Utilities;
+using System;
 
 namespace MessageBird
 {
@@ -48,7 +49,6 @@ namespace MessageBird
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
             ParameterValidator.IsNotNullOrWhiteSpace(token, "token");
-            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
 
             var verify = new Objects.Verify(id, token);
             var verifyResource = new Resources.Verify(verify);
@@ -57,10 +57,16 @@ namespace MessageBird
             return result.Object as Objects.Verify;
         }
 
+        // Alias for the old constructor so that it remains backwards compatible
         public Objects.Verify CreateVerify(string recipient, VerifyOptionalArguments arguments = null)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(recipient, "recipient");
 
+            return CreateVerify(Convert.ToInt64(recipient), arguments);
+        }
+
+        public Objects.Verify CreateVerify(long recipient, VerifyOptionalArguments arguments = null)
+        {
             var verify = new Objects.Verify(recipient, arguments);
             var verifyResource = new Resources.Verify(verify);
             var result = restClient.Create(verifyResource);

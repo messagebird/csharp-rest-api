@@ -53,12 +53,14 @@
     <Compile Include="Lookup\ViewLookupHlr.cs" />
     <Compile Include="Message\CreateMessage.cs" />
     <Compile Include="Message\ViewMessage.cs" />
+    <Compile Include="Verify\CreateVerify.cs" />
     <Compile Include="VoiceMessage\CreateVoiceMessage.cs" />
     <Compile Include="VoiceMessage\ViewVoiceMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
