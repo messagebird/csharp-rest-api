@@ -75,31 +75,54 @@ namespace MessageBirdTests.Resources
         [TestMethod]
         public void OriginatorFormat()
         {
+            //https://developers.messagebird.com/docs/messaging
+            //ORIGINATOR The sender of the message. This can be a telephone number (including country code) or an alphanumeric string.
+            //In case of an alphanumeric string, the maximum length is 11 characters.
+
             var recipients = new Recipients();
             recipients.AddRecipient(31612345678);
 
-            new Message("Orignator", "This is a message from an originator", recipients);
-            var message = new Message("Or igna tor", "This is a message from an originator with whitespace", recipients);
+            var message = new Message("Originator", "This is a message from a valid originator with less or equal than 11 alphanumeric characters.", recipients);
+            Assert.AreEqual("Originator", message.Originator);
+
+            message = new Message("3197001234567890", "This is a message from a valid originator with numeric characters.", recipients);
+            Assert.AreEqual("3197001234567890", message.Originator);
+
+            message = new Message("Or igna t0r", "This is a message from a valid originator with alphanumeric characters and whitespaces and less or equal than 11 characters.", recipients);
+            Assert.AreEqual("Or igna t0r", message.Originator);
+
             try
             {
-                message = new Message("Orignator ", "This is a message from an originator with trailing whitespace", recipients);
-                Assert.Fail("Expected an error exception, because the originator contains trailing whitespace!");
+                message = new Message("Originator ", "This is a message from an invalid originator with trailing whitespace.", recipients);
+                Assert.Fail("Expected an exception, because the originator contains trailing whitespace!");
             }
             catch (Exception e)
             {
                 Assert.IsInstanceOfType(e, typeof(ArgumentException));
+                Assert.AreEqual("Originator can only contain numeric or whitespace separated alphanumeric characters.", e.Message);
             }
 
             try
             {
-                message = new Message(" Orignator", "This is a message from an originator with leading whitespace", recipients);
-                Assert.Fail("Expected an error exception, because the originator contains leading whitespace!");
+                message = new Message(" Originator", "This is a message from an inavlid originator with leading whitespace.", recipients);
+                Assert.Fail("Expected an exception, because the originator contains leading whitespace!");
             }
             catch (Exception e)
             {
                 Assert.IsInstanceOfType(e, typeof(ArgumentException));
+                Assert.AreEqual("Originator can only contain numeric or whitespace separated alphanumeric characters.", e.Message);
+            }
+
+            try
+            {
+                message = new Message("OriginatorXL", "This is a message from an invalid originator with more than 11 alphanumeric characters.", recipients);
+                Assert.Fail("Expected an exception, because the originator has more than 11 alphanumeric characters.");
+            }
+            catch (Exception e)
+            {
+                Assert.IsInstanceOfType(e, typeof(ArgumentException));
+                Assert.AreEqual("Alphanumeric originator is limited to 11 characters.", e.Message);
             }
         }
-
     }
 }

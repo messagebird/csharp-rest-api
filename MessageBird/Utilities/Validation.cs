@@ -41,6 +41,12 @@ namespace MessageBird.Utilities
 
         public static void IsValidOriginator(string originator)
         {
+            const int ORIGINATOR_ALPHANUMERIC_MAXLENGTH = 11;
+
+            //https://developers.messagebird.com/docs/messaging
+            //ORIGINATOR The sender of the message.This can be a telephone number (including country code) or an alphanumeric string.
+            //In case of an alphanumeric string, the maximum length is 11 characters.
+
             if (!string.IsNullOrEmpty(originator))
             {
                 var numeric = new Regex("^\\+?[0-9]+$");
@@ -48,12 +54,13 @@ namespace MessageBird.Utilities
                 var isNumeric = numeric.IsMatch(originator);
                 var isAlphanumericWithWhitespace = alphanumericWithWhitespace.IsMatch(originator);
 
-                if (!isNumeric && !isAlphanumericWithWhitespace) 
+                if (!isNumeric && !isAlphanumericWithWhitespace)
                 {
                     throw new ArgumentException("Originator can only contain numeric or whitespace separated alphanumeric characters.");
-                } else if (isAlphanumericWithWhitespace && originator.Length > 11)
+                }
+                else if (!isNumeric && isAlphanumericWithWhitespace && originator.Length > ORIGINATOR_ALPHANUMERIC_MAXLENGTH)
                 {
-                    throw new ArgumentException("Alphanumeric originator is limited to 11 characters.");
+                    throw new ArgumentException($"Alphanumeric originator is limited to {ORIGINATOR_ALPHANUMERIC_MAXLENGTH} characters.");
                 }
             }
         }
