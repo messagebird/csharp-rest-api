@@ -35,6 +35,8 @@ namespace MessageBird.Objects
         Plain,
         [EnumMember(Value = "unicode")]
         Unicode
+        [EnumMember(Value = "auto")]
+        Auto
     };
     public enum MessageClass { Flash = 0, Normal };
 
@@ -56,7 +58,7 @@ namespace MessageBird.Objects
             Class = MessageClass.Normal;
         }
     }
-    
+
     public class Message : IIdentifiable<string>
     {
         [JsonProperty("id")]
