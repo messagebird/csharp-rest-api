@@ -34,7 +34,7 @@ namespace MessageBird.Objects
         [EnumMember(Value = "plain")]
         Plain,
         [EnumMember(Value = "unicode")]
-        Unicode
+        Unicode,
         [EnumMember(Value = "auto")]
         Auto
     };
