@@ -23,7 +23,7 @@ namespace MessageBird.Objects
             [EnumMember(Value = "delivery_failed")]
             DeliveryFailed,
             [EnumMember(Value = "expired")]
-            Expired
+            Expired,
             // Voice message status
             [EnumMember(Value = "calling")]
             Calling,
