@@ -50,7 +50,7 @@ namespace MessageBird.Utilities
             if (!string.IsNullOrEmpty(originator))
             {
                 var numeric = new Regex("^\\+?[0-9]+$");
-                var alphanumericWithWhitespace = new Regex("^[A-Za-z0-9]+(?:\\s[A-Za-z0-9]+)*$");
+                var alphanumericWithWhitespace = new Regex("^['A-Za-z0-9]+(?:\\s['A-Za-z0-9]+)*$");
                 var isNumeric = numeric.IsMatch(originator);
                 var isAlphanumericWithWhitespace = alphanumericWithWhitespace.IsMatch(originator);
 
