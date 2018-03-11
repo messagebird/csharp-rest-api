@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-
 using MessageBird.Json.Converters;
 
 namespace MessageBird.Objects
 {
-
     public enum Language
     {
         [EnumMember(Value = "nl-nl")]

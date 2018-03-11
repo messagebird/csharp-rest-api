@@ -40,7 +40,9 @@ namespace Examples.Message
                     Console.WriteLine(e.Reason);
                 }
             }
+
             Console.WriteLine("Press any key to continue...");
+
             Console.ReadKey();
         }
     }

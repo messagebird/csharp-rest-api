@@ -47,7 +47,9 @@ namespace Examples.VoiceMessage
                     Console.WriteLine(e.Reason);
                 }
             }
+
             Console.WriteLine("Press any key to continue...");
+
             Console.ReadKey();
         }
     }

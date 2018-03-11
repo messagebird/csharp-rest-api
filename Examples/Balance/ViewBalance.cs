@@ -33,13 +33,16 @@ namespace Examples.Balance
                         Console.WriteLine("code: {0} description: '{1}' parameter: '{2}'", error.Code, error.Description, error.Parameter);
                     }
                 }
+
                 // or fails without error information from the endpoint, in which case the reason contains a 'best effort' description.
                 if (e.HasReason)
                 {
                     Console.WriteLine(e.Reason);
                 }
             }
+
             Console.WriteLine("Press any key to continue...");
+
             Console.ReadKey();
         }
     }

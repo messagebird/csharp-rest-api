@@ -38,7 +38,6 @@ namespace MessageBird.Json.Converters
             }
         }
 
-
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             // The MessageBird endpoint will always send a recipients object.
@@ -56,8 +55,7 @@ namespace MessageBird.Json.Converters
             }
             throw new JsonSerializationException(String.Format("Unexpected token '{0}' when parsing recipients.", reader.TokenType));
         }
-
-
+        
         public override bool CanConvert(Type objectType)
         {
             return typeof(Recipients).IsAssignableFrom(objectType);

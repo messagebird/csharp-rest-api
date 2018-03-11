@@ -41,7 +41,9 @@ namespace Examples.HLR
                     Console.WriteLine(e.Reason);
                 }
             }
+
             Console.WriteLine("Press any key to continue...");
+
             Console.ReadKey();
         }
     }

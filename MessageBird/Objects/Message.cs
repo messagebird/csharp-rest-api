@@ -2,12 +2,9 @@
 using System.Collections;
 using System.Text.RegularExpressions;
 using System.Runtime.Serialization;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-
 using MessageBird.Json.Converters;
-
 
 namespace MessageBird.Objects
 {
