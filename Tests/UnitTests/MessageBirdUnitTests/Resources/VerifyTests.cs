@@ -1,7 +1,6 @@
-﻿using System;
-using MessageBird.Objects;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using MessageBird.Objects;
 
 namespace MessageBirdTests.Resources
 {
