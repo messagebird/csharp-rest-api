@@ -1,5 +1,6 @@
 ﻿using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Resources;
+using System;
 
 namespace MessageBird.Net
 {
@@ -9,6 +10,7 @@ namespace MessageBird.Net
         string AccessKey { get; }
         string Endpoint { get; }
         IProxyConfigurationInjector ProxyConfigurationInjector { get; }
+        TimeSpan RequestTimeout { get; set; }
 
         string ApiVersion { get; }
         string ClientVersion { get; }
