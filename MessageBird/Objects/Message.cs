@@ -27,7 +27,9 @@ namespace MessageBird.Objects
         [EnumMember(Value = "premium")]
         Premium,
         [EnumMember(Value = "flash")]
-        Flash
+        Flash,
+        [EnumMember(Value ="tts")]
+        tts
     };
     public enum DataEncoding
     {
