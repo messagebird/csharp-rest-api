@@ -29,7 +29,7 @@ namespace MessageBird.Objects
         [EnumMember(Value = "flash")]
         Flash,
         [EnumMember(Value ="tts")]
-        tts
+        Tts
     };
     public enum DataEncoding
     {

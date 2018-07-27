@@ -35,8 +35,12 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(originator, "originator");
             ParameterValidator.IsNotNullOrWhiteSpace(body, "body");
             ParameterValidator.ContainsAtLeast(msisdns, 1, "msisdns");
+            if (optionalArguments != null)
+            {
+                ParameterValidator.IsValidMessageType(optionalArguments.Type);
+            }
 
-            var recipients = new Recipients(msisdns);
+           var recipients = new Recipients(msisdns);
             var message = new Message(originator, body, recipients, optionalArguments);
 
             var messages = new Messages(message);

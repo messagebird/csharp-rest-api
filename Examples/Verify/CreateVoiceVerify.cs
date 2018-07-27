@@ -17,7 +17,7 @@ namespace Examples.Verify
             try
             {
                 VerifyOptionalArguments optionalArguments = new VerifyOptionalArguments();
-                optionalArguments.Type = MessageType.tts;
+                optionalArguments.Type = MessageType.Tts;
                 optionalArguments.Voice = Voice.Female;
                 optionalArguments.Language = Language.Dutch;
                 // optionalArguments.Originator = "MessageBird";
