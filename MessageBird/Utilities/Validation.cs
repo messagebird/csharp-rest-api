@@ -1,3 +1,4 @@
+using MessageBird.Objects;
 using System;
 using System.Text.RegularExpressions;
 
@@ -37,6 +38,15 @@ namespace MessageBird.Utilities
             {
                 throw new ArgumentException(String.Format("The array contains {0} elements, but at least {1} were expected", param.Length, n), paramName);  
             }
+        }
+
+        public static void IsValidMessageType(MessageType messagetype)
+        {
+            if(messagetype == MessageType.Tts)
+            {
+                throw new ArgumentException(String.Format("Messagetype not supported : {0}", messagetype));
+            }
+
         }
 
         public static void IsValidOriginator(string originator)
