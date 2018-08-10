@@ -65,7 +65,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="MockRestClient.cs" />
-    <Compile Include="Resources\FooTest.cs" />
     <Compile Include="Resources\VerifyTests.cs" />
     <Compile Include="Resources\MessagesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
