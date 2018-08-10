@@ -48,7 +48,7 @@ namespace MessageBirdTests
         /// <summary>
         /// Actually creates the mock and configures it as specified.
         /// </summary>
-        public IRestClient Get()
+        public Mock<RestClient> Get()
         {
             var restClient = mockRepository.Create<RestClient>(AccessKey, ProxyConfigurationInjector);
             
@@ -65,14 +65,14 @@ namespace MessageBirdTests
             // Handle the overload...
             if (RequestBody == null)
             {
-                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<HttpStatusCode>())).Returns(ResponseBody);
+                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
             }
             else
             {
-                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<string>(), It.IsAny<HttpStatusCode>())).Returns(ResponseBody);
+                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<string>(), It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
             }
-
-            return restClient.Object;
+            
+            return restClient;
         }
         
         /// <summary>
