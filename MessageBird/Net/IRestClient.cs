@@ -1,5 +1,7 @@
 ﻿using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Resources;
+using System;
+using System.Net;
 
 namespace MessageBird.Net
 {
@@ -18,5 +20,8 @@ namespace MessageBird.Net
         T Retrieve<T>(T resource) where T : Resource;
         void Update(Resource resource);
         void Delete(Resource resource);
+
+        string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode);
+        string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode);
     }
 }
