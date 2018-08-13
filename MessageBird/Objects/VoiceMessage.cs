@@ -73,6 +73,7 @@ namespace MessageBird.Objects
     public class VoiceMessageOptionalArguments
     {
         public string Reference { get; set; }
+        public string ReportUrl { get; set; }
         public string Originator { get; set; }
         public Language Language { get; set; }
         public Voice Voice { get; set; }
@@ -99,6 +100,9 @@ namespace MessageBird.Objects
 
         [JsonProperty("reference")]
         public string Reference { get; set; }
+
+        [JsonProperty("reportUrl")]
+        public string ReportUrl { get; set; }
 
         private string originator;
         [JsonProperty("originator")]
@@ -182,6 +186,7 @@ namespace MessageBird.Objects
             optionalArguments = optionalArguments ?? new VoiceMessageOptionalArguments();
 
             Reference = optionalArguments.Reference;
+            ReportUrl = optionalArguments.ReportUrl;
             Originator = optionalArguments.Originator;
             Language = optionalArguments.Language;
             Voice = optionalArguments.Voice;
