@@ -52,7 +52,16 @@
     <Compile Include="Net\ProxyConfigurationInjector\IProxyConfigurationInjector.cs" />
     <Compile Include="Net\ProxyConfigurationInjector\InjectDefaultCredentialsForProxiedUris.cs" />
     <Compile Include="Net\RestClient.cs" />
+    <Compile Include="Net\RestClientOptions.cs" />
     <Compile Include="Objects\Balance.cs" />
+    <Compile Include="Objects\BaseList.cs" />
+    <Compile Include="Objects\Contact.cs" />
+    <Compile Include="Objects\ContactCustomDetails.cs" />
+    <Compile Include="Objects\ContactGroupReference.cs" />
+    <Compile Include="Objects\ContactList.cs" />
+    <Compile Include="Objects\ContactMessageReference.cs" />
+    <Compile Include="Objects\ContactOptionalArguments.cs" />
+    <Compile Include="Objects\Links.cs" />
     <Compile Include="Objects\LookupHlr.cs" />
     <Compile Include="Objects\Formats.cs" />
     <Compile Include="Objects\Error.cs" />
@@ -67,6 +76,9 @@
     <Compile Include="Objects\VoiceMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Balance.cs" />
+    <Compile Include="Resources\BaseLists.cs" />
+    <Compile Include="Resources\ContactLists.cs" />
+    <Compile Include="Resources\Contacts.cs" />
     <Compile Include="Resources\LookupHlr.cs" />
     <Compile Include="Resources\Lookup.cs" />
     <Compile Include="Resources\Hlr.cs" />
