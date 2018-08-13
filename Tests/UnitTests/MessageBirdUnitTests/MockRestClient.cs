@@ -69,7 +69,7 @@ namespace MessageBirdTests
             }
             else
             {
-                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<string>(), It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
+                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, RequestBody, It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
             }
             
             return restClient;
