@@ -124,5 +124,20 @@ namespace MessageBirdTests.Resources
                 Assert.AreEqual("Alphanumeric originator is limited to 11 characters.", e.Message);
             }
         }
+
+        [TestMethod]
+        public void ReportUrl()
+        {
+            var recipients = new Recipients();
+            recipients.AddRecipient(31612345678);
+            var optionalArguments = new MessageOptionalArguments
+            {
+                ReportUrl = "https://example.com/status-update",
+            };
+
+            var message = new Message("Originator", "Body", recipients, optionalArguments);
+
+            Assert.AreEqual("https://example.com/status-update", message.ReportUrl);
+        }
     }
 }
