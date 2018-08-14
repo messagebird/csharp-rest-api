@@ -61,6 +61,9 @@
     <Compile Include="Objects\ContactList.cs" />
     <Compile Include="Objects\ContactMessageReference.cs" />
     <Compile Include="Objects\ContactOptionalArguments.cs" />
+    <Compile Include="Objects\Group.cs" />
+    <Compile Include="Objects\GroupContactReference.cs" />
+    <Compile Include="Objects\GroupList.cs" />
     <Compile Include="Objects\Links.cs" />
     <Compile Include="Objects\LookupHlr.cs" />
     <Compile Include="Objects\Formats.cs" />
@@ -79,6 +82,8 @@
     <Compile Include="Resources\BaseLists.cs" />
     <Compile Include="Resources\ContactLists.cs" />
     <Compile Include="Resources\Contacts.cs" />
+    <Compile Include="Resources\GroupLists.cs" />
+    <Compile Include="Resources\Groups.cs" />
     <Compile Include="Resources\LookupHlr.cs" />
     <Compile Include="Resources\Lookup.cs" />
     <Compile Include="Resources\Hlr.cs" />
