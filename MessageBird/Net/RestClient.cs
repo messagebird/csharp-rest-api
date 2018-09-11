@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net;
 using System.Text;
-
 using MessageBird.Exceptions;
 using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Resources;
