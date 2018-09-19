@@ -13,14 +13,6 @@ namespace MessageBird.Objects
         Postpaid
     }
 
-    public enum PaymentType
-    {
-        [EnumMember(Value = "credits")]
-        Credits,
-        [EnumMember(Value = "euros")]
-        Euros
-    }
-
     public class Balance : IIdentifiable<string>
     {
         /// <summary>
@@ -41,8 +33,8 @@ namespace MessageBird.Objects
         [JsonProperty("payment"), JsonConverter(typeof(StringEnumConverter))]
         public PaymentMethod Payment { get; set; }
 
-        [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
-        public PaymentType Type { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
 
         [JsonProperty("amount")]
         public string Amount { get; set; }

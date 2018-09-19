@@ -27,14 +27,18 @@ namespace MessageBird.Objects
         [EnumMember(Value = "premium")]
         Premium,
         [EnumMember(Value = "flash")]
-        Flash
+        Flash,
+        [EnumMember(Value ="tts")]
+        Tts
     };
     public enum DataEncoding
     {
         [EnumMember(Value = "plain")]
         Plain,
         [EnumMember(Value = "unicode")]
-        Unicode
+        Unicode,
+        [EnumMember(Value = "auto")]
+        Auto
     };
     public enum MessageClass { Flash = 0, Normal };
 
@@ -42,6 +46,7 @@ namespace MessageBird.Objects
     {
         public MessageType Type { get; set; }
         public string Reference { get; set; }
+        public string ReportUrl { get; set; }
         public int? Validity { get; set; }
         public int? Gateway { get; set; }
         public Hashtable TypeDetails { get; set; }
@@ -83,27 +88,15 @@ namespace MessageBird.Objects
             }
             set
             {
+                Utilities.ParameterValidator.IsValidOriginator(value);
+
                 var numeric = new Regex("^\\+?[0-9]+$");
-                var alphanumericWithWhitespace = new Regex("^[A-Za-z0-9]+(?:\\s[A-Za-z0-9]+)*$");
                 if (string.IsNullOrEmpty(value) || numeric.IsMatch(value))
                 {
-                    originator = value.TrimStart(new [] {'+'});
+                    value = value.TrimStart(new[] { '+' });
                 }
-                else if (alphanumericWithWhitespace.IsMatch(value))
-                {
-                    if (value.Length <= 11)
-                    {
-                        originator = value;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Alphanumeric originator is limited to 11 characters.");
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException("Originator can only contain numeric or whitespace separated alphanumeric characters.");
-                }
+
+                originator = value;
             }
         }
 
@@ -112,6 +105,9 @@ namespace MessageBird.Objects
 
         [JsonProperty("reference")]
         public string Reference { get; set; }
+
+        [JsonProperty("reportUrl")]
+        public string ReportUrl { get; set; }
 
         [JsonProperty("validity")]
         public int? Validity { get; set; }
@@ -157,6 +153,7 @@ namespace MessageBird.Objects
 
             Type = optionalArguments.Type;
             Reference = optionalArguments.Reference;
+            ReportUrl = optionalArguments.ReportUrl;
             Validity = optionalArguments.Validity;
             Gateway = optionalArguments.Gateway;
             TypeDetails = optionalArguments.TypeDetails;

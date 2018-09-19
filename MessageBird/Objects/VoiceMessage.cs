@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -17,8 +18,38 @@ namespace MessageBird.Objects
         German,
         [EnumMember(Value = "en-gb")]
         English,
+        [EnumMember(Value = "en-us")]
+        AmericanEnglish,
+        [EnumMember(Value = "en-au")]
+        AustralianEnglish,
         [EnumMember(Value = "fr-fr")]
-        French
+        French,
+        [EnumMember(Value = "fr-ca")]
+        CanadianFrench,
+        [EnumMember(Value = "es-es")]
+        Spanish,
+        [EnumMember(Value = "es-mx")]
+        MexicanSpanish,
+        [EnumMember(Value = "es-us")]
+        AmericanSpanish,
+        [EnumMember(Value = "ru-ru")]
+        Russian,
+        [EnumMember(Value = "zh-cn")]
+        Chinese,
+        [EnumMember(Value = "is-is")]
+        Icelandic,
+        [EnumMember(Value = "it-it")]
+        Italian,
+        [EnumMember(Value = "ja-jp")]
+        Japanese,
+        [EnumMember(Value = "ko-kr")]
+        Korean,
+        [EnumMember(Value = "pl-pl")]
+        Polish,
+        [EnumMember(Value = "pt-br")]
+        BrazilianPortugese,
+        [EnumMember(Value = "ro-ro")]
+        Romanian
     };
 
     public enum Voice
@@ -42,6 +73,8 @@ namespace MessageBird.Objects
     public class VoiceMessageOptionalArguments
     {
         public string Reference { get; set; }
+        public string ReportUrl { get; set; }
+        public string Originator { get; set; }
         public Language Language { get; set; }
         public Voice Voice { get; set; }
         public int Repeat { get; set; }
@@ -67,6 +100,37 @@ namespace MessageBird.Objects
 
         [JsonProperty("reference")]
         public string Reference { get; set; }
+
+        [JsonProperty("reportUrl")]
+        public string ReportUrl { get; set; }
+
+        private string originator;
+        [JsonProperty("originator")]
+        public string Originator
+        {
+            get
+            {
+                return originator;
+            }
+            set
+            {
+                var numeric = new Regex("^\\+?[0-9]+$");
+                if (!String.IsNullOrEmpty(value) && !numeric.IsMatch(value))
+                {
+                    throw new ArgumentException("Originator can only contain numeric characters.");
+                }
+
+                // Only trim the '+' sign value if it's not empty or null
+                if (!String.IsNullOrEmpty(value))
+                {
+                    originator = value.TrimStart(new[] { '+' });
+                }
+                else
+                {
+                    originator = value;
+                }
+            }
+        }
 
         private string body;
         [JsonProperty("body")]
@@ -122,6 +186,8 @@ namespace MessageBird.Objects
             optionalArguments = optionalArguments ?? new VoiceMessageOptionalArguments();
 
             Reference = optionalArguments.Reference;
+            ReportUrl = optionalArguments.ReportUrl;
+            Originator = optionalArguments.Originator;
             Language = optionalArguments.Language;
             Voice = optionalArguments.Voice;
             Repeat = optionalArguments.Repeat;

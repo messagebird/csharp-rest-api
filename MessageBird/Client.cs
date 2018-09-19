@@ -3,6 +3,7 @@ using MessageBird.Objects;
 using MessageBird.Resources;
 using MessageBird.Net;
 using MessageBird.Utilities;
+using System;
 
 namespace MessageBird
 {
@@ -34,14 +35,68 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(originator, "originator");
             ParameterValidator.IsNotNullOrWhiteSpace(body, "body");
             ParameterValidator.ContainsAtLeast(msisdns, 1, "msisdns");
+            if (optionalArguments != null)
+            {
+                ParameterValidator.IsValidMessageType(optionalArguments.Type);
+            }
 
-            var recipients = new Recipients(msisdns);
+           var recipients = new Recipients(msisdns);
             var message = new Message(originator, body, recipients, optionalArguments);
 
             var messages = new Messages(message);
             var result = restClient.Create(messages);
 
             return result.Object as Message;
+        }
+
+        public Objects.Verify SendVerifyToken(string id, string token)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+            ParameterValidator.IsNotNullOrWhiteSpace(token, "token");
+
+            var verify = new Objects.Verify(id, token);
+            var verifyResource = new Resources.Verify(verify);
+            var result = restClient.Retrieve(verifyResource);
+
+            return result.Object as Objects.Verify;
+        }
+
+        // Alias for the old constructor so that it remains backwards compatible
+        public Objects.Verify CreateVerify(string recipient, VerifyOptionalArguments arguments = null)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(recipient, "recipient");
+
+            return CreateVerify(Convert.ToInt64(recipient), arguments);
+        }
+
+        public Objects.Verify CreateVerify(long recipient, VerifyOptionalArguments arguments = null)
+        {
+            var verify = new Objects.Verify(recipient, arguments);
+            var verifyResource = new Resources.Verify(verify);
+            var result = restClient.Create(verifyResource);
+
+            return result.Object as Objects.Verify;
+        }
+
+        public void DeleteVerify(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var verify = new Objects.Verify(id);
+            var verifyResource = new Resources.Verify(verify);
+
+            restClient.Delete(verifyResource);
+        }
+
+        public Objects.Verify ViewVerify(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var verify = new Objects.Verify(id);
+            var verifyResource = new Resources.Verify(verify);
+            var result = restClient.Retrieve(verifyResource);
+
+            return result.Object as Objects.Verify;
         }
 
         public Message ViewMessage(string id)
@@ -103,6 +158,32 @@ namespace MessageBird
             var result = restClient.Retrieve(balance);
 
             return result.Object as Objects.Balance;
+        }
+
+        public Objects.Lookup ViewLookup(long phonenumber, LookupOptionalArguments optionalArguments = null)
+        {
+            var lookup = new Resources.Lookup(new Objects.Lookup(phonenumber, optionalArguments));
+            var result = restClient.Retrieve(lookup);
+
+            return result.Object as Objects.Lookup;
+        }
+
+        public Objects.LookupHlr RequestLookupHlr(long phonenumber, string reference, LookupHlrOptionalArguments optionalArguments = null)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(reference, "reference");
+
+            var lookupHlr = new Resources.LookupHlr(new Objects.LookupHlr(phonenumber, reference, optionalArguments));
+            var result = restClient.Create(lookupHlr);
+
+            return result.Object as Objects.LookupHlr;
+        }
+
+        public Objects.LookupHlr ViewLookupHlr(long phonenumber, LookupHlrOptionalArguments optionalArguments = null)
+        {
+            var lookupHlr = new Resources.LookupHlr(new Objects.LookupHlr(phonenumber, optionalArguments));
+            var result = restClient.Retrieve(lookupHlr);
+
+            return result.Object as Objects.LookupHlr;
         }
     }
 }

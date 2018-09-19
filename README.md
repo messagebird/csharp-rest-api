@@ -46,7 +46,7 @@ Balance balance = client.Balance();
 #### Error handling
 In case of an error the *client* throws an *ErrorException*.
 The *ErrorException* objects contains either:
-- an array of *Error* objects that encapsulates the errors in the response (see [API errors](https://www.messagebird.com/developers#api-errors) for more info),
+- an array of *Error* objects that encapsulates the errors in the response (see [errors](https://developers.messagebird.com/docs/errors) for more info),
 - a *best effort* description when no error information from the endpoint is available.
 
 See the provided examples on how to access error information from the *ErrorException*.
