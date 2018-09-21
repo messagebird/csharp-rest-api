@@ -1,2 +1,9 @@
 language: csharp
 solution: csharp-rest-client.sln
+
+matrix:
+  include:
+    - dotnet: 2.1
+      mono: none
+    - mono: latest
+
