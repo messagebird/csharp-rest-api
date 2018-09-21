@@ -1,7 +1,7 @@
 language: csharp
 solution: csharp-rest-client.sln
 mono: none
-dotnet: 2.1
+dotnet: 1.1.4
 script:
   - cd Tests/UnitTests/MessageBirdUnitTests
   - dotnet restore
