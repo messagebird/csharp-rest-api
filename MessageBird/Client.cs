@@ -11,6 +11,12 @@ namespace MessageBird
     {
         private readonly IRestClient restClient;
 
+        public TimeSpan RequestTimeout
+        {
+            get { return restClient.RequestTimeout; }
+            set { restClient.RequestTimeout = value; }
+        }
+
         private Client(IRestClient restClient)
         {
             this.restClient = restClient;

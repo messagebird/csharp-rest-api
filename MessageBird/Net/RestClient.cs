@@ -20,6 +20,8 @@ namespace MessageBird.Net
 
         public IProxyConfigurationInjector ProxyConfigurationInjector { get; private set; }
 
+        public TimeSpan RequestTimeout { get; set; }
+
         public string ClientVersion
         {
             get { return "1.3.6.0"; }
@@ -35,15 +37,26 @@ namespace MessageBird.Net
             get { return string.Format("MessageBird/ApiClient/{0} DotNet/{1}", ApiVersion, ClientVersion); }
         }
 
-        public RestClient(string endpoint, string accessKey, IProxyConfigurationInjector proxyConfigurationInjector)
+        public RestClient(string endpoint, string accessKey, IProxyConfigurationInjector proxyConfigurationInjector, TimeSpan requestTimeout)
         {
             Endpoint = endpoint;
             AccessKey = accessKey;
             ProxyConfigurationInjector = proxyConfigurationInjector;
+            RequestTimeout = requestTimeout;
+        }
+
+        public RestClient(string endpoint, string accessKey, IProxyConfigurationInjector proxyConfigurationInjector)
+            : this(endpoint, accessKey, proxyConfigurationInjector, TimeSpan.FromSeconds(60))
+        {
+        }
+
+        public RestClient(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector, TimeSpan requestTimeout)
+            : this(HttpsRestMessagebirdComEndpoint, accessKey, proxyConfigurationInjector, requestTimeout)
+        {
         }
 
         public RestClient(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector)
-            : this(HttpsRestMessagebirdComEndpoint, accessKey, proxyConfigurationInjector)
+            : this(accessKey, proxyConfigurationInjector, TimeSpan.FromSeconds(60))
         {
         }
 
@@ -137,6 +150,7 @@ namespace MessageBird.Net
             request.Accept = ApplicationJsonContentType;
             request.ContentType = ApplicationJsonContentType;
             request.Method = method;
+            request.Timeout = RequestTimeout > TimeSpan.Zero ? (int)RequestTimeout.TotalMilliseconds : 60000;
 
             WebHeaderCollection headers = request.Headers;
             headers.Add("Authorization", String.Format("AccessKey {0}", AccessKey));
