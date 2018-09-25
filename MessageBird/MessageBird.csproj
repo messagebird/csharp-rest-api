@@ -1,99 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C49CD3F8-BCDB-4BA9-B817-6A6C65452510}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MessageBird</RootNamespace>
-    <AssemblyName>MessageBird</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <Product>MessageBird</Product>
+    <Title>MessageBird</Title>
+    <Company>MessageBird</Company>
+    <Copyright>Copyright ©  2014</Copyright>
+    <FileVersion>1.3.7.0</FileVersion>
+    <InformationalVersion>1.3.7.0</InformationalVersion>
+    <Version>1.3.7.0</Version>
+    <AssemblyVersion>1.3.7.0</AssemblyVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Runtime.Serialization" />
+
+  <!-- Conditionally obtain references for the .NET Framework 4.0 target -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Client.cs" />
-    <Compile Include="Exceptions\ErrorException.cs" />
-    <Compile Include="Json\Converters\MessageConverter.cs" />
-    <Compile Include="Json\Converters\RecipientsConverter.cs" />
-    <Compile Include="Json\Converters\RFC3339DateTimeConverter.cs" />
-    <Compile Include="Net\HttpStatusCode.cs" />
-    <Compile Include="Net\IRestClient.cs" />
-    <Compile Include="Net\ProxyConfigurationInjector\InjectCredentialsForProxiedUris.cs" />
-    <Compile Include="Net\ProxyConfigurationInjector\InjectWebProxy.cs" />
-    <Compile Include="Net\ProxyConfigurationInjector\IProxyConfigurationInjector.cs" />
-    <Compile Include="Net\ProxyConfigurationInjector\InjectDefaultCredentialsForProxiedUris.cs" />
-    <Compile Include="Net\RestClient.cs" />
-    <Compile Include="Objects\Balance.cs" />
-    <Compile Include="Objects\LookupHlr.cs" />
-    <Compile Include="Objects\Formats.cs" />
-    <Compile Include="Objects\Error.cs" />
-    <Compile Include="Objects\Lookup.cs" />
-    <Compile Include="Objects\HlrDetails.cs" />
-    <Compile Include="Objects\Hlr.cs" />
-    <Compile Include="Objects\IIdentifiable.cs" />
-    <Compile Include="Objects\Message.cs" />
-    <Compile Include="Objects\Recipient.cs" />
-    <Compile Include="Objects\Recipients.cs" />
-    <Compile Include="Objects\Verify.cs" />
-    <Compile Include="Objects\VoiceMessage.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Balance.cs" />
-    <Compile Include="Resources\LookupHlr.cs" />
-    <Compile Include="Resources\Lookup.cs" />
-    <Compile Include="Resources\Hlr.cs" />
-    <Compile Include="Resources\Messages.cs" />
-    <Compile Include="Resources\Resource.cs" />
-    <Compile Include="Resources\Verify.cs" />
-    <Compile Include="Resources\VoiceMessages.cs" />
-    <Compile Include="Utilities\ReflectionUtils.cs" />
-    <Compile Include="Utilities\Validation.cs" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
