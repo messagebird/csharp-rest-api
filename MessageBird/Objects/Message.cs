@@ -46,6 +46,7 @@ namespace MessageBird.Objects
     {
         public MessageType Type { get; set; }
         public string Reference { get; set; }
+        public string ReportUrl { get; set; }
         public int? Validity { get; set; }
         public int? Gateway { get; set; }
         public Hashtable TypeDetails { get; set; }
@@ -105,6 +106,9 @@ namespace MessageBird.Objects
         [JsonProperty("reference")]
         public string Reference { get; set; }
 
+        [JsonProperty("reportUrl")]
+        public string ReportUrl { get; set; }
+
         [JsonProperty("validity")]
         public int? Validity { get; set; }
 
@@ -149,6 +153,7 @@ namespace MessageBird.Objects
 
             Type = optionalArguments.Type;
             Reference = optionalArguments.Reference;
+            ReportUrl = optionalArguments.ReportUrl;
             Validity = optionalArguments.Validity;
             Gateway = optionalArguments.Gateway;
             TypeDetails = optionalArguments.TypeDetails;
