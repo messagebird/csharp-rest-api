@@ -185,5 +185,80 @@ namespace MessageBird
 
             return result.Object as Objects.LookupHlr;
         }
+
+        public Contact CreateContact(long msisdn, ContactOptionalArguments optionalArguments = null)
+        {
+            var contact = new Contact { Msisdn = msisdn };
+            if (optionalArguments != null)
+            {
+                contact.FirstName = optionalArguments.FirstName;
+                contact.LastName = optionalArguments.LastName;
+                contact.CustomDetails = new ContactCustomDetails
+                {
+                    Custom1 = optionalArguments.Custom1,
+                    Custom2 = optionalArguments.Custom2,
+                    Custom3 = optionalArguments.Custom3,
+                    Custom4 = optionalArguments.Custom4,
+                };
+            }
+
+            var result = restClient.Create(new Contacts(contact));
+
+            return result.Object as Contact;
+        }
+
+        public void DeleteContact(string id)
+        {
+            restClient.Delete(new Contacts(new Contact { Id = id }));
+        }
+        
+        public ContactList ListContacts(int limit = 20, int offset = 0)
+        {
+            var contactLists = new ContactLists();
+
+            var contactList = (ContactList)contactLists.Object;
+            contactList.Limit = limit;
+            contactList.Offset = offset;
+            
+            restClient.Retrieve(contactLists);
+
+            return contactLists.Object as ContactList;
+        }
+
+        public Contact ViewContact(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var contacts = new Contacts(new Contact { Id = id });
+            restClient.Retrieve(contacts);
+
+            return contacts.Object as Contact;
+        }
+
+        public Contact UpdateContact(string id, ContactOptionalArguments optionalArguments)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var customDetails = new ContactCustomDetails
+            {
+                Custom1 = optionalArguments.Custom1,
+                Custom2 = optionalArguments.Custom2,
+                Custom3 = optionalArguments.Custom3,
+                Custom4 = optionalArguments.Custom4,
+            };
+
+            var contacts = new Contacts(new Contact
+            {
+                Id = id,
+                FirstName = optionalArguments.FirstName,
+                LastName = optionalArguments.LastName,
+                CustomDetails = customDetails,
+            });
+
+            RestClientOptions.UpdateMode = UpdateMode.Patch;
+            restClient.Update(contacts);
+
+            return contacts.Object as Contact;
+        }
     }
 }

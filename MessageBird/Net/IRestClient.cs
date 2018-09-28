@@ -1,7 +1,5 @@
 ﻿using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Resources;
-using System;
-using System.Net;
 
 namespace MessageBird.Net
 {

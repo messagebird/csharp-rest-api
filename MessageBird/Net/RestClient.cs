@@ -52,11 +52,8 @@ namespace MessageBird.Net
         /// </summary>
         public T Retrieve<T>(T resource) where T : Resource
         {
-            var uri = resource.Uri;
-            if (resource.HasQueryString)
-            {
-                uri += "?" + resource.QueryString;
-            }
+            var uri = GetUriWithQueryString(resource);
+
             return RequestWithResource("GET", uri, resource, HttpStatusCode.OK);
         }
 
@@ -65,7 +62,61 @@ namespace MessageBird.Net
         /// </summary>
         public T Create<T>(T resource) where T : Resource
         {
-            return RequestWithResource("POST", resource.Uri, resource, HttpStatusCode.Created);
+            var uri = GetUriWithQueryString(resource);
+
+            return RequestWithResource("POST", uri, resource, HttpStatusCode.Created);
+        }
+        
+        /// <summary>
+        /// Updates a resource. HTTP method is determined by
+        /// RestClientOptions.UpdateMode.
+        /// </summary>
+        public void Update(Resource resource)
+        {
+            var method = GetUpdateMethod();
+            var uri = GetUriWithQueryString(resource);
+
+            RequestWithResource(method, uri, resource, HttpStatusCode.NoContent);
+        }
+
+        /// <summary>
+        /// Determines what HTTP method should be used for updates: some API's
+        /// use PATCH and others require PUT. We can unfortunately not just add
+        /// a Patch method or set this property on this class. That would be a
+        /// breaking change: we can't just change the public interface.
+        /// </summary>
+        private string GetUpdateMethod()
+        {
+            if (RestClientOptions.UpdateMode == UpdateMode.Patch)
+            {
+                return "PATCH";
+            }
+            else if (RestClientOptions.UpdateMode == UpdateMode.Put)
+            {
+                return "PUT";
+            }
+
+            throw new Exception("Unexpected UpdateMode: " + RestClientOptions.UpdateMode);
+        }
+
+        public void Delete(Resource resource)
+        {
+            var uri = GetUriWithQueryString(resource);
+
+            PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent);
+        }
+
+        /// <summary>
+        /// Gets the resource's URI with the query string, if it is set.
+        /// </summary>
+        private string GetUriWithQueryString(Resource resource)
+        {
+            var uri = resource.Uri;
+            if (resource.HasQueryString)
+            {
+                uri += "?" + resource.QueryString;
+            }
+            return uri;
         }
 
         /// <summary>
@@ -98,16 +149,6 @@ namespace MessageBird.Net
             return encode;
         }
 
-        public void Update(Resource resource)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Resource resource)
-        {
-            throw new NotImplementedException();
-        }
-        
         private ErrorException ErrorExceptionFromWebException(WebException e)
         {
             var httpWebResponse = e.Response as HttpWebResponse;
