@@ -47,6 +47,9 @@ namespace MessageBird.Net
         {
         }
 
+        /// <summary>
+        /// Retrieves a resource with HTTP GET.
+        /// </summary>
         public T Retrieve<T>(T resource) where T : Resource
         {
             var uri = resource.Uri;
@@ -54,58 +57,38 @@ namespace MessageBird.Net
             {
                 uri += "?" + resource.QueryString;
             }
-            HttpWebRequest request = PrepareRequest(uri, "GET");
-
-            return PerformRoundTrip(request, resource, HttpStatusCode.OK, () => { });
+            return RequestWithResource("GET", uri, resource, HttpStatusCode.OK);
         }
 
+        /// <summary>
+        /// Creates a resource with HTTP POST.
+        /// </summary>
         public T Create<T>(T resource) where T : Resource
         {
-            HttpWebRequest request = PrepareRequest(resource.Uri, "POST");
-            return PerformRoundTrip(request, resource, HttpStatusCode.Created, () =>
-            {
-                using (var requestWriter = new StreamWriter(request.GetRequestStream()))
-                {
-                    string serializedResource = resource.Serialize();
-                    requestWriter.Write(serializedResource);
-                }
-            }
-            );
+            return RequestWithResource("POST", resource.Uri, resource, HttpStatusCode.Created);
         }
 
-        private T PerformRoundTrip<T>(HttpWebRequest request, T resource, HttpStatusCode expectedHttpStatusCode, Action requestAction)
+        /// <summary>
+        /// Performs a HTTP request and does any (de)serialization needed.
+        /// </summary>
+        private T RequestWithResource<T>(string method, string uri, T resource, HttpStatusCode expectedHttpStatusCode)
             where T : Resource
         {
-            try
-            {
-                requestAction();
+            string response;
 
-                using (var response = request.GetResponse() as HttpWebResponse)
-                {
-                    var statusCode = (HttpStatusCode)response.StatusCode;
-                    if (statusCode == expectedHttpStatusCode)
-                    {
-                        Stream responseStream = response.GetResponseStream();
-                        Encoding encoding = GetEncoding(response);
+            if (method == "GET" || method == "DELETE")
+            {
+                response = PerformHttpRequest(method, uri, expectedHttpStatusCode);
+            }
+            else
+            {
+                string s = resource.Serialize();
+                response = PerformHttpRequest(method, uri, s, expectedHttpStatusCode);
+            }
 
-                        using (var responseReader = new StreamReader(responseStream, encoding))
-                        {
-                            string responseContent = responseReader.ReadToEnd();
-                            resource.Deserialize(responseContent);
-                            return resource;
-                        }
-                    }
-                    throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
-                }
-            }
-            catch (WebException e)
-            {
-                throw ErrorExceptionFromWebException(e);
-            }
-            catch (Exception e)
-            {
-                throw new ErrorException(String.Format("Unhandled exception {0}", e), e);
-            }
+            resource.Deserialize(response);
+
+            return resource;
         }
 
         private static Encoding GetEncoding(HttpWebResponse response)
@@ -124,30 +107,7 @@ namespace MessageBird.Net
         {
             throw new NotImplementedException();
         }
-
-        private HttpWebRequest PrepareRequest(string requestUriString, string method)
-        {
-            string uriString = String.Format("{0}/{1}", Endpoint, requestUriString);
-            var uri = new Uri(uriString);
-            // TODO: ##jwp; need to find out why .NET 4.0 under VS2013 refuses to recognize `WebRequest.CreateHttp`.
-            // HttpWebRequest request = WebRequest.CreateHttp(uri);
-            var request = WebRequest.Create(uri) as HttpWebRequest;
-            request.UserAgent = UserAgent;
-            const string ApplicationJsonContentType = "application/json"; // http://tools.ietf.org/html/rfc4627
-            request.Accept = ApplicationJsonContentType;
-            request.ContentType = ApplicationJsonContentType;
-            request.Method = method;
-
-            WebHeaderCollection headers = request.Headers;
-            headers.Add("Authorization", String.Format("AccessKey {0}", AccessKey));
-
-            if (null != ProxyConfigurationInjector)
-            {
-                request.Proxy = ProxyConfigurationInjector.InjectProxyConfiguration(request.Proxy, uri);
-            }
-            return request;
-        }
-
+        
         private ErrorException ErrorExceptionFromWebException(WebException e)
         {
             var httpWebResponse = e.Response as HttpWebResponse;
@@ -191,6 +151,76 @@ namespace MessageBird.Net
                 default:
                     return new ErrorException(String.Format("Unhandled status code {0}", statusCode), e);
             }
+        }
+
+        public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode)
+        {
+            var request = PrepareRequest(method, uri);
+
+            try
+            {
+                if (!string.IsNullOrEmpty(body))
+                {
+                    using (var requestWriter = new StreamWriter(request.GetRequestStream()))
+                    {
+                        requestWriter.Write(body);
+                    }
+                }
+
+                using (var response = request.GetResponse() as HttpWebResponse)
+                {
+                    var statusCode = (HttpStatusCode)response.StatusCode;
+                    if (statusCode == expectedStatusCode)
+                    {
+                        Stream responseStream = response.GetResponseStream();
+                        Encoding encoding = GetEncoding(response);
+
+                        using (var responseReader = new StreamReader(responseStream, encoding))
+                        {
+                            return responseReader.ReadToEnd();
+                        }
+                    }
+                    throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
+                }
+            }
+            catch (WebException e)
+            {
+                throw ErrorExceptionFromWebException(e);
+            }
+            catch (Exception e)
+            {
+                throw new ErrorException(String.Format("Unhandled exception {0}", e), e);
+            }
+        }
+
+        public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode)
+        {
+            string body = null;
+
+            return PerformHttpRequest(method, uri, body, expectedStatusCode);
+        }
+
+        private HttpWebRequest PrepareRequest(string method, string requestUriString)
+        {
+            string uriString = String.Format("{0}/{1}", Endpoint, requestUriString);
+            var uri = new Uri(uriString);
+            // TODO: ##jwp; need to find out why .NET 4.0 under VS2013 refuses to recognize `WebRequest.CreateHttp`.
+            // HttpWebRequest request = WebRequest.CreateHttp(uri);
+            var request = WebRequest.Create(uri) as HttpWebRequest;
+            request.UserAgent = UserAgent;
+            const string ApplicationJsonContentType = "application/json"; // http://tools.ietf.org/html/rfc4627
+            request.Accept = ApplicationJsonContentType;
+            request.ContentType = ApplicationJsonContentType;
+            request.Method = method;
+
+            WebHeaderCollection headers = request.Headers;
+            headers.Add("Authorization", String.Format("AccessKey {0}", AccessKey));
+
+            if (null != ProxyConfigurationInjector)
+            {
+                request.Proxy = ProxyConfigurationInjector.InjectProxyConfiguration(request.Proxy, uri);
+            }
+            return request;
         }
     }
 }
