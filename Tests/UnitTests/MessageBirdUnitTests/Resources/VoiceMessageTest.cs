@@ -63,5 +63,19 @@ namespace MessageBirdTests.Resources
             voiceMessages.Deserialize(serializedMessage);
         }
 
+        [TestMethod]
+        public void ReportUrl()
+        {
+            var recipients = new Recipients();
+            recipients.AddRecipient(31612345678);
+            var optionalArguments = new VoiceMessageOptionalArguments
+            {
+                ReportUrl = "https://example.com/voice-status",
+            };
+
+            var voiceMessage = new VoiceMessage("Body", recipients, optionalArguments);
+
+            Assert.AreEqual(voiceMessage.ReportUrl, "https://example.com/voice-status");
+        }
     }
 }
