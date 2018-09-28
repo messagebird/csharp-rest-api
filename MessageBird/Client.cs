@@ -4,6 +4,7 @@ using MessageBird.Resources;
 using MessageBird.Net;
 using MessageBird.Utilities;
 using System;
+using System.Collections.Generic;
 
 namespace MessageBird
 {
@@ -259,6 +260,104 @@ namespace MessageBird
             restClient.Update(contacts);
 
             return contacts.Object as Contact;
+        }
+
+        public Group CreateGroup(string name)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(name, "name");
+
+            var groups = new Groups(new Group { Name = name });
+            var result = restClient.Create(groups);
+
+            return result.Object as Group;
+        }
+
+        public void DeleteGroup(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var groups = new Groups(new Group { Id = id });
+
+            restClient.Delete(groups);
+        }
+
+        public GroupList ListGroups(int limit = 20, int offset = 0)
+        {
+            var groupLists = new GroupLists();
+
+            var groupList = (GroupList)groupLists.Object;
+            groupList.Limit = limit;
+            groupList.Offset = offset;
+
+            restClient.Retrieve(groupLists);
+
+            return groupLists.Object as GroupList;
+        }
+
+        public Group UpdateGroup(string id, string name)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var groups = new Groups(new Group
+            {
+                Id = id,
+                Name = name,
+            });
+
+            RestClientOptions.UpdateMode = UpdateMode.Patch;
+            restClient.Update(groups);
+
+            return groups.Object as Group;
+        }
+
+        public Group ViewGroup(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var groups = new Groups(new Group { Id = id });
+            restClient.Retrieve(groups);
+
+            return groups.Object as Group;
+        }
+
+        public void AddContactsToGroup(string groupId, IEnumerable<string> contactIds)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(groupId, "groupId");
+
+            var uri = string.Format("groups/{0}?{1}", groupId, GetAddContactsToGroupQuery(contactIds));
+
+            restClient.PerformHttpRequest("GET", uri, HttpStatusCode.NoContent);
+        }
+
+        /// <summary>
+        /// Gets a query string to add contact IDs to a group. This uses a
+        /// specific format: ids[]=foo&ids[]=bar. Given the structure of
+        /// RestClient, this is easier done by providing the HTTP method as URL
+        /// parameter. See:
+        /// https://developers.messagebird.com/docs/groups#add-contact-to-group
+        /// https://developers.messagebird.com/docs/groups#add-contact-to-group
+        /// </summary>
+        private string GetAddContactsToGroupQuery(IEnumerable<string> contactIds)
+        {
+            var parameters = new List<string>();
+            parameters.Add("_method=PUT");
+
+            foreach (var contactId in contactIds)
+            {
+                parameters.Add("ids[]=" + contactId);
+            }
+
+            return string.Join("&", parameters);
+        }
+
+        public void RemoveContactFromGroup(string groupId, string contactId)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(groupId, "groupId");
+            ParameterValidator.IsNotNullOrWhiteSpace(contactId, "contactId");
+
+            var uri = string.Format("groups/{0}/contacts/{1}", groupId, contactId);
+
+            restClient.PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent);
         }
     }
 }
