@@ -22,7 +22,7 @@ namespace MessageBird.Net
 
         public string ClientVersion
         {
-            get { return "1.4.0.0"; }
+            get { return "1.4.0.1"; }
         }
 
         public string ApiVersion

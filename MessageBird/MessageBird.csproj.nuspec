@@ -13,6 +13,7 @@
     <copyright>Copyright (c) 2014, MessageBird</copyright>
     <tags>SMS MMS OTP 2FA Voice MessageBird Telecom</tags>
   </metadata>
+  <dependency id="" version="9.0.1" />
   <files>
     <file src="bin\Release\net40\MessageBird.dll" target="lib\net40" />
     <file src="bin\Release\netstandard2.0\MessageBird.dll" target="lib\netstandard2.0" />
