@@ -347,7 +347,7 @@ namespace MessageBird
                 parameters.Add("ids[]=" + contactId);
             }
 
-            return string.Join("&", parameters);
+            return string.Join("&", parameters.ToArray());
         }
 
         public void RemoveContactFromGroup(string groupId, string contactId)
