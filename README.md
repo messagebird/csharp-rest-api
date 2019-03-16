@@ -1,6 +1,6 @@
 MessageBird's REST API for C#
 ===============================
-This repository contains the open source C# client for MessageBird's REST API. Documentation can be found at: https://www.messagebird.com/developers
+This repository contains the open source C# client for MessageBird's REST API. Documentation can be found at: https://developers.messagebird.com
 
 Requirements
 -----
@@ -55,7 +55,7 @@ See the provided examples on how to access error information from the *ErrorExce
 Documentation
 ----
 Complete documentation, instructions, and examples are available at:
-[https://www.messagebird.com/developers](https://www.messagebird.com/developers)
+[https://developers.messagebird.com](https://developers.messagebird.com)
 
 
 License
