@@ -41,7 +41,7 @@ namespace MessageBird
                 ParameterValidator.IsValidMessageType(optionalArguments.Type);
             }
 
-           var recipients = new Recipients(msisdns);
+            var recipients = new Recipients(msisdns);
             var message = new Message(originator, body, recipients, optionalArguments);
 
             var messages = new Messages(message);
