@@ -255,5 +255,37 @@ namespace MessageBirdTests.Resources
             client.DeleteConversationWebhook(WebhookId);
             restClient.Verify();
         }
+
+        [TestMethod]
+        public void ListWebhooks()
+        {
+            var restClient = MockRestClient
+                .ThatReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
+                    "WebhookList.json")))
+                .FromEndpoint("GET", $"webhooks?limit=20&offset=0",
+                    Resource.ConverstationsEndpoint)
+                .Get();
+            var client = Client.Create(restClient.Object);
+
+            var messages = client.ListConversationWebhooks();
+            restClient.Verify();
+
+            Assert.AreEqual(10, messages.TotalCount);
+            Assert.AreEqual(2, messages.Count);
+        }
+
+        [TestMethod]
+        public void ListWebhooksPagination()
+        {
+            var restClient = MockRestClient
+                .ThatReturns("{}")
+                .FromEndpoint("GET", $"webhooks?limit=50&offset=10",
+                    Resource.ConverstationsEndpoint)
+                .Get();
+            var client = Client.Create(restClient.Object);
+
+            client.ListConversationWebhooks(50, 10);
+            restClient.Verify();
+        }
     }
 }

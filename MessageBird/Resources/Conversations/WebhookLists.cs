@@ -5,9 +5,9 @@ namespace MessageBird.Resources.Conversations
     public class WebhookLists : BaseLists<Webhook>
     {
         public WebhookLists()
-            : base("messages", new WebhookList())
+            : base("webhooks", new WebhookList())
         { }
         
-        public override string Endpoint => Conversations.ConverstationsEndpoint;
+        public override string Endpoint => ConverstationsEndpoint;
     }
 }
