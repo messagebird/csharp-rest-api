@@ -7,6 +7,9 @@ namespace MessageBird.Resources
 {
     public abstract class Resource
     {
+        public static string ConverstationsEndpoint = "https://conversations.messagebird.com/v1";
+        public static string DefaultEndpoint = "https://rest.messagebird.com";
+        
         public string Id
         {
             get
@@ -80,5 +83,7 @@ namespace MessageBird.Resources
                 return QueryString.Length > 0;
             }
         }
+
+        public virtual string Endpoint => DefaultEndpoint;
     }
 }

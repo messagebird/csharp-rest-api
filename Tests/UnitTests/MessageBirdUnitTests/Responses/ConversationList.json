@@ -1,0 +1,92 @@
+{
+  "offset": 0,
+  "limit": 20,
+  "count": 2,
+  "totalCount": 2,
+  "items": [
+    {
+      "id": "fbbdde79129f45e3a179458a91e2ead6",
+      "contactId": "03dfc27855c3475b953d6200a1b7eaf7",
+      "contact": {
+        "id": "03dfc27855c3475b953d6200a1b7eaf7",
+        "href": "https://rest.messagebird.com/contacts/03dfc27855c3475b953d6200a1b7eaf7",
+        "msisdn": 31612345678,
+        "firstName": "John",
+        "lastName": "Doe",
+        "customDetails": {
+          "custom1": null,
+          "custom2": null,
+          "custom3": null,
+          "custom4": null
+        },
+        "createdDatetime": "2018-08-01T09:45:52Z",
+        "updatedDatetime": "2018-08-28T12:37:35Z"
+      },
+      "channels": [
+        {
+          "id": "619747f69cf940a98fb443140ce9aed2",
+          "name": "My WhatsApp",
+          "platformId": "whatsapp",
+          "status": "active",
+          "createdDatetime": "2018-08-28T11:56:57Z",
+          "updatedDatetime": "2018-08-29T08:16:33Z"
+        },
+      ],
+      "status": "active",
+      "createdDatetime": "2018-08-29T08:52:54Z",
+      "updatedDatetime": "2018-08-29T08:52:54Z",
+      "lastReceivedDatetime": "2018-08-29T08:52:54Z",
+      "lastUsedChannelId": "619747f69cf940a98fb443140ce9aed2",
+      "messages": {
+        "totalCount": 10,
+        "href": "https://conversations.messagebird.com/v1/conversations/fbbdde79129f45e3a179458a91e2ead6/messages"
+      }
+    },
+    {
+      "id": "2e15efafec384e1c82e9842075e87beb",
+      "contactId": "a621095fa44947a28b441cfdf85cb802",
+      "contact": {
+        "id": "a621095fa44947a28b441cfdf85cb802",
+        "href": "https://rest.messagebird.com/1/contacts/a621095fa44947a28b441cfdf85cb802",
+        "msisdn": 316123456789,
+        "firstName": "Jen",
+        "lastName": "Smith",
+        "customDetails": {
+          "custom1": null,
+          "custom2": null,
+          "custom3": null,
+          "custom4": null
+        },
+        "createdDatetime": "2018-06-03T20:06:03Z",
+        "updatedDatetime": null
+      },
+      "channels": [
+        {
+          "id": "853eeb5348e541a595da93b48c61a1ae",
+          "name": "SMS",
+          "platformId": "sms",
+          "status": "active",
+          "createdDatetime": "2018-08-28T11:56:57Z",
+          "updatedDatetime": "2018-08-29T08:16:33Z"
+        },
+        {
+          "id": "619747f69cf940a98fb443140ce9aed2",
+          "name": "My WhatsApp",
+          "platformId": "whatsapp",
+          "status": "active",
+          "createdDatetime": "2018-08-28T11:56:57Z",
+          "updatedDatetime": "2018-08-29T08:16:33Z"
+        }
+      ],
+      "status": "active",
+      "createdDatetime": "2018-08-13T09:17:22Z",
+      "updatedDatetime": "2018-08-29T07:35:48Z",
+      "lastReceivedDatetime": "2018-08-29T07:35:48Z",
+      "lastUsedChannelId": "853eeb5348e541a595da93b48c61a1ae",
+      "messages": {
+        "totalCount": 23,
+        "href": "https://conversations.messagebird.com/v1/conversations/2e15efafec384e1c82e9842075e87beb/messages"
+      }
+    },
+  ]
+}

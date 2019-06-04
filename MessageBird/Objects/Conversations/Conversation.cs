@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MessageBird.Objects.Conversations
 {
@@ -29,7 +30,7 @@ namespace MessageBird.Objects.Conversations
         [JsonProperty("messages")]
         public MessagesCount Messages {get;set;}
         
-        [JsonProperty("status")]
+        [JsonProperty("status"), JsonConverter(typeof(StringEnumConverter))]
         public ConversationStatus Status {get;set;}
         
         [JsonProperty("createdDatetime")]

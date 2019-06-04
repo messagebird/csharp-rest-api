@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MessageBird.Objects.Conversations
 {
@@ -8,7 +9,7 @@ namespace MessageBird.Objects.Conversations
     {
         [EnumMember(Value = "received")]
         Received,
-        [EnumMember(Value = "received")]
+        [EnumMember(Value = "sent")]
         Sent,
     }
     
@@ -32,6 +33,14 @@ namespace MessageBird.Objects.Conversations
         [EnumMember(Value = "unsupported")]
         Unsupported,
     }
+
+    public class MessageError
+    {
+        [JsonProperty("code")]
+        public int Code { get; set; }
+        [JsonProperty("description")]
+        public string Description { get; set; }
+    }
     
     public class Message : IIdentifiable<string>
     {
@@ -44,22 +53,25 @@ namespace MessageBird.Objects.Conversations
         [JsonProperty("channelId")]
         public string ChannelId { get; set; }
         
-        [JsonProperty("direction")]
-        private MessageDirection Direction {get; set;}
+        [JsonProperty("direction"), JsonConverter(typeof(StringEnumConverter))]
+        public MessageDirection Direction {get; set;}
         
-        [JsonProperty("status")]
-        private MessageStatus Status {get; set;}
+        [JsonProperty("status"), JsonConverter(typeof(StringEnumConverter))]
+        public MessageStatus Status {get; set;}
         
-        [JsonProperty("type")]
-        private ContentType Type {get; set;}
+        [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
+        public ContentType Type {get; set;}
         
         [JsonProperty("content")]
-        private Content Content {get; set;}
+        public Content Content {get; set;}
+        
+        [JsonProperty("error")]
+        public MessageError Error { get; set; }
         
         [JsonProperty("createdDatetime")]
-        private DateTime? CreatedDatetime {get; set;}
+        public DateTime? CreatedDatetime {get; set;}
         
         [JsonProperty("updatedDatetime")]
-        private DateTime? UpdatedDatetime {get; set;}
+        public DateTime? UpdatedDatetime {get; set;}
     }
 }

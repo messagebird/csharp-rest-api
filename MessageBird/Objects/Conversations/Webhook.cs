@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace MessageBird.Objects.Conversations
@@ -29,7 +30,7 @@ namespace MessageBird.Objects.Conversations
         [JsonProperty("url")]
         public string Url {get;set;}
         
-        [JsonProperty("events")]
+        [JsonProperty("events", ItemConverterType = typeof(StringEnumConverter))]
         public List<WebhookEvent> Events {get;set;}
         
         [JsonProperty("createdDatetime")]

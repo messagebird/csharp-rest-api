@@ -2,7 +2,9 @@
 
 using MessageBird.Net;
 using MessageBird.Net.ProxyConfigurationInjector;
+using MessageBird.Resources;
 using Moq;
+using Newtonsoft.Json.Linq;
 
 namespace MessageBirdTests
 {
@@ -32,6 +34,7 @@ namespace MessageBirdTests
         private string ResponseBody { get; set; }
         private string Method { get; set; }
         private string Uri { get; set; }
+        private string Endpoint { get; set; }
 
         private MockRestClient()
         {
@@ -65,11 +68,13 @@ namespace MessageBirdTests
             // Handle the overload...
             if (RequestBody == null)
             {
-                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
+                restClient.Setup(c => c.PerformHttpRequest(Method, Endpoint, Uri, It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
             }
             else
             {
-                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, RequestBody, It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
+                restClient.Setup(c => c.PerformHttpRequest(Method, Endpoint, Uri,
+                    It.Is<string>(arg => JToken.DeepEquals(JToken.Parse(RequestBody), JToken.Parse(arg))),
+                    It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
             }
             
             return restClient;
@@ -104,10 +109,11 @@ namespace MessageBirdTests
         /// <summary>
         /// Sets the expected (HTTP) method.
         /// </summary>
-        public MockRestClient FromEndpoint(string method, string uri)
+        public MockRestClient FromEndpoint(string method, string uri, string endpoint = null)
         {
             Method = method;
             Uri = uri;
+            Endpoint = endpoint ?? Resource.DefaultEndpoint;
 
             return this;
         }

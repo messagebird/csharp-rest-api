@@ -78,6 +78,14 @@ namespace MessageBird.Net
 
             RequestWithResource(method, uri, resource, HttpStatusCode.NoContent);
         }
+        
+        public T Update<T>(T resource) where T : Resource
+        {
+            var method = GetUpdateMethod();
+            var uri = GetUriWithQueryString(resource);
+
+            return RequestWithResource(method, uri, resource, HttpStatusCode.OK);
+        }
 
         /// <summary>
         /// Determines what HTTP method should be used for updates: some API's
@@ -103,7 +111,7 @@ namespace MessageBird.Net
         {
             var uri = GetUriWithQueryString(resource);
 
-            PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent);
+            PerformHttpRequest("DELETE", resource.Endpoint, uri, HttpStatusCode.NoContent);
         }
 
         /// <summary>
@@ -129,12 +137,12 @@ namespace MessageBird.Net
 
             if (method == "GET" || method == "DELETE")
             {
-                response = PerformHttpRequest(method, uri, expectedHttpStatusCode);
+                response = PerformHttpRequest(method, resource.Endpoint, uri, expectedHttpStatusCode);
             }
             else
             {
                 string s = resource.Serialize();
-                response = PerformHttpRequest(method, uri, s, expectedHttpStatusCode);
+                response = PerformHttpRequest(method, resource.Endpoint, uri, s, expectedHttpStatusCode);
             }
 
             resource.Deserialize(response);
@@ -194,9 +202,9 @@ namespace MessageBird.Net
             }
         }
 
-        public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode)
+        public virtual string PerformHttpRequest(string method, string endpoint, string uri, string body, HttpStatusCode expectedStatusCode)
         {
-            var request = PrepareRequest(method, uri);
+            var request = PrepareRequest(method, uri, endpoint);
 
             try
             {
@@ -234,16 +242,16 @@ namespace MessageBird.Net
             }
         }
 
-        public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode)
+        public virtual string PerformHttpRequest(string method, string endpoint, string uri, HttpStatusCode expectedStatusCode)
         {
             string body = null;
 
-            return PerformHttpRequest(method, uri, body, expectedStatusCode);
+            return PerformHttpRequest(method, endpoint, uri, body, expectedStatusCode);
         }
 
-        private HttpWebRequest PrepareRequest(string method, string requestUriString)
+        private HttpWebRequest PrepareRequest(string method, string requestUriString, string endpoint)
         {
-            string uriString = String.Format("{0}/{1}", Endpoint, requestUriString);
+            string uriString = String.Format("{0}/{1}", endpoint, requestUriString);
             var uri = new Uri(uriString);
             // TODO: ##jwp; need to find out why .NET 4.0 under VS2013 refuses to recognize `WebRequest.CreateHttp`.
             // HttpWebRequest request = WebRequest.CreateHttp(uri);
