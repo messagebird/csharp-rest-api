@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MessageBird.Net;
+using Newtonsoft.Json;
 
 namespace MessageBird.Resources
 {
@@ -23,5 +24,7 @@ namespace MessageBird.Resources
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             return JsonConvert.SerializeObject(requestObject, settings);
         }
+
+        public override UpdateMode UpdateMode => UpdateMode.Patch;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using MessageBird.Exceptions;
+using MessageBird.Net;
 using MessageBird.Objects;
 using Newtonsoft.Json;
 
@@ -85,5 +86,6 @@ namespace MessageBird.Resources
         }
 
         public virtual string Endpoint => DefaultEndpoint;
+        public virtual UpdateMode UpdateMode => UpdateMode.Put;
     }
 }

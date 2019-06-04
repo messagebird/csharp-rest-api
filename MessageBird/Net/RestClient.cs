@@ -73,7 +73,7 @@ namespace MessageBird.Net
         /// </summary>
         public void Update(Resource resource)
         {
-            var method = GetUpdateMethod();
+            var method = GetUpdateMethod(resource);
             var uri = GetUriWithQueryString(resource);
 
             RequestWithResource(method, uri, resource, HttpStatusCode.NoContent);
@@ -81,7 +81,7 @@ namespace MessageBird.Net
         
         public T Update<T>(T resource) where T : Resource
         {
-            var method = GetUpdateMethod();
+            var method = GetUpdateMethod(resource);
             var uri = GetUriWithQueryString(resource);
 
             return RequestWithResource(method, uri, resource, HttpStatusCode.OK);
@@ -93,18 +93,19 @@ namespace MessageBird.Net
         /// a Patch method or set this property on this class. That would be a
         /// breaking change: we can't just change the public interface.
         /// </summary>
-        private string GetUpdateMethod()
+        private string GetUpdateMethod(Resource r)
         {
-            if (RestClientOptions.UpdateMode == UpdateMode.Patch)
+            if (r.UpdateMode == UpdateMode.Patch)
             {
                 return "PATCH";
             }
-            else if (RestClientOptions.UpdateMode == UpdateMode.Put)
+
+            if (r.UpdateMode == UpdateMode.Put)
             {
                 return "PUT";
             }
 
-            throw new Exception("Unexpected UpdateMode: " + RestClientOptions.UpdateMode);
+            throw new Exception("Unexpected UpdateMode: " + r.UpdateMode);
         }
 
         public void Delete(Resource resource)

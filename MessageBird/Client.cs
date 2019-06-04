@@ -255,8 +255,7 @@ namespace MessageBird
                 LastName = optionalArguments.LastName,
                 CustomDetails = customDetails,
             });
-
-            RestClientOptions.UpdateMode = UpdateMode.Patch;
+            
             restClient.Update(contacts);
 
             return contacts.Object as Contact;
@@ -303,8 +302,7 @@ namespace MessageBird
                 Id = id,
                 Name = name,
             });
-
-            RestClientOptions.UpdateMode = UpdateMode.Patch;
+            
             restClient.Update(groups);
 
             return groups.Object as Group;

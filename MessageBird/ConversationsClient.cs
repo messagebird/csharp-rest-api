@@ -46,8 +46,7 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
             conversation.Id = id;
             var resource = new Conversations(conversation);
-
-            RestClientOptions.UpdateMode = UpdateMode.Patch;
+            
             restClient.Update(resource);
 
             return resource.Object as Conversation;
