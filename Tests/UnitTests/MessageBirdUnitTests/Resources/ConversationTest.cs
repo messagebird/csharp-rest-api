@@ -23,7 +23,7 @@ namespace MessageBirdTests.Resources
                     @"{""to"":""+31612345678"",""type"":""text"",""content"":{""text"":""Hello!""},""channelId"":""619747f69cf940a98fb443140ce9aed2""}")
                 .AndReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "ConversationView.json")))
-                .FromEndpoint("POST", "conversations/start", Resource.ConverstationsEndpoint)
+                .FromEndpoint("POST", "conversations/start", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -51,7 +51,7 @@ namespace MessageBirdTests.Resources
             var restClient = MockRestClient
                 .ThatReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "ConversationList.json")))
-                .FromEndpoint("GET", "conversations?limit=20&offset=0", Resource.ConverstationsEndpoint)
+                .FromEndpoint("GET", "conversations?limit=20&offset=0", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -67,7 +67,7 @@ namespace MessageBirdTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns("{}")
-                .FromEndpoint("GET", "conversations?limit=50&offset=10", Resource.ConverstationsEndpoint)
+                .FromEndpoint("GET", "conversations?limit=50&offset=10", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -81,7 +81,7 @@ namespace MessageBirdTests.Resources
             var restClient = MockRestClient
                 .ThatReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "ConversationView.json")))
-                .FromEndpoint("GET", "conversations/2e15efafec384e1c82e9842075e87beb", Resource.ConverstationsEndpoint)
+                .FromEndpoint("GET", "conversations/2e15efafec384e1c82e9842075e87beb", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -100,7 +100,7 @@ namespace MessageBirdTests.Resources
                 .ThatExpects(@"{""id"":""2e15efafec384e1c82e9842075e87beb"",""status"": ""archived""}")
                 .AndReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "ConversationView.json")))
-                .FromEndpoint("PATCH", $"conversations/{ConvId}", Resource.ConverstationsEndpoint)
+                .FromEndpoint("PATCH", $"conversations/{ConvId}", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -119,7 +119,7 @@ namespace MessageBirdTests.Resources
                 .ThatReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "ConversationMessagesList.json")))
                 .FromEndpoint("GET", $"conversations/{ConvId}/messages?limit=20&offset=0",
-                    Resource.ConverstationsEndpoint)
+                    Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -137,7 +137,7 @@ namespace MessageBirdTests.Resources
             var restClient = MockRestClient
                 .ThatReturns("{}")
                 .FromEndpoint("GET", $"conversations/{ConvId}/messages?limit=50&offset=10",
-                    Resource.ConverstationsEndpoint)
+                    Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -152,7 +152,7 @@ namespace MessageBirdTests.Resources
                 .ThatExpects(@"{""type"": ""text"",""content"":{""text"": ""Hello!""}}")
                 .AndReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "ConversationMessage.json")))
-                .FromEndpoint("POST", $"conversations/{ConvId}/messages", Resource.ConverstationsEndpoint)
+                .FromEndpoint("POST", $"conversations/{ConvId}/messages", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -178,7 +178,7 @@ namespace MessageBirdTests.Resources
             var restClient = MockRestClient
                 .ThatReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "ConversationMessage.json")))
-                .FromEndpoint("GET", $"messages/{MsgId}", Resource.ConverstationsEndpoint)
+                .FromEndpoint("GET", $"messages/{MsgId}", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -200,7 +200,7 @@ namespace MessageBirdTests.Resources
                     @"{""events"":[""message.created"", ""message.updated""],""channelId"": ""853eeb5348e541a595da93b48c61a1ae"",""url"":""https://example.com/webhook""}")
                 .AndReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "WebhookView.json")))
-                .FromEndpoint("POST", "webhooks", Resource.ConverstationsEndpoint)
+                .FromEndpoint("POST", "webhooks", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -230,7 +230,7 @@ namespace MessageBirdTests.Resources
             var restClient = MockRestClient
                 .ThatReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "WebhookView.json")))
-                .FromEndpoint("GET", $"webhooks/{WebhookId}", Resource.ConverstationsEndpoint)
+                .FromEndpoint("GET", $"webhooks/{WebhookId}", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -248,7 +248,7 @@ namespace MessageBirdTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(string.Empty)
-                .FromEndpoint("DELETE", $"webhooks/{WebhookId}", Resource.ConverstationsEndpoint)
+                .FromEndpoint("DELETE", $"webhooks/{WebhookId}", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -263,7 +263,7 @@ namespace MessageBirdTests.Resources
                 .ThatReturns(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses",
                     "WebhookList.json")))
                 .FromEndpoint("GET", $"webhooks?limit=20&offset=0",
-                    Resource.ConverstationsEndpoint)
+                    Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -280,7 +280,7 @@ namespace MessageBirdTests.Resources
             var restClient = MockRestClient
                 .ThatReturns("{}")
                 .FromEndpoint("GET", $"webhooks?limit=50&offset=10",
-                    Resource.ConverstationsEndpoint)
+                    Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 

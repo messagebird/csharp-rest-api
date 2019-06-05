@@ -6,6 +6,9 @@ namespace MessageBird.Resources.Conversations
         
         public Webhooks() : this(new Objects.Conversations.Webhook()) { }
         
-        public override string Endpoint => Conversations.ConverstationsEndpoint;
+        public override string BaseUrl
+        {
+            get { return Conversations.ConverstationsBaseUrl; }
+        }
     }
 }

@@ -70,7 +70,7 @@ namespace MessageBird.Utilities
                 }
                 else if (!isNumeric && isAlphanumericWithWhitespace && originator.Length > ORIGINATOR_ALPHANUMERIC_MAXLENGTH)
                 {
-                    throw new ArgumentException($"Alphanumeric originator is limited to {ORIGINATOR_ALPHANUMERIC_MAXLENGTH} characters.");
+                    throw new ArgumentException(string.Format("Alphanumeric originator is limited to {0} characters.", ORIGINATOR_ALPHANUMERIC_MAXLENGTH));
                 }
             }
         }

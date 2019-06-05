@@ -24,6 +24,9 @@ namespace MessageBird.Resources
             return JsonConvert.SerializeObject(requestObject, settings);
         }
 
-        public override UpdateMode UpdateMode => UpdateMode.Patch;
+        public override UpdateMode UpdateMode
+        {
+            get { return UpdateMode.Patch; }
+        }
     }
 }

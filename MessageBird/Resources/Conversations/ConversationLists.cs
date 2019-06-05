@@ -5,6 +5,9 @@ namespace MessageBird.Resources.Conversations
         public ConversationLists()
             : base("conversations", new Objects.Conversations.ConversationList())
         { }
-        public override string Endpoint => Conversations.ConverstationsEndpoint;
+        public override string BaseUrl
+        {
+            get { return Conversations.ConverstationsBaseUrl; }
+        }
     }
 }

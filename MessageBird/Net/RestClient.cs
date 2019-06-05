@@ -112,7 +112,7 @@ namespace MessageBird.Net
         {
             var uri = GetUriWithQueryString(resource);
 
-            PerformHttpRequest("DELETE", resource.Endpoint, uri, HttpStatusCode.NoContent);
+            PerformHttpRequest("DELETE", resource.BaseUrl, uri, HttpStatusCode.NoContent);
         }
 
         /// <summary>
@@ -138,12 +138,12 @@ namespace MessageBird.Net
 
             if (method == "GET" || method == "DELETE")
             {
-                response = PerformHttpRequest(method, resource.Endpoint, uri, expectedHttpStatusCode);
+                response = PerformHttpRequest(method, resource.BaseUrl, uri, expectedHttpStatusCode);
             }
             else
             {
                 string s = resource.Serialize();
-                response = PerformHttpRequest(method, resource.Endpoint, uri, s, expectedHttpStatusCode);
+                response = PerformHttpRequest(method, resource.BaseUrl, uri, s, expectedHttpStatusCode);
             }
 
             resource.Deserialize(response);
@@ -203,9 +203,9 @@ namespace MessageBird.Net
             }
         }
 
-        public virtual string PerformHttpRequest(string method, string endpoint, string uri, string body, HttpStatusCode expectedStatusCode)
+        public virtual string PerformHttpRequest(string method, string baseUrl, string uri, string body, HttpStatusCode expectedStatusCode)
         {
-            var request = PrepareRequest(method, uri, endpoint);
+            var request = PrepareRequest(method, uri, baseUrl);
 
             try
             {
@@ -243,11 +243,11 @@ namespace MessageBird.Net
             }
         }
 
-        public virtual string PerformHttpRequest(string method, string endpoint, string uri, HttpStatusCode expectedStatusCode)
+        public virtual string PerformHttpRequest(string method, string baseUrl, string uri, HttpStatusCode expectedStatusCode)
         {
             string body = null;
 
-            return PerformHttpRequest(method, endpoint, uri, body, expectedStatusCode);
+            return PerformHttpRequest(method, baseUrl, uri, body, expectedStatusCode);
         }
 
         private HttpWebRequest PrepareRequest(string method, string requestUriString, string endpoint)

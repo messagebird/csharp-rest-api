@@ -20,8 +20,14 @@ namespace MessageBird.Resources.Conversations
             return JsonConvert.SerializeObject(Request, settings);
         }
         
-        public override string Uri => String.Format("conversations/{0}/{1}", Request.ConversationId, Name);
-        
-        public override string Endpoint => Conversations.ConverstationsEndpoint;
+        public override string Uri
+        {
+            get { return String.Format("conversations/{0}/{1}", Request.ConversationId, Name); }
+        }
+
+        public override string BaseUrl
+        {
+            get { return Conversations.ConverstationsBaseUrl; }
+        }
     }
 }

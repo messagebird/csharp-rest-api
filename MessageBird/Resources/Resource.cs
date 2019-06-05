@@ -8,8 +8,8 @@ namespace MessageBird.Resources
 {
     public abstract class Resource
     {
-        public static string ConverstationsEndpoint = "https://conversations.messagebird.com/v1";
-        public static string DefaultEndpoint = "https://rest.messagebird.com";
+        public static string ConverstationsBaseUrl = "https://conversations.messagebird.com/v1";
+        public static string DefaultBaseUrl = "https://rest.messagebird.com";
         
         public string Id
         {
@@ -85,7 +85,14 @@ namespace MessageBird.Resources
             }
         }
 
-        public virtual string Endpoint => DefaultEndpoint;
-        public virtual UpdateMode UpdateMode => UpdateMode.Put;
+        public virtual string BaseUrl
+        {
+            get { return DefaultBaseUrl; }
+        }
+
+        public virtual UpdateMode UpdateMode
+        {
+            get { return UpdateMode.Put; }
+        }
     }
 }

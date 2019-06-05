@@ -324,7 +324,7 @@ namespace MessageBird
 
             var uri = string.Format("groups/{0}?{1}", groupId, GetAddContactsToGroupQuery(contactIds));
 
-            restClient.PerformHttpRequest("GET", Resource.DefaultEndpoint, uri, HttpStatusCode.NoContent);
+            restClient.PerformHttpRequest("GET", Resource.DefaultBaseUrl, uri, HttpStatusCode.NoContent);
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace MessageBird
 
             var uri = string.Format("groups/{0}/contacts/{1}", groupId, contactId);
 
-            restClient.PerformHttpRequest("DELETE", Resource.DefaultEndpoint, uri, HttpStatusCode.NoContent);
+            restClient.PerformHttpRequest("DELETE", Resource.DefaultBaseUrl, uri, HttpStatusCode.NoContent);
         }
     }
 }
