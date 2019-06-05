@@ -16,7 +16,6 @@ namespace MessageBird.Net
 
         T Create<T> (T resource) where T : Resource;
         T Retrieve<T>(T resource) where T : Resource;
-        void Update(Resource resource);
         T Update<T>(T resource) where T : Resource;
         void Delete(Resource resource); 
 

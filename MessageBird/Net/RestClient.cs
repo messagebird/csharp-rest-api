@@ -71,14 +71,6 @@ namespace MessageBird.Net
         /// Updates a resource. HTTP method is determined by
         /// RestClientOptions.UpdateMode.
         /// </summary>
-        public void Update(Resource resource)
-        {
-            var method = GetUpdateMethod(resource);
-            var uri = GetUriWithQueryString(resource);
-
-            RequestWithResource(method, uri, resource, HttpStatusCode.NoContent);
-        }
-        
         public T Update<T>(T resource) where T : Resource
         {
             var method = GetUpdateMethod(resource);
