@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace MessageBird
 {
-    public class Client
+    public partial class Client
     {
         private readonly IRestClient restClient;
 
@@ -36,12 +36,13 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(originator, "originator");
             ParameterValidator.IsNotNullOrWhiteSpace(body, "body");
             ParameterValidator.ContainsAtLeast(msisdns, 1, "msisdns");
+            
             if (optionalArguments != null)
             {
                 ParameterValidator.IsValidMessageType(optionalArguments.Type);
             }
 
-           var recipients = new Recipients(msisdns);
+            var recipients = new Recipients(msisdns);
             var message = new Message(originator, body, recipients, optionalArguments);
 
             var messages = new Messages(message);
@@ -255,8 +256,7 @@ namespace MessageBird
                 LastName = optionalArguments.LastName,
                 CustomDetails = customDetails,
             });
-
-            RestClientOptions.UpdateMode = UpdateMode.Patch;
+            
             restClient.Update(contacts);
 
             return contacts.Object as Contact;
@@ -303,8 +303,7 @@ namespace MessageBird
                 Id = id,
                 Name = name,
             });
-
-            RestClientOptions.UpdateMode = UpdateMode.Patch;
+            
             restClient.Update(groups);
 
             return groups.Object as Group;
@@ -326,7 +325,7 @@ namespace MessageBird
 
             var uri = string.Format("groups/{0}?{1}", groupId, GetAddContactsToGroupQuery(contactIds));
 
-            restClient.PerformHttpRequest("GET", uri, HttpStatusCode.NoContent);
+            restClient.PerformHttpRequest("GET", uri, HttpStatusCode.NoContent, baseUrl: Resource.DefaultBaseUrl);
         }
 
         /// <summary>
@@ -357,7 +356,7 @@ namespace MessageBird
 
             var uri = string.Format("groups/{0}/contacts/{1}", groupId, contactId);
 
-            restClient.PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent);
+            restClient.PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent, baseUrl: Resource.DefaultBaseUrl);
         }
     }
 }

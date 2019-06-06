@@ -1,8 +1,10 @@
 ﻿using System;
-
+using System.IO;
 using MessageBird.Net;
 using MessageBird.Net.ProxyConfigurationInjector;
+using MessageBird.Resources;
 using Moq;
+using Newtonsoft.Json.Linq;
 
 namespace MessageBirdTests
 {
@@ -32,6 +34,7 @@ namespace MessageBirdTests
         private string ResponseBody { get; set; }
         private string Method { get; set; }
         private string Uri { get; set; }
+        private string BaseUrl { get; set; }
 
         private MockRestClient()
         {
@@ -65,11 +68,13 @@ namespace MessageBirdTests
             // Handle the overload...
             if (RequestBody == null)
             {
-                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
+                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<HttpStatusCode>(), BaseUrl)).Returns(ResponseBody).Verifiable();
             }
             else
             {
-                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, RequestBody, It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
+                restClient.Setup(c => c.PerformHttpRequest(Method, Uri,
+                    It.Is<string>(arg => JToken.DeepEquals(JToken.Parse(RequestBody), JToken.Parse(arg))),
+                    It.IsAny<HttpStatusCode>(), BaseUrl)).Returns(ResponseBody).Verifiable();
             }
             
             return restClient;
@@ -86,17 +91,21 @@ namespace MessageBirdTests
         /// <summary>
         /// Creates a mock client and sets the expected response body.
         /// </summary>
-        public static MockRestClient ThatReturns(string responseBody)
+        public static MockRestClient ThatReturns(string responseBody = null, string filename = null)
         {
-            return new MockRestClient { ResponseBody = responseBody };
+            return new MockRestClient
+            {
+                ResponseBody = responseBody ??
+                               File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses", filename))
+            };
         }
 
         /// <summary>
-        /// Sets the expected response body.
+        /// Sets the expected response body from string or json file name.
         /// </summary>
-        public MockRestClient AndReturns(string responseBody)
+        public MockRestClient AndReturns(string responseBody = null, string filename = null)
         {
-            ResponseBody = responseBody;
+            ResponseBody = responseBody ?? File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses", filename));
 
             return this;
         }
@@ -104,10 +113,11 @@ namespace MessageBirdTests
         /// <summary>
         /// Sets the expected (HTTP) method.
         /// </summary>
-        public MockRestClient FromEndpoint(string method, string uri)
+        public MockRestClient FromEndpoint(string method, string uri, string baseUrl = null)
         {
             Method = method;
             Uri = uri;
+            BaseUrl = baseUrl ?? Resource.DefaultBaseUrl;
 
             return this;
         }

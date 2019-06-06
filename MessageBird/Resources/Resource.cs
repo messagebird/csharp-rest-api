@@ -1,5 +1,6 @@
 ﻿using System;
 using MessageBird.Exceptions;
+using MessageBird.Net;
 using MessageBird.Objects;
 using Newtonsoft.Json;
 
@@ -7,6 +8,9 @@ namespace MessageBird.Resources
 {
     public abstract class Resource
     {
+        public static string ConverstationsBaseUrl = "https://conversations.messagebird.com/v1";
+        public static string DefaultBaseUrl = "https://rest.messagebird.com";
+        
         public string Id
         {
             get
@@ -79,6 +83,16 @@ namespace MessageBird.Resources
             {
                 return QueryString.Length > 0;
             }
+        }
+
+        public virtual string BaseUrl
+        {
+            get { return DefaultBaseUrl; }
+        }
+
+        public virtual UpdateMode UpdateMode
+        {
+            get { return UpdateMode.Put; }
         }
     }
 }

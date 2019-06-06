@@ -1,0 +1,34 @@
+{
+  "count": 2,
+  "items": [
+    {
+      "id": "eb34fb1fc73f47a58ad644de0e2de254",
+      "conversationId": "2e15efafec384e1c82e9842075e87beb",
+      "channelId": "619747f69cf940a98fb443140ce9aed2",
+      "status": "received",
+      "direction": "received",
+      "type": "text",
+      "content": {
+        "text": "This is a test WhatsApp message"
+      },
+      "createdDatetime": "2018-08-29T08:07:15Z",
+      "updatedDatetime": "2018-08-29T08:07:33Z"
+    },
+    {
+      "id": "5f3437fdb8444583aea093a047ac014b",
+      "conversationId": "2e15efafec384e1c82e9842075e87beb",
+      "channelId": "853eeb5348e541a595da93b48c61a1ae",
+      "status": "delivered",
+      "direction": "sent",
+      "type": "text",
+      "content": {
+        "text": "This is a test SMS message"
+      },
+      "createdDatetime": "2018-08-28T15:52:41Z",
+      "updatedDatetime": "2018-08-28T15:52:58Z"
+    }
+  ],
+  "limit": 20,
+  "offset": 0,
+  "totalCount": 24
+}

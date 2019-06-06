@@ -12,8 +12,6 @@ namespace MessageBird.Net
     // immutable, so no read/write properties
     public class RestClient : IRestClient
     {
-        public static readonly string HttpsRestMessagebirdComEndpoint = "https://rest.messagebird.com";
-
         public string AccessKey { get; private set; }
 
         public string Endpoint { get; private set; }
@@ -43,7 +41,7 @@ namespace MessageBird.Net
         }
 
         public RestClient(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector)
-            : this(HttpsRestMessagebirdComEndpoint, accessKey, proxyConfigurationInjector)
+            : this(Resource.DefaultBaseUrl, accessKey, proxyConfigurationInjector)
         {
         }
 
@@ -71,12 +69,12 @@ namespace MessageBird.Net
         /// Updates a resource. HTTP method is determined by
         /// RestClientOptions.UpdateMode.
         /// </summary>
-        public void Update(Resource resource)
+        public T Update<T>(T resource) where T : Resource
         {
-            var method = GetUpdateMethod();
+            var method = GetUpdateMethod(resource);
             var uri = GetUriWithQueryString(resource);
 
-            RequestWithResource(method, uri, resource, HttpStatusCode.NoContent);
+            return RequestWithResource(method, uri, resource, HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -85,25 +83,26 @@ namespace MessageBird.Net
         /// a Patch method or set this property on this class. That would be a
         /// breaking change: we can't just change the public interface.
         /// </summary>
-        private string GetUpdateMethod()
+        private string GetUpdateMethod(Resource r)
         {
-            if (RestClientOptions.UpdateMode == UpdateMode.Patch)
+            if (r.UpdateMode == UpdateMode.Patch)
             {
                 return "PATCH";
             }
-            else if (RestClientOptions.UpdateMode == UpdateMode.Put)
+
+            if (r.UpdateMode == UpdateMode.Put)
             {
                 return "PUT";
             }
 
-            throw new Exception("Unexpected UpdateMode: " + RestClientOptions.UpdateMode);
+            throw new Exception("Unexpected UpdateMode: " + r.UpdateMode);
         }
 
         public void Delete(Resource resource)
         {
             var uri = GetUriWithQueryString(resource);
 
-            PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent);
+            PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent, baseUrl: resource.BaseUrl);
         }
 
         /// <summary>
@@ -129,12 +128,12 @@ namespace MessageBird.Net
 
             if (method == "GET" || method == "DELETE")
             {
-                response = PerformHttpRequest(method, uri, expectedHttpStatusCode);
+                response = PerformHttpRequest(method, uri, expectedHttpStatusCode, baseUrl: resource.BaseUrl);
             }
             else
             {
                 string s = resource.Serialize();
-                response = PerformHttpRequest(method, uri, s, expectedHttpStatusCode);
+                response = PerformHttpRequest(method, uri, s, expectedHttpStatusCode, baseUrl: resource.BaseUrl);
             }
 
             resource.Deserialize(response);
@@ -194,9 +193,9 @@ namespace MessageBird.Net
             }
         }
 
-        public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode)
+        public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode, string baseUrl)
         {
-            var request = PrepareRequest(method, uri);
+            var request = PrepareRequest(method, uri, baseUrl);
 
             try
             {
@@ -234,16 +233,26 @@ namespace MessageBird.Net
             }
         }
 
-        public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode)
+        public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode, string baseUrl)
         {
             string body = null;
 
-            return PerformHttpRequest(method, uri, body, expectedStatusCode);
+            return PerformHttpRequest(method, uri, body, expectedStatusCode, baseUrl);
+        }
+        
+        public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode)
+        {
+            return PerformHttpRequest(method, uri, body, expectedStatusCode, Endpoint);
         }
 
-        private HttpWebRequest PrepareRequest(string method, string requestUriString)
+        public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode)
         {
-            string uriString = String.Format("{0}/{1}", Endpoint, requestUriString);
+            return PerformHttpRequest(method, uri, expectedStatusCode, Endpoint);
+        }
+
+        private HttpWebRequest PrepareRequest(string method, string requestUriString, string endpoint)
+        {
+            string uriString = String.Format("{0}/{1}", endpoint, requestUriString);
             var uri = new Uri(uriString);
             // TODO: ##jwp; need to find out why .NET 4.0 under VS2013 refuses to recognize `WebRequest.CreateHttp`.
             // HttpWebRequest request = WebRequest.CreateHttp(uri);

@@ -1,0 +1,13 @@
+{
+  "id": "13a97a5023944648b8e5e61248c40da8",
+  "conversationId": "2e15efafec384e1c82e9842075e87beb",
+  "channelId": "a621095fa44947a28b441cfdf85cb802",
+  "status": "pending",
+  "type": "text",
+  "direction": "sent",
+  "content": {
+    "text": "Hello!"
+  },
+  "createdDatetime": "2018-08-29T13:53:44.642664784Z",
+  "updatedDatetime": "2018-08-29T13:53:44.673850825Z"
+}
