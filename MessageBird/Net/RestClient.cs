@@ -12,8 +12,6 @@ namespace MessageBird.Net
     // immutable, so no read/write properties
     public class RestClient : IRestClient
     {
-        public static readonly string HttpsRestMessagebirdComEndpoint = "https://rest.messagebird.com";
-
         public string AccessKey { get; private set; }
 
         public string Endpoint { get; private set; }
@@ -43,7 +41,7 @@ namespace MessageBird.Net
         }
 
         public RestClient(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector)
-            : this(HttpsRestMessagebirdComEndpoint, accessKey, proxyConfigurationInjector)
+            : this(Resource.DefaultBaseUrl, accessKey, proxyConfigurationInjector)
         {
         }
 
@@ -104,7 +102,7 @@ namespace MessageBird.Net
         {
             var uri = GetUriWithQueryString(resource);
 
-            PerformHttpRequest("DELETE", resource.BaseUrl, uri, HttpStatusCode.NoContent);
+            PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent, baseUrl: resource.BaseUrl);
         }
 
         /// <summary>
@@ -130,12 +128,12 @@ namespace MessageBird.Net
 
             if (method == "GET" || method == "DELETE")
             {
-                response = PerformHttpRequest(method, resource.BaseUrl, uri, expectedHttpStatusCode);
+                response = PerformHttpRequest(method, uri, expectedHttpStatusCode, baseUrl: resource.BaseUrl);
             }
             else
             {
                 string s = resource.Serialize();
-                response = PerformHttpRequest(method, resource.BaseUrl, uri, s, expectedHttpStatusCode);
+                response = PerformHttpRequest(method, uri, s, expectedHttpStatusCode, baseUrl: resource.BaseUrl);
             }
 
             resource.Deserialize(response);
@@ -195,7 +193,7 @@ namespace MessageBird.Net
             }
         }
 
-        public virtual string PerformHttpRequest(string method, string baseUrl, string uri, string body, HttpStatusCode expectedStatusCode)
+        public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode, string baseUrl)
         {
             var request = PrepareRequest(method, uri, baseUrl);
 
@@ -235,11 +233,21 @@ namespace MessageBird.Net
             }
         }
 
-        public virtual string PerformHttpRequest(string method, string baseUrl, string uri, HttpStatusCode expectedStatusCode)
+        public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode, string baseUrl)
         {
             string body = null;
 
-            return PerformHttpRequest(method, baseUrl, uri, body, expectedStatusCode);
+            return PerformHttpRequest(method, uri, body, expectedStatusCode, baseUrl);
+        }
+        
+        public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode)
+        {
+            return PerformHttpRequest(method, uri, body, expectedStatusCode, Endpoint);
+        }
+
+        public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode)
+        {
+            return PerformHttpRequest(method, uri, expectedStatusCode, Endpoint);
         }
 
         private HttpWebRequest PrepareRequest(string method, string requestUriString, string endpoint)

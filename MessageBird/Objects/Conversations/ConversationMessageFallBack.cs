@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Objects.Conversations
 {
-    public class MessageFallBack
+    public class ConversationMessageFallBack
     {
         [JsonProperty("from")]
         public string From { get; set; }

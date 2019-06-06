@@ -2,10 +2,10 @@ using MessageBird.Objects.Conversations;
 
 namespace MessageBird.Resources.Conversations
 {
-    public class WebhookLists : BaseLists<Webhook>
+    public class WebhookLists : BaseLists<ConversationWebhook>
     {
         public WebhookLists()
-            : base("webhooks", new WebhookList())
+            : base("webhooks", new ConversationWebhookList())
         { }
         
         public override string BaseUrl

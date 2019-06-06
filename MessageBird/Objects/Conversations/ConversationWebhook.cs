@@ -7,7 +7,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace MessageBird.Objects.Conversations
 {
-    public enum WebhookEvent
+    public enum ConversationWebhookEvent
     {
         [EnumMember(Value = "conversation.created")]
         ConversationCreated,
@@ -19,7 +19,7 @@ namespace MessageBird.Objects.Conversations
         MessageUpdated,
     }
     
-    public class Webhook : IIdentifiable<string>
+    public class ConversationWebhook : IIdentifiable<string>
     {
         [JsonProperty("id")]
         public string Id {get;set;}
@@ -31,7 +31,7 @@ namespace MessageBird.Objects.Conversations
         public string Url {get;set;}
         
         [JsonProperty("events", ItemConverterType = typeof(StringEnumConverter))]
-        public List<WebhookEvent> Events {get;set;}
+        public List<ConversationWebhookEvent> Events {get;set;}
         
         [JsonProperty("createdDatetime")]
         public DateTime? CreatedDatetime {get;set;}

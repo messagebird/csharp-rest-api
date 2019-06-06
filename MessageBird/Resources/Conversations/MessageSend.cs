@@ -6,10 +6,10 @@ namespace MessageBird.Resources.Conversations
 {
     public class MessageSend : Resource
     {
-        public MessageSendRequest Request { get; protected set; }
+        public ConversationMessageSendRequest Request { get; protected set; }
 
-        public MessageSend(MessageSendRequest request)
-            : base("messages", new Message())
+        public MessageSend(ConversationMessageSendRequest request)
+            : base("messages", new ConversationMessage())
         {
             Request = request;
         }

@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.IO;
 using MessageBird.Net;
 using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Resources;
@@ -68,13 +68,13 @@ namespace MessageBirdTests
             // Handle the overload...
             if (RequestBody == null)
             {
-                restClient.Setup(c => c.PerformHttpRequest(Method, BaseUrl, Uri, It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
+                restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<HttpStatusCode>(), BaseUrl)).Returns(ResponseBody).Verifiable();
             }
             else
             {
-                restClient.Setup(c => c.PerformHttpRequest(Method, BaseUrl, Uri,
+                restClient.Setup(c => c.PerformHttpRequest(Method, Uri,
                     It.Is<string>(arg => JToken.DeepEquals(JToken.Parse(RequestBody), JToken.Parse(arg))),
-                    It.IsAny<HttpStatusCode>())).Returns(ResponseBody).Verifiable();
+                    It.IsAny<HttpStatusCode>(), BaseUrl)).Returns(ResponseBody).Verifiable();
             }
             
             return restClient;
@@ -91,17 +91,21 @@ namespace MessageBirdTests
         /// <summary>
         /// Creates a mock client and sets the expected response body.
         /// </summary>
-        public static MockRestClient ThatReturns(string responseBody)
+        public static MockRestClient ThatReturns(string responseBody = null, string filename = null)
         {
-            return new MockRestClient { ResponseBody = responseBody };
+            return new MockRestClient
+            {
+                ResponseBody = responseBody ??
+                               File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses", filename))
+            };
         }
 
         /// <summary>
-        /// Sets the expected response body.
+        /// Sets the expected response body from string or json file name.
         /// </summary>
-        public MockRestClient AndReturns(string responseBody)
+        public MockRestClient AndReturns(string responseBody = null, string filename = null)
         {
-            ResponseBody = responseBody;
+            ResponseBody = responseBody ?? File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses", filename));
 
             return this;
         }

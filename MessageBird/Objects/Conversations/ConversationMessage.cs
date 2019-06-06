@@ -5,7 +5,7 @@ using Newtonsoft.Json.Converters;
 
 namespace MessageBird.Objects.Conversations
 {
-    public enum MessageDirection
+    public enum ConversationMessageDirection
     {
         [EnumMember(Value = "received")]
         Received,
@@ -13,7 +13,7 @@ namespace MessageBird.Objects.Conversations
         Sent,
     }
     
-    public enum MessageStatus
+    public enum ConversationMessageStatus
     {
 
         [EnumMember(Value = "deleted")]
@@ -34,7 +34,7 @@ namespace MessageBird.Objects.Conversations
         Unsupported,
     }
 
-    public class MessageError
+    public class ConversationMessageError
     {
         [JsonProperty("code")]
         public int Code { get; set; }
@@ -42,7 +42,7 @@ namespace MessageBird.Objects.Conversations
         public string Description { get; set; }
     }
     
-    public class Message : IIdentifiable<string>
+    public class ConversationMessage : IIdentifiable<string>
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -54,10 +54,10 @@ namespace MessageBird.Objects.Conversations
         public string ChannelId { get; set; }
         
         [JsonProperty("direction"), JsonConverter(typeof(StringEnumConverter))]
-        public MessageDirection Direction {get; set;}
+        public ConversationMessageDirection Direction {get; set;}
         
         [JsonProperty("status"), JsonConverter(typeof(StringEnumConverter))]
-        public MessageStatus Status {get; set;}
+        public ConversationMessageStatus Status {get; set;}
         
         [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
         public ContentType Type {get; set;}
@@ -66,7 +66,7 @@ namespace MessageBird.Objects.Conversations
         public Content Content {get; set;}
         
         [JsonProperty("error")]
-        public MessageError Error { get; set; }
+        public ConversationMessageError Error { get; set; }
         
         [JsonProperty("createdDatetime")]
         public DateTime? CreatedDatetime {get; set;}

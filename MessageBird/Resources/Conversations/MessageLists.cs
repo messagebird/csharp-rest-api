@@ -2,10 +2,10 @@ using System;
 
 namespace MessageBird.Resources.Conversations
 {
-    public class MessageLists : BaseLists<Objects.Conversations.Message>
+    public class MessageLists : BaseLists<Objects.Conversations.ConversationMessage>
     {
         public MessageLists()
-            : base("messages", new Objects.Conversations.MessageList())
+            : base("messages", new Objects.Conversations.ConversationMessageList())
         { }
 
         public override string Uri
@@ -13,7 +13,7 @@ namespace MessageBird.Resources.Conversations
             get
             {
                 return String.Format("conversations/{0}/{1}",
-                    ((Objects.Conversations.MessageList) Object).ConversationId,
+                    ((Objects.Conversations.ConversationMessageList) Object).ConversationId,
                     Name);
             }
         }

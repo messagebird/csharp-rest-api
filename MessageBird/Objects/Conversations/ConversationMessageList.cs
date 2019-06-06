@@ -1,6 +1,6 @@
 namespace MessageBird.Objects.Conversations
 {
-    public class MessageList : BaseList<Message>
+    public class ConversationMessageList : BaseList<ConversationMessage>
 
     {
         public string ConversationId { get; set; }

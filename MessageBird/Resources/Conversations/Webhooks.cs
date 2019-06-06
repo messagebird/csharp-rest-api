@@ -2,9 +2,9 @@ namespace MessageBird.Resources.Conversations
 {
     public class Webhooks : Resource
     {
-        public Webhooks(Objects.Conversations.Webhook webhook) : base("webhooks", webhook) { }
+        public Webhooks(Objects.Conversations.ConversationWebhook conversationWebhook) : base("webhooks", conversationWebhook) { }
         
-        public Webhooks() : this(new Objects.Conversations.Webhook()) { }
+        public Webhooks() : this(new Objects.Conversations.ConversationWebhook()) { }
         
         public override string BaseUrl
         {

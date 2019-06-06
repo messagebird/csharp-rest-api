@@ -23,6 +23,7 @@ namespace MessageBird
         public Conversation ViewConversation(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+            
             var resource = new Conversations(new Conversation {Id = id});
             restClient.Retrieve(resource);
 
@@ -35,6 +36,7 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(startRequest.ChannelId, "channelId");
             ParameterValidator.IsNotNull(startRequest.Type, "type");
             ParameterValidator.IsNotNull(startRequest.Content, "content");
+            
             var resource = new ConversationStart(startRequest);
             restClient.Create(resource);
 
@@ -44,6 +46,7 @@ namespace MessageBird
         public Conversation UpdateConversation(string id, Conversation conversation)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+            
             conversation.Id = id;
             var resource = new Conversations(conversation);
             
@@ -52,77 +55,83 @@ namespace MessageBird
             return resource.Object as Conversation;
         }
 
-        public MessageList ListConversationMessages(string conversationId, int limit = 20, int offset = 0)
+        public ConversationMessageList ListConversationMessages(string conversationId, int limit = 20, int offset = 0)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(conversationId, "conversationId");
+            
             var resource = new MessageLists();
 
-            var list = (MessageList) resource.Object;
+            var list = (ConversationMessageList) resource.Object;
             list.Limit = limit;
             list.Offset = offset;
             list.ConversationId = conversationId;
 
             restClient.Retrieve(resource);
 
-            return resource.Object as MessageList;
+            return resource.Object as ConversationMessageList;
         }
 
-        public Message ViewConversationMessage(string id)
+        public ConversationMessage ViewConversationMessage(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
-            var resource = new Messages(new Message {Id = id});
+            
+            var resource = new Messages(new ConversationMessage {Id = id});
             restClient.Retrieve(resource);
 
-            return resource.Object as Message;
+            return resource.Object as ConversationMessage;
         }
 
-        public Message SendConversationMessage(string conversationId, MessageSendRequest messageRequest)
+        public ConversationMessage SendConversationMessage(string conversationId, ConversationMessageSendRequest conversationMessageRequest)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(conversationId, "conversationId");
-            messageRequest.ConversationId = conversationId;
-            var resource = new MessageSend(messageRequest);
+            
+            conversationMessageRequest.ConversationId = conversationId;
+            var resource = new MessageSend(conversationMessageRequest);
             restClient.Create(resource);
 
-            return resource.Object as Message;
+            return resource.Object as ConversationMessage;
         }
 
-        public WebhookList ListConversationWebhooks(int limit = 20, int offset = 0)
+        public ConversationWebhookList ListConversationWebhooks(int limit = 20, int offset = 0)
         {
             var resource = new WebhookLists();
 
-            var list = (WebhookList) resource.Object;
+            var list = (ConversationWebhookList) resource.Object;
             list.Limit = limit;
             list.Offset = offset;
 
             restClient.Retrieve(resource);
 
-            return resource.Object as WebhookList;
+            return resource.Object as ConversationWebhookList;
         }
 
-        public Webhook ViewConversationWebhook(string id)
+        public ConversationWebhook ViewConversationWebhook(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
-            var resource = new Webhooks(new Webhook {Id = id});
+            
+            var resource = new Webhooks(new ConversationWebhook {Id = id});
             restClient.Retrieve(resource);
 
-            return resource.Object as Webhook;
+            return resource.Object as ConversationWebhook;
         }
 
-        public Webhook CreateConversationWebhook(Webhook webhook)
+        public ConversationWebhook CreateConversationWebhook(ConversationWebhook conversationWebhook)
         {
-            ParameterValidator.IsNotNullOrWhiteSpace(webhook.ChannelId, "channelId");
-            ParameterValidator.IsNotNullOrWhiteSpace(webhook.Url, "url");
-            ParameterValidator.ContainsAtLeast(webhook.Events.ToArray(), 1, "events");
-            var resource = new Webhooks(webhook);
+            ParameterValidator.IsNotNullOrWhiteSpace(conversationWebhook.ChannelId, "channelId");
+            ParameterValidator.IsNotNullOrWhiteSpace(conversationWebhook.Url, "url");
+            ParameterValidator.ContainsAtLeast(conversationWebhook.Events.ToArray(), 1, "events");
+            
+            var resource = new Webhooks(conversationWebhook);
             restClient.Create(resource);
 
-            return resource.Object as Webhook;
+            return resource.Object as ConversationWebhook;
         }
 
         public void DeleteConversationWebhook(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
-            var resource = new Webhooks(new Webhook {Id = id});
+            
+            var resource = new Webhooks(new ConversationWebhook {Id = id});
             restClient.Delete(resource);
         }
     }

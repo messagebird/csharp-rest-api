@@ -18,8 +18,10 @@ namespace MessageBird.Net
         T Retrieve<T>(T resource) where T : Resource;
         T Update<T>(T resource) where T : Resource;
         void Delete(Resource resource); 
-
-        string PerformHttpRequest(string method, string baseUrl, string uri, string body, HttpStatusCode expectedStatusCode);
-        string PerformHttpRequest(string method, string baseUrl, string uri, HttpStatusCode expectedStatusCode);
+        
+        string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode);
+        string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode);
+        string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode, string baseUrl);
+        string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode, string baseUrl);
     }
 }

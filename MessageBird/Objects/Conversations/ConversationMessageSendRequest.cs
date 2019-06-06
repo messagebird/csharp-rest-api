@@ -3,7 +3,7 @@ using Newtonsoft.Json.Converters;
 
 namespace MessageBird.Objects.Conversations
 {
-    public class MessageSendRequest
+    public class ConversationMessageSendRequest
     {
         [JsonIgnore]
         public string ConversationId { get; set; }
@@ -18,6 +18,6 @@ namespace MessageBird.Objects.Conversations
         public string ChannelId {get;set;}
         
         [JsonProperty("fallback")]
-        public MessageFallBack FallBack { get; set; }
+        public ConversationMessageFallBack FallBack { get; set; }
     }
 }

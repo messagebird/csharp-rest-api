@@ -36,6 +36,7 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(originator, "originator");
             ParameterValidator.IsNotNullOrWhiteSpace(body, "body");
             ParameterValidator.ContainsAtLeast(msisdns, 1, "msisdns");
+            
             if (optionalArguments != null)
             {
                 ParameterValidator.IsValidMessageType(optionalArguments.Type);
@@ -324,7 +325,7 @@ namespace MessageBird
 
             var uri = string.Format("groups/{0}?{1}", groupId, GetAddContactsToGroupQuery(contactIds));
 
-            restClient.PerformHttpRequest("GET", Resource.DefaultBaseUrl, uri, HttpStatusCode.NoContent);
+            restClient.PerformHttpRequest("GET", uri, HttpStatusCode.NoContent, baseUrl: Resource.DefaultBaseUrl);
         }
 
         /// <summary>
@@ -355,7 +356,7 @@ namespace MessageBird
 
             var uri = string.Format("groups/{0}/contacts/{1}", groupId, contactId);
 
-            restClient.PerformHttpRequest("DELETE", Resource.DefaultBaseUrl, uri, HttpStatusCode.NoContent);
+            restClient.PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent, baseUrl: Resource.DefaultBaseUrl);
         }
     }
 }

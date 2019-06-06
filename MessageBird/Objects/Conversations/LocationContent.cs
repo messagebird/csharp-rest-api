@@ -5,9 +5,9 @@ namespace MessageBird.Objects.Conversations
     public class LocationContent
     {
         [JsonProperty("latitude")]
-        public double Latitude {get;set;}
+        public float Latitude {get;set;}
         
         [JsonProperty("longitude")]
-        public double Longitude {get;set;}
+        public float Longitude {get;set;}
     }
 }
