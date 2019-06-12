@@ -3,7 +3,7 @@
   <metadata>
     <id>MessageBird</id>
     <title>MessageBird's REST API for C#</title>
-    <version>1.5.0.0</version>
+    <version>1.6.0.0</version>
     <authors>MessageBird,Remco Vermeulen</authors>
     <owners>MessageBird</owners>
     <licenseUrl>https://github.com/messagebird/csharp-rest-api/blob/master/LICENSE</licenseUrl>
