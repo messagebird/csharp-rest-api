@@ -25,19 +25,11 @@ namespace MessageBirdTests.Resources
             }
         }
 
-        private bool HasToken
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(Token);
-            }
-        }
-
         public override string QueryString
         {
             get
             {
-                return HasToken ? "token=" + System.Uri.EscapeDataString(Token) : string.Empty;
+                return string.IsNullOrEmpty(Token) ? string.Empty : "token=" + System.Uri.EscapeDataString(Token);
             }
         }
 
@@ -65,7 +57,7 @@ namespace MessageBirdTests.Resources
         private const Language LANGUAGE = Language.BrazilianPortugese;
 
 
-        private static string CREATE_VERIFY_RESPONSE = "{" +
+        private const string CREATE_VERIFY_RESPONSE = "{" +
                 "\"id\": \"2cec4f419b7a4cf7b546a41c630a20b0\"," +
                 "\"href\": \"some_url\"," +
                 "\"recipient\": 31627343907," +
@@ -78,7 +70,7 @@ namespace MessageBirdTests.Resources
                 "\"validUntilDatetime\": \"2019-07-04T08:24:07+00:00\"" +
                 "}";
 
-        private static string EXPECTED_REQUEST = "{" +
+        private const string EXPECTED_REQUEST = "{" +
             "\"recipient\":31612345678," +
             "\"reference\":\"testref\"," +
             "\"originator\":\"test ori\"," +
