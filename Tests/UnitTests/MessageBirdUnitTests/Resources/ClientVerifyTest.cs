@@ -56,33 +56,8 @@ namespace MessageBirdTests.Resources
         private const Voice VOICE = Voice.Female;
         private const Language LANGUAGE = Language.BrazilianPortugese;
 
-
-        private const string CREATE_VERIFY_RESPONSE = "{" +
-                "\"id\": \"2cec4f419b7a4cf7b546a41c630a20b0\"," +
-                "\"href\": \"some_url\"," +
-                "\"recipient\": 31627343907," +
-                "\"reference\": null," +
-                "\"messages\": {" +
-                "    \"href\": \"some_url\"" +
-                "}," +
-                "\"status\": \"sent\"," +
-                "\"createdDatetime\": \"2019-07-04T08:23:37+00:00\"," +
-                "\"validUntilDatetime\": \"2019-07-04T08:24:07+00:00\"" +
-                "}";
-
-        private const string EXPECTED_REQUEST = "{" +
-            "\"recipient\":31612345678," +
-            "\"reference\":\"testref\"," +
-            "\"originator\":\"test ori\"," +
-            "\"template\":\"test template\"," +
-            "\"datacoding\":\"auto\"," +
-            "\"tokenLength\":15," +
-            "\"type\":\"tts\"," +
-            "\"timeout\":1234," +
-            "\"voice\":\"female\"," +
-            "\"language\":\"pt-br\"" +
-            "}";
-
+        private const string CREATE_VERIFY_RESPONSE = @"{""id"": ""2cec4f419b7a4cf7b546a41c630a20b0"",""href"": ""some_ur"",""recipient"": 31627343907,""reference"": null,""messages"": {""href"": ""some_url""},""status"": ""sent"",""createdDatetime"": ""2019-07-04T08:23:37+00:00"",""validUntilDatetime"": ""2019-07-04T08:24:07+00:00""}";
+        private const string EXPECTED_REQUEST = @"{""recipient"":31612345678,""reference"":""testref"",""originator"":""test ori"",""template"":""test template"",""datacoding"":""auto"",""tokenLength"":15,""type"":""tts"",""timeout"":1234,""voice"":""female"",""language"":""pt-br""}";
 
         [TestMethod]
         public void CreateVerifyTest()
