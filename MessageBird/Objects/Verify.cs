@@ -101,7 +101,7 @@ namespace MessageBird.Objects
         [JsonProperty("datacoding"), DefaultValue(DataEncoding.Plain), JsonConverter(typeof(StringEnumConverter))]
         public DataEncoding Encoding { get; set; }
 
-        [JsonProperty("tokenLenght"), DefaultValue(6)]
+        [JsonProperty("tokenLength"), DefaultValue(6)]
         public int TokenLength { get; set; }
 
         [JsonProperty("type"), DefaultValue(MessageType.Sms), JsonConverter(typeof(StringEnumConverter))]
