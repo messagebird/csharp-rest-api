@@ -2,10 +2,10 @@ using System;
 
 namespace MessageBird.Resources.Conversations
 {
-    public class Messages : Resource
+    public class Messages : ConversationsResource
     {
-        public Messages(Objects.Conversations.ConversationMessage conversationMessage) : base("messages", conversationMessage) { }
-        public Messages() : this(new Objects.Conversations.ConversationMessage()) { }
+        public Messages(Objects.Conversations.ConversationMessage conversationMessage,bool useWhatsAppSandbox) : base("messages", conversationMessage, useWhatsAppSandbox) { }
+        public Messages(bool useWhatsAppSandbox) : this(new Objects.Conversations.ConversationMessage(), useWhatsAppSandbox) { }
 
         private string BaseName
         {
@@ -22,9 +22,6 @@ namespace MessageBird.Resources.Conversations
             get { return HasId ? string.Format("{0}/{1}", Name, Id) : BaseName; }
         }
 
-        public override string BaseUrl
-        {
-            get { return ConverstationsBaseUrl; }
-        }
+        
     }
 }

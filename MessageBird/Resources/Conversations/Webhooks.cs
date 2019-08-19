@@ -1,14 +1,10 @@
 namespace MessageBird.Resources.Conversations
 {
-    public class Webhooks : Resource
+    public class Webhooks : ConversationsResource
     {
-        public Webhooks(Objects.Conversations.ConversationWebhook conversationWebhook) : base("webhooks", conversationWebhook) { }
+        public Webhooks(Objects.Conversations.ConversationWebhook conversationWebhook, bool useWhatsAppSandbox) : base("webhooks", conversationWebhook, useWhatsAppSandbox) { }
         
-        public Webhooks() : this(new Objects.Conversations.ConversationWebhook()) { }
+        public Webhooks(bool useWhatsAppSandbox) : this(new Objects.Conversations.ConversationWebhook(), useWhatsAppSandbox) { }
         
-        public override string BaseUrl
-        {
-            get { return Conversations.ConverstationsBaseUrl; }
-        }
     }
 }

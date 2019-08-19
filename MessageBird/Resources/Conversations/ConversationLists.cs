@@ -1,13 +1,9 @@
 namespace MessageBird.Resources.Conversations
 {
-    public class ConversationLists : BaseLists<Objects.Conversations.Conversation>
+    public class ConversationLists : ConversationsBaseLists<Objects.Conversations.Conversation>
     {
-        public ConversationLists()
-            : base("conversations", new Objects.Conversations.ConversationList())
+        public ConversationLists(bool useWhatsAppSandbox)
+            : base("conversations", new Objects.Conversations.ConversationList(), useWhatsAppSandbox)
         { }
-        public override string BaseUrl
-        {
-            get { return Conversations.ConverstationsBaseUrl; }
-        }
     }
 }

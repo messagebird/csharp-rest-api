@@ -2,14 +2,10 @@ using MessageBird.Net;
 
 namespace MessageBird.Resources.Conversations
 {
-    public class Conversations : Resource
+    public class Conversations : ConversationsResource
     {
-        public Conversations(Objects.Conversations.Conversation conversation) : base("conversations", conversation) { }
-        public Conversations() : this(new Objects.Conversations.Conversation()) { }
-        public override string BaseUrl
-        {
-            get { return ConverstationsBaseUrl; }
-        }
+        public Conversations(Objects.Conversations.Conversation conversation, bool useWhatsappSandbox) : base("conversations", conversation, useWhatsappSandbox) { }
+        public Conversations(bool useWhatsappSandbox) : this(new Objects.Conversations.Conversation(),useWhatsappSandbox) { }
 
         public override UpdateMode UpdateMode
         {

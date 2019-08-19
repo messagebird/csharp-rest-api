@@ -2,10 +2,10 @@ using System;
 
 namespace MessageBird.Resources.Conversations
 {
-    public class MessageLists : BaseLists<Objects.Conversations.ConversationMessage>
+    public class MessageLists : ConversationsBaseLists<Objects.Conversations.ConversationMessage>
     {
-        public MessageLists()
-            : base("messages", new Objects.Conversations.ConversationMessageList())
+        public MessageLists(bool useWhatsAppSandbox)
+            : base("messages", new Objects.Conversations.ConversationMessageList(), useWhatsAppSandbox)
         { }
 
         public override string Uri
@@ -16,11 +16,6 @@ namespace MessageBird.Resources.Conversations
                     ((Objects.Conversations.ConversationMessageList) Object).ConversationId,
                     Name);
             }
-        }
-
-        public override string BaseUrl
-        {
-            get { return Conversations.ConverstationsBaseUrl; }
         }
     }
 }
