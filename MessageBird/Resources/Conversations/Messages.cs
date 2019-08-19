@@ -4,8 +4,8 @@ namespace MessageBird.Resources.Conversations
 {
     public class Messages : ConversationsResource
     {
-        public Messages(Objects.Conversations.ConversationMessage conversationMessage,bool useWhatsAppSandbox) : base("messages", conversationMessage, useWhatsAppSandbox) { }
-        public Messages(bool useWhatsAppSandbox) : this(new Objects.Conversations.ConversationMessage(), useWhatsAppSandbox) { }
+        public Messages(Objects.Conversations.ConversationMessage conversationMessage, bool useWhatsAppSandbox = false) : base("messages", conversationMessage, useWhatsAppSandbox) { }
+        public Messages(bool useWhatsAppSandbox = false) : this(new Objects.Conversations.ConversationMessage(), useWhatsAppSandbox) { }
 
         private string BaseName
         {

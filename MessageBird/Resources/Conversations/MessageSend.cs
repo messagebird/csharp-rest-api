@@ -8,7 +8,7 @@ namespace MessageBird.Resources.Conversations
     {
         public ConversationMessageSendRequest Request { get; protected set; }
 
-        public MessageSend(ConversationMessageSendRequest request, bool useWhatsAppSandbox)
+        public MessageSend(ConversationMessageSendRequest request, bool useWhatsAppSandbox = false)
             : base("messages", new ConversationMessage(), useWhatsAppSandbox)
         {
             Request = request;

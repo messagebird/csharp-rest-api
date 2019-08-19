@@ -4,7 +4,7 @@ namespace MessageBird.Resources.Conversations
 {
     public class MessageLists : ConversationsBaseLists<Objects.Conversations.ConversationMessage>
     {
-        public MessageLists(bool useWhatsAppSandbox)
+        public MessageLists(bool useWhatsAppSandbox = false)
             : base("messages", new Objects.Conversations.ConversationMessageList(), useWhatsAppSandbox)
         { }
 
