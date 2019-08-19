@@ -8,10 +8,7 @@ using System.Collections.Generic;
 
 namespace MessageBird
 {
-    enum Features
-    {
-        EnableWhatsAppSandboxConversations = 1
-    }
+
     public partial class Client
     {
         public enum Features
