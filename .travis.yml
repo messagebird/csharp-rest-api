@@ -2,8 +2,27 @@ language: csharp
 solution: csharp-rest-client.sln
 mono: none
 dotnet: 2.1.300
-script:
-  - cd Tests/UnitTests/MessageBirdUnitTests
-  - dotnet restore
-  - dotnet test
-
+env:
+  - VERSION=1.6.1.$TRAVIS_BUILD_NUMBER
+stages:
+  - test
+  - name: deploy
+    if: branch = master
+jobs:
+  include:
+    - stage: test
+      script:
+        - cd Tests/UnitTests/MessageBirdUnitTests
+        - dotnet restore
+        - dotnet test
+    - stage: deploy
+      script:
+        - cd MessageBird
+        - dotnet restore
+        - dotnet build
+        - dotnet pack -p:PackageID=MessageBirdStaging -c Release -p:PackageVersion=$VERSION
+        - dotnet nuget push MessageBirdStaging.{VERSION}.nupkg -k $STAGING_KEY -s https://apiint.nugettest.org/v3/index.json
+        - 
+        - dotnet pack -p:PackageID=MessageBird -c Release -p:PackageVersion=$VERSION
+        - dotnet nuget push MessageBird.{VERSION}.nupkg -k $LIVE_KEY -s https://api.nuget.org/v3/index.json
+        
