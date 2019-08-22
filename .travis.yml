@@ -9,12 +9,13 @@ env:
 stages:
   - test
   - name: deploy
-    if: branch = master
+    if: (branch = master) AND (NOT (type IN (push, pull_request)))
 jobs:
   include:
     - stage: test
       script:
         - echo $VERSION
+        - echo "$TRAVIS_BRANCH" 
         - git config --list
         - git tag
         - cd Tests/UnitTests/MessageBirdUnitTests
@@ -27,11 +28,12 @@ jobs:
         - dotnet build
         - dotnet pack -p:PackageID=MessageBird -c Release -p:PackageVersion=$VERSION
     - stage: deploy
+      if: branch = master
       script:
         - test "$(curl -I https://globalcdn.nuget.org/packages/messagebird.$VERSION.nupkg | head -n1 | awk '{print $2}')" -eq 200 && echo "package with version $VERSION already exists" && exit 0 || echo "Packing and uploading ..."
         - cd MessageBird
         - dotnet restore
         - dotnet build
         - dotnet pack -p:PackageID=MessageBird -c Release -p:PackageVersion=$VERSION
-        - dotnet nuget push bin/Release/MessageBird.{VERSION}.nupkg -k $LIVE_KEY -s https://api.nuget.org/v3/index.json
+        - dotnet nuget push bin/Release/MessageBird.$VERSION.nupkg -k $LIVE_KEY -s https://api.nuget.org/v3/index.json
         
