@@ -1,7 +1,9 @@
 language: csharp
 solution: csharp-rest-client.sln
 mono: none
-dotnet: 3.0
+sudo: required
+dist: xenial
+dotnet: 2.2
 env:
   - VERSION=1.6.1.$TRAVIS_BUILD_NUMBER
 stages:
@@ -16,6 +18,10 @@ jobs:
         - cd Tests/UnitTests/MessageBirdUnitTests
         - dotnet restore
         - dotnet test
+        - cd ../../../MessageBird
+        - dotnet restore
+        - dotnet build
+        - dotnet pack -p:PackageID=MessageBirdStaging -c Release -p:PackageVersion=$VERSION
     - stage: deploy
       script:
         - cd MessageBird
