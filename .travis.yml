@@ -17,7 +17,7 @@ jobs:
         - echo $VERSION
         - echo "$TRAVIS_BRANCH" 
         - git config --list
-        - git tag
+        - git tag test-tag
         - cd Tests/UnitTests/MessageBirdUnitTests
         - dotnet restore
         - dotnet test
@@ -28,7 +28,6 @@ jobs:
         - dotnet build
         - dotnet pack -p:PackageID=MessageBird -c Release -p:PackageVersion=$VERSION
     - stage: deploy
-      if: branch = master
       script:
         - test "$(curl -I https://globalcdn.nuget.org/packages/messagebird.$VERSION.nupkg | head -n1 | awk '{print $2}')" -eq 200 && echo "package with version $VERSION already exists" && exit 0 || echo "Packing and uploading ..."
         - cd MessageBird
