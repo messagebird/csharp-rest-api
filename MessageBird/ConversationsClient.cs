@@ -1,3 +1,4 @@
+using System;
 using MessageBird.Net;
 using MessageBird.Objects.Conversations;
 using MessageBird.Resources.Conversations;
@@ -9,7 +10,7 @@ namespace MessageBird
     {
         public ConversationList ListConversations(int limit = 20, int offset = 0)
         {
-            var resource = new ConversationLists();
+            var resource = new ConversationLists(useConversationsWhatsAppSandbox);
 
             var list = (ConversationList) resource.Object;
             list.Limit = limit;
@@ -24,7 +25,7 @@ namespace MessageBird
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
             
-            var resource = new Conversations(new Conversation {Id = id});
+            var resource = new Conversations(new Conversation {Id = id}, useConversationsWhatsAppSandbox);
             restClient.Retrieve(resource);
 
             return resource.Object as Conversation;
@@ -37,7 +38,7 @@ namespace MessageBird
             ParameterValidator.IsNotNull(startRequest.Type, "type");
             ParameterValidator.IsNotNull(startRequest.Content, "content");
             
-            var resource = new ConversationStart(startRequest);
+            var resource = new ConversationStart(startRequest, useConversationsWhatsAppSandbox);
             restClient.Create(resource);
 
             return resource.Object as Conversation;
@@ -48,7 +49,7 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
             
             conversation.Id = id;
-            var resource = new Conversations(conversation);
+            var resource = new Conversations(conversation, useConversationsWhatsAppSandbox);
             
             restClient.Update(resource);
 
@@ -59,7 +60,7 @@ namespace MessageBird
         {
             ParameterValidator.IsNotNullOrWhiteSpace(conversationId, "conversationId");
             
-            var resource = new MessageLists();
+            var resource = new MessageLists(useConversationsWhatsAppSandbox);
 
             var list = (ConversationMessageList) resource.Object;
             list.Limit = limit;
@@ -75,7 +76,7 @@ namespace MessageBird
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
             
-            var resource = new Messages(new ConversationMessage {Id = id});
+            var resource = new Messages(new ConversationMessage {Id = id}, useConversationsWhatsAppSandbox);
             restClient.Retrieve(resource);
 
             return resource.Object as ConversationMessage;
@@ -86,7 +87,7 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(conversationId, "conversationId");
             
             conversationMessageRequest.ConversationId = conversationId;
-            var resource = new MessageSend(conversationMessageRequest);
+            var resource = new MessageSend(conversationMessageRequest, useConversationsWhatsAppSandbox);
             restClient.Create(resource);
 
             return resource.Object as ConversationMessage;
@@ -94,7 +95,7 @@ namespace MessageBird
 
         public ConversationWebhookList ListConversationWebhooks(int limit = 20, int offset = 0)
         {
-            var resource = new WebhookLists();
+            var resource = new WebhookLists(useConversationsWhatsAppSandbox);
 
             var list = (ConversationWebhookList) resource.Object;
             list.Limit = limit;
@@ -109,7 +110,7 @@ namespace MessageBird
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
             
-            var resource = new Webhooks(new ConversationWebhook {Id = id});
+            var resource = new Webhooks(new ConversationWebhook {Id = id}, useConversationsWhatsAppSandbox);
             restClient.Retrieve(resource);
 
             return resource.Object as ConversationWebhook;
@@ -121,7 +122,7 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(conversationWebhook.Url, "url");
             ParameterValidator.ContainsAtLeast(conversationWebhook.Events.ToArray(), 1, "events");
             
-            var resource = new Webhooks(conversationWebhook);
+            var resource = new Webhooks(conversationWebhook, useConversationsWhatsAppSandbox);
             restClient.Create(resource);
 
             return resource.Object as ConversationWebhook;
@@ -131,7 +132,7 @@ namespace MessageBird
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
             
-            var resource = new Webhooks(new ConversationWebhook {Id = id});
+            var resource = new Webhooks(new ConversationWebhook {Id = id}, useConversationsWhatsAppSandbox);
             restClient.Delete(resource);
         }
     }

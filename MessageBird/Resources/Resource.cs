@@ -8,7 +8,8 @@ namespace MessageBird.Resources
 {
     public abstract class Resource
     {
-        public static string ConverstationsBaseUrl = "https://conversations.messagebird.com/v1";
+        
+
         public static string DefaultBaseUrl = "https://rest.messagebird.com";
         
         public string Id
@@ -94,5 +95,6 @@ namespace MessageBird.Resources
         {
             get { return UpdateMode.Put; }
         }
+
     }
 }

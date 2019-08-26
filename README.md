@@ -52,6 +52,22 @@ The *ErrorException* objects contains either:
 
 See the provided examples on how to access error information from the *ErrorException*.
 
+##### Conversations WhatsApp Sandbox
+To use the whatsapp sandbox you need to add `Client.Features.EnableWhatsAppSandboxConversations` to the list of features you want enabled. Don't forget to replace `YOUR_ACCESS_KEY` with your actual access key.
+
+```csharp
+using System;
+using MessageBird;
+using MessageBird.Objects;
+
+class Example
+{
+  static void Main(string[] args)
+  {
+    Client client = Client.CreateDefault("YOUR_ACCESS_KEY",features: new Client.Features[] { Client.Features.EnableWhatsAppSandboxConversations });
+  }
+}
+```
 Documentation
 ----
 Complete documentation, instructions, and examples are available at:

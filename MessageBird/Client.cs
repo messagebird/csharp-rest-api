@@ -8,27 +8,41 @@ using System.Collections.Generic;
 
 namespace MessageBird
 {
+
     public partial class Client
     {
-        private readonly IRestClient restClient;
-
-        private Client(IRestClient restClient)
+        public enum Features
         {
-            this.restClient = restClient;
+            EnableWhatsAppSandboxConversations = 1
         }
 
-        public static Client Create(IRestClient restClient)
+        private readonly IRestClient restClient;
+        private readonly Features[] features;
+
+        private bool useConversationsWhatsAppSandbox;
+
+        private Client(IRestClient restClient, Features[] features = null)
+        {
+            this.restClient = restClient;
+            this.features = features;
+            if (this.features != null && Array.IndexOf(this.features, Features.EnableWhatsAppSandboxConversations) >= 0)
+            {
+                this.useConversationsWhatsAppSandbox = true;
+            }
+        }
+
+        public static Client Create(IRestClient restClient, Features[] features=null)
         {
             ParameterValidator.IsNotNull(restClient, "restClient");
 
-            return new Client(restClient);
+            return new Client(restClient, features);
         }
 
-        public static Client CreateDefault(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector = null)
+        public static Client CreateDefault(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector = null, Features[] features = null)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(accessKey, "accessKey");
 
-            return new Client(new RestClient(accessKey, proxyConfigurationInjector));
+            return new Client(new RestClient(accessKey, proxyConfigurationInjector), features);
         }
 
         public Message SendMessage(string originator, string body, long[] msisdns, MessageOptionalArguments optionalArguments = null)
