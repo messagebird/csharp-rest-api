@@ -5,8 +5,9 @@ sudo: required
 dist: xenial
 dotnet: 2.2
 env:
-  matrix:
   - VERSION=1.6.1
+  global:
+    secure: dW4i1leTDXh38v7756n1XCC/l9FokZDmOlwjSdYD89BcgGsJzHh/g/K/9IISUhNw9ZXqs2GRGsHGUd4BnZ/dkju+9eyR9VvYBB6h9UfFxKk3+lLbIiWnIUpKzlqrmErpyoEr7tGtqk1JR4+rgRy/CP7giS9uCV2SlX+kntGz60bkrX2308n5PMidCjg9o6DeLnmpDO8+joAUBi2+v3/648+6pk9OIiFJqrYjj90fH+YlF+3vPYugS6arbSiRQ5lfn8lHWqfIuCzikHcjA3/MVeVqrXuYINtWz0xF03/n107Wrl00FtrRnXcp2ssixXZ1u6is9zJFvRewoKjxTSN3VjQIev9h+HTSBoua5KQdcbZ6Of2+f8SiC6lXvAz436OxOqyO7z11urHLBk/ZL+1iX5Qkh+9Aq+ZhdHsbufnZMzfgzx3MLRhrsgK0aJk+gnAOSqci7a/bZlkuGUlru4cN0jR/aP2+tIAM+beRwo0e0eTEHxy4wnKDs00sJnY0nOpq/K7zRqRuq/3DXkGq9+/8TzyiCp9mJ+z4lXzZfJWybmcaTnXKJqzcN1GmVV1UaGfEz0SZWRiJ28XTLyZkxpXRUN+n+zYJNGlonzFub92y0Q0v4td2NVuzIi2WNcC1G1MJJUr3DZ16/0D5QU6589O6JoVjhD31Diw7oK0ig+YedgY=
 stages:
 - name: test
 - name: deploy
@@ -28,5 +29,3 @@ jobs:
     - dotnet build
     - dotnet pack -p:PackageID=MessageBird -c Release -p:PackageVersion=$VERSION
     - dotnet nuget push bin/Release/MessageBird.$VERSION.nupkg -k $LIVE_KEY -s https://api.nuget.org/v3/index.json
-    - git tag $VERSION
-    - git push origin $VERSION --tags
