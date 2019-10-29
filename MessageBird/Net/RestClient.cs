@@ -257,6 +257,9 @@ namespace MessageBird.Net
             // TODO: ##jwp; need to find out why .NET 4.0 under VS2013 refuses to recognize `WebRequest.CreateHttp`.
             // HttpWebRequest request = WebRequest.CreateHttp(uri);
             var request = WebRequest.Create(uri) as HttpWebRequest;
+            #if NET45
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            #endif
             request.UserAgent = UserAgent;
             const string ApplicationJsonContentType = "application/json"; // http://tools.ietf.org/html/rfc4627
             request.Accept = ApplicationJsonContentType;
