@@ -24,4 +24,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Responses\VoiceCallFlowList.json" />
+    <None Remove="Responses\VoiceCallFlowUpdate.json" />
+    <None Remove="Responses\VoiceCallFlowView.json" />
+  </ItemGroup>
 </Project>

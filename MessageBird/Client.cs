@@ -5,6 +5,8 @@ using MessageBird.Net;
 using MessageBird.Utilities;
 using System;
 using System.Collections.Generic;
+using MessageBird.Objects.VoiceCalls;
+using MessageBird.Resources.VoiceCalls;
 
 namespace MessageBird
 {
@@ -31,7 +33,7 @@ namespace MessageBird
             }
         }
 
-        public static Client Create(IRestClient restClient, Features[] features=null)
+        public static Client Create(IRestClient restClient, Features[] features = null)
         {
             ParameterValidator.IsNotNull(restClient, "restClient");
 
@@ -50,7 +52,7 @@ namespace MessageBird
             ParameterValidator.IsNotNullOrWhiteSpace(originator, "originator");
             ParameterValidator.IsNotNullOrWhiteSpace(body, "body");
             ParameterValidator.ContainsAtLeast(msisdns, 1, "msisdns");
-            
+
             if (optionalArguments != null)
             {
                 ParameterValidator.IsValidMessageType(optionalArguments.Type);
@@ -227,7 +229,7 @@ namespace MessageBird
         {
             restClient.Delete(new Contacts(new Contact { Id = id }));
         }
-        
+
         public ContactList ListContacts(int limit = 20, int offset = 0)
         {
             var contactLists = new ContactLists();
@@ -235,7 +237,7 @@ namespace MessageBird
             var contactList = (ContactList)contactLists.Object;
             contactList.Limit = limit;
             contactList.Offset = offset;
-            
+
             restClient.Retrieve(contactLists);
 
             return contactLists.Object as ContactList;
@@ -270,7 +272,7 @@ namespace MessageBird
                 LastName = optionalArguments.LastName,
                 CustomDetails = customDetails,
             });
-            
+
             restClient.Update(contacts);
 
             return contacts.Object as Contact;
@@ -317,7 +319,7 @@ namespace MessageBird
                 Id = id,
                 Name = name,
             });
-            
+
             restClient.Update(groups);
 
             return groups.Object as Group;
@@ -372,5 +374,91 @@ namespace MessageBird
 
             restClient.PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent, baseUrl: Resource.DefaultBaseUrl);
         }
+
+        /// <summary>
+        /// This request retrieves a listing of all call flows.
+        /// </summary>
+        /// <param name="limit">Set how many records will return from the server</param>
+        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
+        public VoiceCallFlowList ListVoiceCallFlows(int limit = 20, int offset = 0)
+        {
+            var resource = new VoiceCallFlowLists();
+
+            var list = (VoiceCallFlowList)resource.Object;
+            list.Limit = limit;
+            list.Offset = offset;
+
+            restClient.Retrieve(resource);
+
+            return (VoiceCallFlowList)resource.Object;
+        }
+
+        /// <summary>
+        /// This request retrieves a call flow resource.<para />
+        /// The single parameter is the unique ID that was returned upon creation. 
+        /// </summary>
+        /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
+        /// <returns></returns>
+        public VoiceCallFlow ViewVoiceCallFlow(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var resource = new VoiceCallFlows(new VoiceCallFlow() { Id = id });
+            restClient.Retrieve(resource);
+
+            return (VoiceCallFlow)resource.Object;
+        }
+
+        /// <summary>
+        /// Creating a call flow
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.</returns>
+        public VoiceCallFlow CreateVoiceCallFlow(VoiceCallFlow request)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(request.Title, "title");
+            ParameterValidator.IsNotNull(request.Steps, "steps");
+
+            var voiceCallFlows = new VoiceCallFlows(new VoiceCallFlow { Title = request.Title, Steps = request.Steps, Record = request.Record });
+            var result = restClient.Create(voiceCallFlows);
+
+            return (VoiceCallFlow)result.Object;
+        }
+
+        /// <summary>
+        /// This request deletes a call flow. The single parameter is the unique ID that was returned upon creation.<br/>
+        /// If successful, this request will return an HTTP header of 204 No Content and an empty response. If the request failed, an error object will be returned.
+        /// </summary>
+        /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
+        public void DeleteVoiceCallFlow(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var voiceCallFlows = new VoiceCallFlows(new VoiceCallFlow { Id = id });
+
+            restClient.Delete(voiceCallFlows);
+        }
+
+        /// <summary>
+        /// This request updates a call flow resource. The single parameter is the unique ID that was returned upon creation.<br/>
+        /// If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.
+        /// </summary>
+        /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
+        /// <param name="voiceCallFlow"></param>
+        /// <returns></returns>
+        public VoiceCallFlow UpdateVoiceCallFlow(string id, VoiceCallFlow voiceCallFlow)
+        {
+
+            ParameterValidator.IsNotNullOrWhiteSpace(voiceCallFlow.Title, "title");
+            ParameterValidator.IsNotNull(voiceCallFlow.Steps, "steps");
+
+            var voiceCallFlows = new VoiceCallFlows(new VoiceCallFlow { Id = id, Title = voiceCallFlow.Title, Steps = voiceCallFlow.Steps, Record = voiceCallFlow.Record });
+            var result = restClient.Update(voiceCallFlows);
+            return (VoiceCallFlow)result.Object;
+        }
     }
+
+
 }
+
