@@ -99,7 +99,6 @@ namespace MessageBirdUnitTests.Resources
             restClient.Verify();
 
             Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", voiceCallFlow.Id);
-            //Assert.AreEqual("Forward call to 31611223344", voiceCallFlow.Title);
         }
     }
 }

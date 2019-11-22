@@ -346,7 +346,7 @@ namespace MessageBird
 
         /// <summary>
         /// Gets a query string to add contact IDs to a group. This uses a
-        /// specific format: ids[]=foo & ids[]=bar. Given the structure of
+        /// specific format: ids[]=foo&ids[]=bar. Given the structure of
         /// RestClient, this is easier done by providing the HTTP method as URL
         /// parameter. See:
         /// https://developers.messagebird.com/docs/groups#add-contact-to-group

@@ -7,24 +7,26 @@ namespace MessageBird.Objects.VoiceCalls
 
     public class Options
     {
-
-        [JsonProperty("destination")] public string Destination { get; set; }
+        [JsonProperty("destination")] 
+        public string Destination { get; set; }
     }
 
     public class Step
     {
+        [JsonProperty("id")] 
+        public string Id { get; set; }
 
-        [JsonProperty("id")] public string Id { get; set; }
+        [JsonProperty("action")] 
+        public string Action { get; set; }
 
-        [JsonProperty("action")] public string Action { get; set; }
-
-        [JsonProperty("options")] public Options Options { get; set; }
+        [JsonProperty("options")] 
+        public Options Options { get; set; }
     }
 
     public class Links
     {
-
-        [JsonProperty("self")] public string Self { get; set; }
+        [JsonProperty("self")] 
+        public string Self { get; set; }
     }
 
     public class VoiceCallFlow : IIdentifiable<string>
@@ -35,19 +37,26 @@ namespace MessageBird.Objects.VoiceCalls
             Record = null;
         }
 
-        [JsonProperty("id")] public string Id { get; set; }
+        [JsonProperty("id")] 
+        public string Id { get; set; }
 
-        [JsonProperty("title")] public string Title { get; set; }
+        [JsonProperty("title")] 
+        public string Title { get; set; }
 
-        [JsonProperty("record")] public bool? Record { get; set; }
+        [JsonProperty("record")] 
+        public bool? Record { get; set; }
 
-        [JsonProperty("steps")] public List<Step> Steps { get; set; }
+        [JsonProperty("steps")] 
+        public List<Step> Steps { get; set; }
 
-        [JsonProperty("createdAt")] public DateTime? CreatedAt { get; set; }
+        [JsonProperty("createdAt")] 
+        public DateTime? CreatedAt { get; set; }
 
-        [JsonProperty("updatedAt")] public DateTime? UpdatedAt { get; set; }
+        [JsonProperty("updatedAt")] 
+        public DateTime? UpdatedAt { get; set; }
 
-        [JsonProperty("_links")] public Links Links { get; set; }
+        [JsonProperty("_links")] 
+        public Links Links { get; set; }
 
         /// <summary>
         /// Requests to the Contacts API use a different format than responses.
@@ -80,13 +89,22 @@ namespace MessageBird.Objects.VoiceCalls
             {
                 Steps=new List<Step>();
             }
-            [JsonProperty("id")] public string Id { get; set; }
-            [JsonProperty("title")] public string Title { get; set; }
 
-            [JsonProperty("record")] public bool? Record { get; set; }
+            [JsonProperty("id")] 
+            public string Id { get; set; }
 
-            [JsonProperty("steps")] public List<Step> Steps { get; set; }
-            [JsonProperty("_links")] public Links Links { get; set; }
+            [JsonProperty("title")] 
+            public string Title { get; set; }
+
+            [JsonProperty("record")] 
+            public bool? Record { get; set; }
+
+            [JsonProperty("steps")] 
+            public List<Step> Steps { get; set; }
+
+            [JsonProperty("_links")] 
+            public Links Links { get; set; }
+
             public RequestObject(VoiceCallFlow voiceCallFlow)
             {
                 Title = voiceCallFlow.Title;
@@ -100,13 +118,17 @@ namespace MessageBird.Objects.VoiceCalls
     public class Pagination
     {
 
-        [JsonProperty("totalCount")] public int TotalCount { get; set; }
+        [JsonProperty("totalCount")] 
+        public int TotalCount { get; set; }
 
-        [JsonProperty("pageCount")] public int PageCount { get; set; }
+        [JsonProperty("pageCount")] 
+        public int PageCount { get; set; }
 
-        [JsonProperty("currentPage")] public int CurrentPage { get; set; }
+        [JsonProperty("currentPage")] 
+        public int CurrentPage { get; set; }
 
-        [JsonProperty("perPage")] public int PerPage { get; set; }
+        [JsonProperty("perPage")] 
+        public int PerPage { get; set; }
     }
 
     public class VoiceCallFlowList : IIdentifiable<string>
@@ -115,7 +137,8 @@ namespace MessageBird.Objects.VoiceCalls
         [JsonProperty("data")]
         public List<VoiceCallFlow> Data { get; set; }
 
-        [JsonProperty("_links")] public Links Links { get; set; }
+        [JsonProperty("_links")] 
+        public Links Links { get; set; }
 
         [JsonProperty("pagination")]
         public Pagination Pagination { get; set; }
