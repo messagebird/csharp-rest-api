@@ -1,20 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Product>MessageBird</Product>
     <Title>MessageBird</Title>
     <Company>MessageBird</Company>
-    <Copyright>Copyright ©  2014</Copyright>
+    <Copyright>Copyright © 2019</Copyright>
     <FileVersion>1.6.1.0</FileVersion>
     <InformationalVersion>1.6.1.0</InformationalVersion>
     <Version>1.6.1.0</Version>
     <AssemblyVersion>1.6.1.0</AssemblyVersion>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
-
-  <!-- Conditionally obtain references for the .NET Framework 4.0 target -->
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
