@@ -1,5 +1,4 @@
-﻿using MessageBird.Net;
-using MessageBird.Objects;
+﻿using MessageBird.Objects;
 
 namespace MessageBird.Resources.Conversations
 {

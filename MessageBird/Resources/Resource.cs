@@ -8,8 +8,6 @@ namespace MessageBird.Resources
 {
     public abstract class Resource
     {
-        
-
         public static string DefaultBaseUrl = "https://rest.messagebird.com";
         
         public string Id
