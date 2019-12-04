@@ -3,6 +3,7 @@ using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Objects;
+using MessageBird.Objects.Common;
 
 namespace Examples.VoiceMessage
 {

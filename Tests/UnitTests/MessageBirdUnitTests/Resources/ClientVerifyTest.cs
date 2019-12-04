@@ -1,5 +1,6 @@
 ﻿using MessageBird.Net;
 using MessageBird.Objects;
+using MessageBird.Objects.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WireMock.Server;
 
@@ -7,7 +8,7 @@ namespace MessageBirdUnitTests.Resources
 {
     /**
      * Using this class to be able to change the base url of the request.
-     */ 
+     */
     internal class VerifyWithUrl : MessageBird.Resources.Resource
     {
         public VerifyWithUrl(Verify verify)

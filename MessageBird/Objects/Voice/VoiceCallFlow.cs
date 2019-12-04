@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace MessageBird.Objects.VoiceCalls
+namespace MessageBird.Objects.Voice
 {
     public class VoiceCallFlow : IIdentifiable<string>
     {
@@ -89,23 +89,13 @@ namespace MessageBird.Objects.VoiceCalls
         }
     }
 
-    public class VoiceCallFlowList : IIdentifiable<string>
+    public class VoiceCallFlowResponse : IIdentifiable<string>
     {
-
         [JsonProperty("data")]
         public List<VoiceCallFlow> Data { get; set; }
 
-        [JsonProperty("_links")] 
+        [JsonProperty("_links")]
         public Links Links { get; set; }
-
-        [JsonProperty("pagination")]
-        public Pagination Pagination { get; set; }
-
-        [JsonProperty("limit")]
-        public int Limit { get; set; }
-
-        [JsonProperty("offset")]
-        public int Offset { get; set; }
 
         public string Id
         {
@@ -116,22 +106,17 @@ namespace MessageBird.Objects.VoiceCalls
         }
     }
 
-    public class VoiceCallFlowResponse : IIdentifiable<string>
+    public class VoiceCallFlowList : VoiceCallFlowResponse
     {
-        [JsonProperty("data")]
-        public List<VoiceCallFlow> Data { get; set; }
+        [JsonProperty("pagination")]
+        public Pagination Pagination { get; set; }
 
-        [JsonProperty("_links")] 
-        public Links Links { get; set; }
-        
-        public string Id
-        {
-            get
-            {
-                return string.Empty;
-            }
-        }
-    }    
+        [JsonProperty("limit")]
+        public int Limit { get; set; }
+
+        [JsonProperty("offset")]
+        public int Offset { get; set; }
+    }   
     
     public class Options
     {

@@ -1,14 +1,14 @@
-﻿using System;
-using MessageBird.Exceptions;
+﻿using MessageBird.Exceptions;
 using MessageBird.Net;
+using MessageBird.Objects.Voice;
 using Newtonsoft.Json;
 
-namespace MessageBird.Resources.VoiceCalls
+namespace MessageBird.Resources.Voice
 {
     public class VoiceCallFlows : VoiceCallFlowsResource
     {
-        public VoiceCallFlows(Objects.VoiceCalls.VoiceCallFlow voiceCallFlow) : base("call-flows", voiceCallFlow) { }
-        public VoiceCallFlows() : this(new Objects.VoiceCalls.VoiceCallFlow()) { }
+        public VoiceCallFlows(VoiceCallFlow voiceCallFlow) : base("call-flows", voiceCallFlow) { }
+        public VoiceCallFlows() : this(new VoiceCallFlow()) { }
         
         public override UpdateMode UpdateMode
         {
@@ -19,7 +19,7 @@ namespace MessageBird.Resources.VoiceCalls
         {
             try
             {
-                Object = JsonConvert.DeserializeObject<Objects.VoiceCalls.VoiceCallFlowResponse>(resource);
+                Object = JsonConvert.DeserializeObject<VoiceCallFlowResponse>(resource);
             }
             catch (JsonSerializationException e)
             {

@@ -2,7 +2,7 @@
 using System.Linq;
 using MessageBird;
 using MessageBird.Exceptions;
-using MessageBird.Objects.VoiceCalls;
+using MessageBird.Objects.Voice;
 
 namespace Examples.VoiceCallFlow
 {
@@ -13,7 +13,7 @@ namespace Examples.VoiceCallFlow
         internal static void Main(string[] args)
         {
             var client = Client.CreateDefault(YourAccessKey);
-            var newVoiceCallFlow = new MessageBird.Objects.VoiceCalls.VoiceCallFlow
+            var newVoiceCallFlow = new MessageBird.Objects.Voice.VoiceCallFlow
             {
                 Title = "Forward call to 1234567890",
                 Record = true

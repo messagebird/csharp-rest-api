@@ -1,12 +1,12 @@
-﻿using MessageBird.Net.ProxyConfigurationInjector;
-using MessageBird.Objects;
-using MessageBird.Resources;
-using MessageBird.Net;
-using MessageBird.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using MessageBird.Objects.VoiceCalls;
-using MessageBird.Resources.VoiceCalls;
+using MessageBird.Net;
+using MessageBird.Net.ProxyConfigurationInjector;
+using MessageBird.Objects;
+using MessageBird.Objects.Voice;
+using MessageBird.Resources;
+using MessageBird.Resources.Voice;
+using MessageBird.Utilities;
 
 namespace MessageBird
 {

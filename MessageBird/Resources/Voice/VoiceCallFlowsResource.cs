@@ -1,9 +1,8 @@
-﻿using System;
-using MessageBird.Net;
-using MessageBird.Objects;
+﻿using MessageBird.Objects;
+using MessageBird.Objects.Voice;
 using Newtonsoft.Json;
 
-namespace MessageBird.Resources.VoiceCalls
+namespace MessageBird.Resources.Voice
 {
     public class VoiceCallFlowsResource : Resource
     {
@@ -12,7 +11,6 @@ namespace MessageBird.Resources.VoiceCalls
         public VoiceCallFlowsResource(string name, IIdentifiable<string> attachedObject) :
             base(name, attachedObject)
         {
-            //
         }
 
         public override string BaseUrl
@@ -25,7 +23,7 @@ namespace MessageBird.Resources.VoiceCalls
 
         public override string Serialize()
         {
-            var requestObject = ((Objects.VoiceCalls.VoiceCallFlow)Object).ToRequestObject();
+            var requestObject = ((VoiceCallFlow)Object).ToRequestObject();
 
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             return JsonConvert.SerializeObject(requestObject, settings);
