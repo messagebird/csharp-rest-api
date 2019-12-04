@@ -1,13 +1,16 @@
 MessageBird's REST API for C#
 ===============================
-This repository contains the open source C# client for MessageBird's REST API. Documentation can be found at: https://developers.messagebird.com
+This repository contains the open source C# client for MessageBird's REST API. Documentation can be found at: https://developers.messagebird.com.
+
+[![Build status](https://api.travis-ci.org/messagebird/csharp-rest-api.svg?branch=master)](https://travis-ci.org/messagebird/csharp-rest-api)
+[![NuGet version (MessageBird)](https://img.shields.io/nuget/v/MessageBird.svg?style=flat-square)](https://www.nuget.org/packages/MessageBird/)
 
 Requirements
 -----
 
 - [Sign up](https://www.messagebird.com/en/signup) for a free MessageBird account
 - Create a new access_key in the developers sections
-- MessageBird API client for C# requires **.NET Framework >= 4** or **.NET Standard >= 2.0**
+- MessageBird API client for C# requires **.NET Standard >= 2.0**
 - It has a dependency on **JSON.NET >= 4.5.6**
 
 Installation
