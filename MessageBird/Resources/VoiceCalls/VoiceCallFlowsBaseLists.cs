@@ -12,7 +12,6 @@ namespace MessageBird.Resources.VoiceCalls
             //
         }
 
-
         public override string QueryString
         {
             get

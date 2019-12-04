@@ -1,6 +1,7 @@
-﻿using MessageBird;
+﻿using System;
+using System.Linq;
+using MessageBird;
 using MessageBird.Exceptions;
-using System;
 
 namespace Examples.VoiceCallFlow
 {
@@ -14,9 +15,11 @@ namespace Examples.VoiceCallFlow
 
             try
             {
-                var voiceCallFlow = client.ViewVoiceCallFlow("PUT YOUR REQUEST ID HERE");
+                var voiceCallFlowResponse = client.ViewVoiceCallFlow("PUT YOUR REQUEST ID HERE");
+                var voiceCallFlow = voiceCallFlowResponse.Data.FirstOrDefault();
+
                 Console.WriteLine("The Voice Call Flow Id is: {0}", voiceCallFlow.Id);
-                Console.WriteLine("The Voice Call Flow Id Title: {0}", voiceCallFlow.Title);
+                Console.WriteLine("The Voice Call Flow Title is: {0}", voiceCallFlow.Title);
             }
             catch (ErrorException e)
             {

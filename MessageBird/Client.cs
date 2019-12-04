@@ -10,7 +10,6 @@ using MessageBird.Resources.VoiceCalls;
 
 namespace MessageBird
 {
-
     public partial class Client
     {
         public enum Features
@@ -400,14 +399,14 @@ namespace MessageBird
         /// </summary>
         /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
         /// <returns></returns>
-        public VoiceCallFlow ViewVoiceCallFlow(string id)
+        public VoiceCallFlowResponse ViewVoiceCallFlow(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
 
             var resource = new VoiceCallFlows(new VoiceCallFlow() { Id = id });
             restClient.Retrieve(resource);
 
-            return (VoiceCallFlow)resource.Object;
+            return (VoiceCallFlowResponse)resource.Object;
         }
 
         /// <summary>
@@ -415,7 +414,7 @@ namespace MessageBird
         /// </summary>
         /// <param name="request"></param>
         /// <returns>If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.</returns>
-        public VoiceCallFlow CreateVoiceCallFlow(VoiceCallFlow request)
+        public VoiceCallFlowResponse CreateVoiceCallFlow(VoiceCallFlow request)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(request.Title, "title");
             ParameterValidator.IsNotNull(request.Steps, "steps");
@@ -423,7 +422,7 @@ namespace MessageBird
             var voiceCallFlows = new VoiceCallFlows(new VoiceCallFlow { Title = request.Title, Steps = request.Steps, Record = request.Record });
             var result = restClient.Create(voiceCallFlows);
 
-            return (VoiceCallFlow)result.Object;
+            return (VoiceCallFlowResponse)result.Object;
         }
 
         /// <summary>
@@ -447,15 +446,15 @@ namespace MessageBird
         /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
         /// <param name="voiceCallFlow"></param>
         /// <returns></returns>
-        public VoiceCallFlow UpdateVoiceCallFlow(string id, VoiceCallFlow voiceCallFlow)
+        public VoiceCallFlowResponse UpdateVoiceCallFlow(string id, VoiceCallFlow voiceCallFlow)
         {
-
             ParameterValidator.IsNotNullOrWhiteSpace(voiceCallFlow.Title, "title");
             ParameterValidator.IsNotNull(voiceCallFlow.Steps, "steps");
 
             var voiceCallFlows = new VoiceCallFlows(new VoiceCallFlow { Id = id, Title = voiceCallFlow.Title, Steps = voiceCallFlow.Steps, Record = voiceCallFlow.Record });
             var result = restClient.Update(voiceCallFlows);
-            return (VoiceCallFlow)result.Object;
+
+            return (VoiceCallFlowResponse)result.Object;
         }
     }
 

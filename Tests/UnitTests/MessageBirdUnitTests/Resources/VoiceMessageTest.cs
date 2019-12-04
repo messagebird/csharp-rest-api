@@ -4,7 +4,7 @@ using MessageBird.Objects;
 using MessageBird.Resources;
 using Newtonsoft.Json;
 
-namespace MessageBirdTests.Resources
+namespace MessageBirdUnitTests.Resources
 {
     [TestClass]
     public class VoiceMessageTest

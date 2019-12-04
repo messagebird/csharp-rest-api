@@ -2,7 +2,7 @@
 using MessageBird.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MessageBirdTests.Resources
+namespace MessageBirdUnitTests.Resources
 {
     [TestClass]
     public class ContactTest

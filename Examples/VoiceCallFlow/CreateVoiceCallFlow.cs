@@ -1,7 +1,8 @@
-﻿using MessageBird;
+﻿using System;
+using System.Linq;
+using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Objects.VoiceCalls;
-using System;
 
 namespace Examples.VoiceCallFlow
 {
@@ -16,12 +17,16 @@ namespace Examples.VoiceCallFlow
             {
                 Title = "Forward call to 1234567890",
                 Record = true
-            };
+            };            
             newVoiceCallFlow.Steps.Add(new Step { Action = "transfer", Options = new Options { Destination = "1234567890" } });
+            
             try
             {
-                var voiceCallFlow = client.CreateVoiceCallFlow(newVoiceCallFlow);
-                Console.WriteLine("The Voice Call Flow Created with Id = {0}", voiceCallFlow.Id);
+                var voiceCallFlowResponse = client.CreateVoiceCallFlow(newVoiceCallFlow);
+                var voiceCallFlow = voiceCallFlowResponse.Data.FirstOrDefault();
+
+                Console.WriteLine("The Voice Call Flow with Id = {0} has been created", voiceCallFlow.Id);
+                Console.WriteLine("The Voice Call Flow Title is: {0}", voiceCallFlow.Title);
             }
             catch (ErrorException e)
             {

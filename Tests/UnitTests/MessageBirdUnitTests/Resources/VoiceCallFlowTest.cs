@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MessageBird;
 using MessageBird.Objects.VoiceCalls;
 using MessageBird.Resources.VoiceCalls;
-using MessageBirdTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MessageBirdUnitTests.Resources
@@ -27,10 +27,28 @@ namespace MessageBirdUnitTests.Resources
                 Record = true,
                 Steps = new List<Step> { new Step { Action = "transfer", Options = new Options { Destination = "31612345678" } } }
             };
-            var voiceCallFlow = client.CreateVoiceCallFlow(newVoiceCallFlow);
+
+            var voiceCallFlowResponse = client.CreateVoiceCallFlow(newVoiceCallFlow);
             restClient.Verify();
 
-            Assert.AreEqual("Forward call to 31612345678", voiceCallFlow.Title);
+            Assert.IsNotNull(voiceCallFlowResponse.Data);
+            Assert.IsNotNull(voiceCallFlowResponse.Links);
+
+            var links = voiceCallFlowResponse.Links;
+            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.Self);
+
+            var voiceCallFlow = voiceCallFlowResponse.Data.FirstOrDefault();
+            Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", voiceCallFlow.Id);
+            Assert.AreEqual("Forward call to 31612345678", voiceCallFlow.Title);   
+            Assert.AreEqual(true, voiceCallFlow.Record); 
+            Assert.IsNotNull(voiceCallFlow.CreatedAt);
+            Assert.IsNotNull(voiceCallFlow.UpdatedAt);        
+            Assert.IsNotNull(voiceCallFlow.Steps);
+
+            var step = voiceCallFlow.Steps.FirstOrDefault();
+            Assert.AreEqual("2fa1383e-6f21-4e6f-8c36-0920c3d0730b", step.Id);
+            Assert.AreEqual("transfer", step.Action);
+            Assert.AreEqual("31612345678", step.Options.Destination);
         }
 
         [TestMethod]
@@ -40,6 +58,7 @@ namespace MessageBirdUnitTests.Resources
                 .ThatReturns(string.Empty)
                 .FromEndpoint("DELETE", "call-flows/foo-id", VoiceCallFlowsResource.VoiceCallFlowsBaseUrl)
                 .Get();
+
             var client = Client.Create(restClient.Object);
 
             client.DeleteVoiceCallFlow("foo-id");
@@ -54,14 +73,40 @@ namespace MessageBirdUnitTests.Resources
                 .FromEndpoint("GET", "call-flows?limit=20&offset=0", VoiceCallFlowsResource.VoiceCallFlowsBaseUrl)
                 .Get();
 
-
             var client = Client.Create(restClient.Object);
 
-            var voiceCallFlows = client.ListVoiceCallFlows();
+            var voiceCallFlowList = client.ListVoiceCallFlows();
             restClient.Verify();
 
+            Assert.IsNotNull(voiceCallFlowList.Data);
+            Assert.IsNotNull(voiceCallFlowList.Links);
+            Assert.IsNotNull(voiceCallFlowList.Pagination);
 
-            Assert.AreEqual(1, voiceCallFlows.Pagination.TotalCount);
+            var listLinks = voiceCallFlowList.Links;
+            Assert.AreEqual("/call-flows?page=1", listLinks.Self);
+
+            var voiceCallFlow = voiceCallFlowList.Data.FirstOrDefault();
+            Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", voiceCallFlow.Id);
+            Assert.AreEqual("Forward call to 31612345678", voiceCallFlow.Title);   
+            Assert.AreEqual(false, voiceCallFlow.Record); 
+            Assert.IsNotNull(voiceCallFlow.CreatedAt);
+            Assert.IsNotNull(voiceCallFlow.UpdatedAt);     
+            Assert.IsNotNull(voiceCallFlow.Steps);
+            Assert.IsNotNull(voiceCallFlow.Links);
+
+            var links = voiceCallFlow.Links;
+            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.Self);
+
+            var step = voiceCallFlow.Steps.FirstOrDefault();
+            Assert.AreEqual("3538a6b8-5a2e-4537-8745-f72def6bd393", step.Id);
+            Assert.AreEqual("transfer", step.Action);
+            Assert.AreEqual("31612345678", step.Options.Destination);
+
+            var pagination = voiceCallFlowList.Pagination;
+            Assert.AreEqual(1, pagination.TotalCount);
+            Assert.AreEqual(1, pagination.PageCount);
+            Assert.AreEqual(1, pagination.CurrentPage);
+            Assert.AreEqual(10, pagination.PerPage);
         }
 
         [TestMethod]
@@ -80,10 +125,28 @@ namespace MessageBirdUnitTests.Resources
                 Title = "Updated call flow",
                 Steps = new List<Step> { new Step { Action = "transfer", Options = new Options { Destination = "31611223344" } } }
             };
-            var updatedVoiceCallFlow = client.UpdateVoiceCallFlow("de3ed163-d5fc-45f4-b8c4-7eea7458c635", voiceCallFlow);
+
+            var voiceCallFlowResponse = client.UpdateVoiceCallFlow("de3ed163-d5fc-45f4-b8c4-7eea7458c635", voiceCallFlow);
             restClient.Verify();
 
-            Assert.IsNotNull(updatedVoiceCallFlow.Id);
+            Assert.IsNotNull(voiceCallFlowResponse.Data);
+            Assert.IsNotNull(voiceCallFlowResponse.Links);
+
+            var links = voiceCallFlowResponse.Links;
+            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.Self);
+
+            var updatedVoiceCallFlow = voiceCallFlowResponse.Data.FirstOrDefault();
+            Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", updatedVoiceCallFlow.Id);
+            Assert.AreEqual("Updated call flow", updatedVoiceCallFlow.Title);   
+            Assert.AreEqual(false, updatedVoiceCallFlow.Record); 
+            Assert.IsNotNull(updatedVoiceCallFlow.CreatedAt);
+            Assert.IsNotNull(updatedVoiceCallFlow.UpdatedAt);        
+            Assert.IsNotNull(updatedVoiceCallFlow.Steps);
+
+            var step = updatedVoiceCallFlow.Steps.FirstOrDefault();
+            Assert.AreEqual("3538a6b8-5a2e-4537-8745-f72def6bd393", step.Id);
+            Assert.AreEqual("transfer", step.Action);
+            Assert.AreEqual("31611223344", step.Options.Destination);           
         }
 
         [TestMethod]
@@ -93,12 +156,30 @@ namespace MessageBirdUnitTests.Resources
                 .ThatReturns(filename: "VoiceCallFlowView.json")
                 .FromEndpoint("GET", "call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", VoiceCallFlowsResource.VoiceCallFlowsBaseUrl)
                 .Get();
+
             var client = Client.Create(restClient.Object);
 
-            var voiceCallFlow = client.ViewVoiceCallFlow("de3ed163-d5fc-45f4-b8c4-7eea7458c635");
+            var voiceCallFlowResponse = client.ViewVoiceCallFlow("de3ed163-d5fc-45f4-b8c4-7eea7458c635");
             restClient.Verify();
 
+            Assert.IsNotNull(voiceCallFlowResponse.Data);
+            Assert.IsNotNull(voiceCallFlowResponse.Links);
+
+            var links = voiceCallFlowResponse.Links;
+            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.Self);
+
+            var voiceCallFlow = voiceCallFlowResponse.Data.FirstOrDefault();
             Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", voiceCallFlow.Id);
+            Assert.AreEqual("Forward call to 31611223344", voiceCallFlow.Title);   
+            Assert.AreEqual(false, voiceCallFlow.Record); 
+            Assert.IsNotNull(voiceCallFlow.CreatedAt);
+            Assert.IsNotNull(voiceCallFlow.UpdatedAt);        
+            Assert.IsNotNull(voiceCallFlow.Steps);
+
+            var step = voiceCallFlow.Steps.FirstOrDefault();
+            Assert.AreEqual("3538a6b8-5a2e-4537-8745-f72def6bd393", step.Id);
+            Assert.AreEqual("transfer", step.Action);
+            Assert.AreEqual("31611223344", step.Options.Destination);
         }
     }
 }

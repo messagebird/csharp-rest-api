@@ -1,7 +1,8 @@
-﻿using MessageBird;
+﻿using System;
+using System.Linq;
+using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Objects.VoiceCalls;
-using System;
 
 namespace Examples.VoiceCallFlow
 {
@@ -18,10 +19,14 @@ namespace Examples.VoiceCallFlow
                 Record = true
             };
             voiceCallFlow.Steps.Add(new Step { Action = "transfer", Options = new Options { Destination = "1234567890" } });
+            
             try
             {
-                var updatedVoiceCallFlow = client.UpdateVoiceCallFlow("ID", voiceCallFlow);
-                Console.WriteLine("The Voice Call Flow with Id = {0} Updated.", updatedVoiceCallFlow.Id);
+                var voiceCallFlowResponse = client.UpdateVoiceCallFlow("ID", voiceCallFlow);
+                var updatedVoiceCallFlow = voiceCallFlowResponse.Data.FirstOrDefault();
+
+                Console.WriteLine("The Voice Call Flow with Id = {0} has been updated", updatedVoiceCallFlow.Id);
+                Console.WriteLine("The Voice Call Flow Title is: {0}", updatedVoiceCallFlow.Title);
             }
             catch (ErrorException e)
             {

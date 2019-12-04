@@ -4,31 +4,6 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Objects.VoiceCalls
 {
-
-    public class Options
-    {
-        [JsonProperty("destination")] 
-        public string Destination { get; set; }
-    }
-
-    public class Step
-    {
-        [JsonProperty("id")] 
-        public string Id { get; set; }
-
-        [JsonProperty("action")] 
-        public string Action { get; set; }
-
-        [JsonProperty("options")] 
-        public Options Options { get; set; }
-    }
-
-    public class Links
-    {
-        [JsonProperty("self")] 
-        public string Self { get; set; }
-    }
-
     public class VoiceCallFlow : IIdentifiable<string>
     {
         public VoiceCallFlow()
@@ -111,24 +86,7 @@ namespace MessageBird.Objects.VoiceCalls
                 Record = voiceCallFlow.Record;
                 Steps = voiceCallFlow.Steps;
             }
-            }
         }
-    
-
-    public class Pagination
-    {
-
-        [JsonProperty("totalCount")] 
-        public int TotalCount { get; set; }
-
-        [JsonProperty("pageCount")] 
-        public int PageCount { get; set; }
-
-        [JsonProperty("currentPage")] 
-        public int CurrentPage { get; set; }
-
-        [JsonProperty("perPage")] 
-        public int PerPage { get; set; }
     }
 
     public class VoiceCallFlowList : IIdentifiable<string>
@@ -156,5 +114,61 @@ namespace MessageBird.Objects.VoiceCalls
                 return string.Empty;
             }
         }
+    }
+
+    public class VoiceCallFlowResponse : IIdentifiable<string>
+    {
+        [JsonProperty("data")]
+        public List<VoiceCallFlow> Data { get; set; }
+
+        [JsonProperty("_links")] 
+        public Links Links { get; set; }
+        
+        public string Id
+        {
+            get
+            {
+                return string.Empty;
+            }
+        }
+    }    
+    
+    public class Options
+    {
+        [JsonProperty("destination")] 
+        public string Destination { get; set; }
+    }
+
+    public class Step
+    {
+        [JsonProperty("id")] 
+        public string Id { get; set; }
+
+        [JsonProperty("action")] 
+        public string Action { get; set; }
+
+        [JsonProperty("options")] 
+        public Options Options { get; set; }
+    }
+
+    public class Links
+    {
+        [JsonProperty("self")] 
+        public string Self { get; set; }
+    }
+    
+    public class Pagination
+    {
+        [JsonProperty("totalCount")] 
+        public int TotalCount { get; set; }
+
+        [JsonProperty("pageCount")] 
+        public int PageCount { get; set; }
+
+        [JsonProperty("currentPage")] 
+        public int CurrentPage { get; set; }
+
+        [JsonProperty("perPage")] 
+        public int PerPage { get; set; }
     }
 }

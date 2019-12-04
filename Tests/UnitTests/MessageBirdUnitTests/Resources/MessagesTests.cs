@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
 
-namespace MessageBirdTests.Resources
+namespace MessageBirdUnitTests.Resources
 {
     [TestClass]
     public class MessagesTests
