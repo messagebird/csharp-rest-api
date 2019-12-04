@@ -570,6 +570,109 @@ namespace MessageBird
             restClient.PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent, baseUrl: Resource.DefaultBaseUrl);
         }
 
+<<<<<<< HEAD
         #endregion
+=======
+        /// <summary>
+        /// This request retrieves a listing of all call flows.
+        /// </summary>
+        /// <param name="limit">Set how many records will return from the server</param>
+        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
+        public CallFlowList ListCallFlows(int limit = 20, int offset = 0)
+        {
+            var resource = new CallFlowLists();
+
+            var list = (CallFlowList)resource.Object;
+            list.Limit = limit;
+            list.Offset = offset;
+
+            restClient.Retrieve(resource);
+
+            return (CallFlowList)resource.Object;
+        }
+
+        /// <summary>
+        /// This request retrieves a call flow resource.<para />
+        /// The single parameter is the unique ID that was returned upon creation. 
+        /// </summary>
+        /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
+        /// <returns></returns>
+        public CallFlowResponse ViewCallFlow(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var resource = new CallFlows(new CallFlow() { Id = id });
+            restClient.Retrieve(resource);
+
+            return (CallFlowResponse)resource.Object;
+        }
+
+        /// <summary>
+        /// Creating a call flow
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.</returns>
+        public CallFlowResponse CreateCallFlow(CallFlow request)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(request.Title, "title");
+            ParameterValidator.IsNotNull(request.Steps, "steps");
+
+            var callFlows = new CallFlows(new CallFlow { Title = request.Title, Steps = request.Steps, Record = request.Record });
+            var result = restClient.Create(callFlows);
+
+            return (CallFlowResponse)result.Object;
+        }
+
+        /// <summary>
+        /// This request deletes a call flow. The single parameter is the unique ID that was returned upon creation.<br/>
+        /// If successful, this request will return an HTTP header of 204 No Content and an empty response. If the request failed, an error object will be returned.
+        /// </summary>
+        /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
+        public void DeleteCallFlow(string id)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var callFlows = new CallFlows(new CallFlow { Id = id });
+
+            restClient.Delete(callFlows);
+        }
+
+        /// <summary>
+        /// This request updates a call flow resource. The single parameter is the unique ID that was returned upon creation.<br/>
+        /// If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.
+        /// </summary>
+        /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
+        /// <param name="callFlow"></param>
+        /// <returns></returns>
+        public CallFlowResponse UpdateCallFlow(string id, CallFlow callFlow)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(callFlow.Title, "title");
+            ParameterValidator.IsNotNull(callFlow.Steps, "steps");
+
+            var callFlows = new CallFlows(new CallFlow { Id = id, Title = callFlow.Title, Steps = callFlow.Steps, Record = callFlow.Record });
+            var result = restClient.Update(callFlows);
+
+            return (CallFlowResponse)result.Object;
+        }
+
+        /// <summary>
+        /// Creating a call
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CallResponse CreateCall(Call request)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(request.source, "source");
+            ParameterValidator.IsNotNullOrWhiteSpace(request.destination, "destination");
+            ParameterValidator.IsNotNull(request.callFlow, "callFlow");
+
+            var callResource = new Calls(request);
+            var result = restClient.Create(callResource);
+
+
+            return (CallResponse)result.Object;
+        }
+>>>>>>> Create Call
     }
 }

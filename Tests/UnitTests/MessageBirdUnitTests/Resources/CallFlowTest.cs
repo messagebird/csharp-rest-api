@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MessageBird;
-using MessageBird.Objects.Voice;
 using MessageBird.Resources.Voice;
+using MessageBird.Objects.Voice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MessageBirdUnitTests.Resources
