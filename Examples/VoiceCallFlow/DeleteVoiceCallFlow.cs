@@ -15,7 +15,7 @@ namespace Examples.VoiceCallFlow
             try
             {
                 client.DeleteVoiceCallFlow("PUT YOUR REQUEST ID HERE");
-                Console.WriteLine("The Voice Call Flow deleted successfully.");
+                Console.WriteLine("The Voice Call Flow was deleted successfully.");
             }
             catch (ErrorException e)
             {

@@ -5,4 +5,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MessageBird\MessageBird.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Recording\" />
+  </ItemGroup>
 </Project>

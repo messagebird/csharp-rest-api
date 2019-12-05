@@ -2,9 +2,9 @@
 using MessageBird.Exceptions;
 using System;
 
-namespace Examples.VoiceCallFlow
+namespace Examples.Recording
 {
-    internal class ListVoiceCallFlow
+    internal class ListRecording
     {
         const string YOUR_ACCESS_KEY = "YOUR_ACCESS_KEY";
 
@@ -12,13 +12,14 @@ namespace Examples.VoiceCallFlow
         {
             var client = Client.CreateDefault(YOUR_ACCESS_KEY);
 
-            var voiceCallFlowList = client.ListVoiceCallFlows();
+            var recordings = client.ListRecordings();
             try
             {
-                foreach (var item in voiceCallFlowList.Data)
+                foreach (var item in recordings.Data)
                 {
-                    Console.WriteLine("The Voice Call Flow Id is: {0}", item.Id);
-                    Console.WriteLine("The Voice Call Flow Title is: {0}", item.Title);
+                    Console.WriteLine("The Recording Id is: {0}", item.Id);
+                    Console.WriteLine("The Recording Format is: {0}", item.Format);
+                    Console.WriteLine("The Recording Duration is: {0}", item.Duration);
                 }
             }
             catch (ErrorException e)
