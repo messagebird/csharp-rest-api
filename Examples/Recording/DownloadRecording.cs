@@ -15,9 +15,13 @@ namespace Examples.Recording
 
             try
             {
-                var recordingFileData = client.DownloadRecording("CALL ID", "LEG ID", "RECORDING ID");
-
-                File.WriteAllBytes(@"/Users/annievella/Documents/test-1.wav", recordingFileData);
+                using (var recordingDataStream = client.DownloadRecording("CALL ID", "LEG ID", "RECORDING ID"))
+                { 
+                    using (var fileStream = File.OpenWrite(@"PATH TO FILE ON YOUR LOCAL MACHINE"))
+                    {
+                        recordingDataStream.CopyTo(fileStream);
+                    }
+                }
             }
             catch (ErrorException e)
             {

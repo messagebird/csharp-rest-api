@@ -24,6 +24,6 @@ namespace MessageBird.Net
         string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode);
         string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode, string baseUrl);
         string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode, string baseUrl);
-        byte[] PerformHttpRequest(string uri, HttpStatusCode expectedStatusCode, string baseUrl);
+        Stream PerformHttpRequest(string uri, HttpStatusCode expectedStatusCode, string baseUrl);
     }
 }

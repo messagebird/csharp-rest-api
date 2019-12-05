@@ -233,7 +233,7 @@ namespace MessageBird
         /// <param name="callId">The unique ID of a call generated upon creation.</param>
         /// <param name="legId">The unique ID of a leg generated upon creation.</param>
         /// <param name="recordingId">The unique ID of a recording generated upon creation.</param>
-        public byte[] DownloadRecording(string callId, string legId, string recordingId)
+        public Stream DownloadRecording(string callId, string legId, string recordingId)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
             ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");

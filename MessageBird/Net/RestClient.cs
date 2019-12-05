@@ -191,8 +191,8 @@ namespace MessageBird.Net
                     return new ErrorException(String.Format("Unhandled status code {0}", statusCode), e);
             }
         }
-
-        public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode, string baseUrl)
+               
+        public virtual T PerformHttpRequest<T>(string method, string uri, string body, HttpStatusCode expectedStatusCode, string baseUrl, Func<HttpWebRequest, HttpStatusCode, T> processFunc)
         {
             var request = PrepareRequest(method, uri, baseUrl);
 
@@ -206,21 +206,7 @@ namespace MessageBird.Net
                     }
                 }
 
-                using (var response = request.GetResponse() as HttpWebResponse)
-                {
-                    var statusCode = (HttpStatusCode)response.StatusCode;
-                    if (statusCode == expectedStatusCode)
-                    {
-                        Stream responseStream = response.GetResponseStream();
-                        Encoding encoding = GetEncoding(response);
-
-                        using (var responseReader = new StreamReader(responseStream, encoding))
-                        {
-                            return responseReader.ReadToEnd();
-                        }
-                    }
-                    throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
-                }
+                return processFunc(request, expectedStatusCode);
             }
             catch (WebException e)
             {
@@ -232,49 +218,14 @@ namespace MessageBird.Net
             }
         }
 
-        public virtual byte[] PerformHttpRequest(string uri, HttpStatusCode expectedStatusCode, string baseUrl)
+        public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode, string baseUrl)
         {
-            var request = PrepareRequest("GET", uri, baseUrl);
-
-            try
-            {
-                using (var response = request.GetResponse() as HttpWebResponse)
-                {
-                    var statusCode = (HttpStatusCode)response.StatusCode;
-                    if (statusCode == expectedStatusCode)
-                    {
-                        Stream responseStream = response.GetResponseStream();
-
-                        int bytesBuffer = 1024;
-                        byte[] buffer = new byte[bytesBuffer];
-                        using (MemoryStream memoryStream = new MemoryStream())
-                        {
-                            int readBytes;
-                            while ((readBytes = responseStream.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                memoryStream.Write(buffer, 0, readBytes);
-                            }
-                            return memoryStream.ToArray();
-                        }
-                    }
-                    throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
-                }
-            }
-            catch (WebException e)
-            {
-                throw ErrorExceptionFromWebException(e);
-            }
-            catch (Exception e)
-            {
-                throw new ErrorException(String.Format("Unhandled exception {0}", e), e);
-            }
+            return PerformHttpRequest(method, uri, body, expectedStatusCode, baseUrl, ProcessRequestAsString);
         }
 
         public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode, string baseUrl)
         {
-            string body = null;
-
-            return PerformHttpRequest(method, uri, body, expectedStatusCode, baseUrl);
+            return PerformHttpRequest(method, uri, null, expectedStatusCode, baseUrl);
         }
         
         public virtual string PerformHttpRequest(string method, string uri, string body, HttpStatusCode expectedStatusCode)
@@ -285,6 +236,11 @@ namespace MessageBird.Net
         public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode)
         {
             return PerformHttpRequest(method, uri, expectedStatusCode, Endpoint);
+        }
+
+        public virtual Stream PerformHttpRequest(string uri, HttpStatusCode expectedStatusCode, string baseUrl)
+        {
+            return PerformHttpRequest("GET", uri, null, expectedStatusCode, baseUrl, ProcessRequestAsStream);
         }
 
         private HttpWebRequest PrepareRequest(string method, string requestUriString, string endpoint)
@@ -301,13 +257,51 @@ namespace MessageBird.Net
             request.Method = method;
 
             WebHeaderCollection headers = request.Headers;
-            headers.Add("Authorization", String.Format("AccessKey {0}", AccessKey));
+            headers.Add("Authorization", string.Format("AccessKey {0}", AccessKey));
 
             if (null != ProxyConfigurationInjector)
             {
                 request.Proxy = ProxyConfigurationInjector.InjectProxyConfiguration(request.Proxy, uri);
             }
             return request;
+        }
+
+        private string ProcessRequestAsString(HttpWebRequest request, HttpStatusCode expectedStatusCode)
+        {
+            using (var response = request.GetResponse() as HttpWebResponse)
+            {
+                var statusCode = (HttpStatusCode)response.StatusCode;
+                if (statusCode == expectedStatusCode)
+                {
+                    Stream responseStream = response.GetResponseStream();
+                    Encoding encoding = GetEncoding(response);
+
+                    using (var responseReader = new StreamReader(responseStream, encoding))
+                    {
+                        return responseReader.ReadToEnd();
+                    }
+                }
+                throw new ErrorException(string.Format("Unexpected status code {0}", statusCode));
+            }
+        }
+
+        private Stream ProcessRequestAsStream(HttpWebRequest request, HttpStatusCode expectedStatusCode)
+        {
+            using (var response = request.GetResponse() as HttpWebResponse)
+            {
+                var statusCode = (HttpStatusCode)response.StatusCode;
+                if (statusCode == expectedStatusCode)
+                {
+                    var responseStream = response.GetResponseStream();
+                    var memoryStream = new MemoryStream();
+
+                    responseStream.CopyTo(memoryStream);
+
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    return memoryStream;
+                }
+                throw new ErrorException(string.Format("Unexpected status code {0}", statusCode));
+            }
         }
     }
 }
