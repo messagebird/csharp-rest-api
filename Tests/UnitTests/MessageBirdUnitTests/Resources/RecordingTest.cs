@@ -1,8 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using MessageBird;
-using MessageBird.Exceptions;
 using MessageBird.Resources.Voice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

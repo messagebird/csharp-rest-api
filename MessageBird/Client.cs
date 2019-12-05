@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using MessageBird.Net;
 using MessageBird.Net.ProxyConfigurationInjector;
 using MessageBird.Objects;
@@ -232,13 +233,15 @@ namespace MessageBird
         /// <param name="callId">The unique ID of a call generated upon creation.</param>
         /// <param name="legId">The unique ID of a leg generated upon creation.</param>
         /// <param name="recordingId">The unique ID of a recording generated upon creation.</param>
-        public void DownloadRecording(string callId, string legId, string recordingId)
+        public byte[] DownloadRecording(string callId, string legId, string recordingId)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
             ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");
             ParameterValidator.IsNotNullOrWhiteSpace(recordingId, "recordingId");
 
-            throw new NotImplementedException();
+            var resource = new Recordings(new Recording { CallId = callId, LegId = legId, Id = recordingId });
+
+            return restClient.PerformHttpRequest(resource.DownloadUri, HttpStatusCode.OK, resource.BaseUrl);
         }
 
         #endregion

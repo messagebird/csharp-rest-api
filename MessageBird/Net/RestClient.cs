@@ -232,6 +232,44 @@ namespace MessageBird.Net
             }
         }
 
+        public virtual byte[] PerformHttpRequest(string uri, HttpStatusCode expectedStatusCode, string baseUrl)
+        {
+            var request = PrepareRequest("GET", uri, baseUrl);
+
+            try
+            {
+                using (var response = request.GetResponse() as HttpWebResponse)
+                {
+                    var statusCode = (HttpStatusCode)response.StatusCode;
+                    if (statusCode == expectedStatusCode)
+                    {
+                        Stream responseStream = response.GetResponseStream();
+
+                        int bytesBuffer = 1024;
+                        byte[] buffer = new byte[bytesBuffer];
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            int readBytes;
+                            while ((readBytes = responseStream.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                memoryStream.Write(buffer, 0, readBytes);
+                            }
+                            return memoryStream.ToArray();
+                        }
+                    }
+                    throw new ErrorException(String.Format("Unexpected status code {0}", statusCode));
+                }
+            }
+            catch (WebException e)
+            {
+                throw ErrorExceptionFromWebException(e);
+            }
+            catch (Exception e)
+            {
+                throw new ErrorException(String.Format("Unhandled exception {0}", e), e);
+            }
+        }
+
         public virtual string PerformHttpRequest(string method, string uri, HttpStatusCode expectedStatusCode, string baseUrl)
         {
             string body = null;

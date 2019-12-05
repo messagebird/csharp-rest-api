@@ -20,6 +20,14 @@ namespace MessageBird.Resources.Voice
             }
         }
 
+        public string DownloadUri
+        {
+            get
+            {
+                return String.Format("{0}/{1}/legs/{2}/recordings/{3}.wav", Name, ((Recording)Object).CallId, ((Recording)Object).LegId, Object.Id);
+            }
+        }
+
         public override void Deserialize(string resource)
         {
             try
