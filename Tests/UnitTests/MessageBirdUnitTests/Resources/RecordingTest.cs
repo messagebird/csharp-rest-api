@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.IO;
 using System.Linq;
 using MessageBird;
-using MessageBird.Exceptions;
 using MessageBird.Resources.Voice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -101,11 +100,18 @@ namespace MessageBirdUnitTests.Resources
             restClient.Verify();
         }
 
-        [Ignore("Method still needs to be implemented")]
         [TestMethod]
         public void Download()
         {
+            var restClient = MockRestClient
+                .ThatReturns(stream: new MemoryStream())
+                .FromEndpoint("GET", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123.wav", RecordingsResource.RecordingsBaseUrl)
+                .Get();
 
+            var client = Client.Create(restClient.Object);
+
+            client.DownloadRecording("bb3f0391-4fdc-4e38-9551-e8a01602984f", "cc3bd14d-3eee-4380-b01f-fe7723c69a31", "3b4ac358-9467-4f7a-a6c8-6157ad181123");
+            restClient.Verify();
         }
     }
 }
