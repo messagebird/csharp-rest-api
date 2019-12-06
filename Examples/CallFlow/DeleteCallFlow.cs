@@ -2,9 +2,9 @@
 using MessageBird.Exceptions;
 using System;
 
-namespace Examples.VoiceCallFlow
+namespace Examples.CallFlow
 {
-    internal class DeleteVoiceCallFlow
+    internal class DeleteCallFlow
     {
         const string YOUR_ACCESS_KEY = "YOUR_ACCESS_KEY";
 
@@ -14,7 +14,7 @@ namespace Examples.VoiceCallFlow
 
             try
             {
-                client.DeleteVoiceCallFlow("PUT YOUR REQUEST ID HERE");
+                client.DeleteCallFlow("PUT YOUR REQUEST ID HERE");
                 Console.WriteLine("The Voice Call Flow deleted successfully.");
             }
             catch (ErrorException e)

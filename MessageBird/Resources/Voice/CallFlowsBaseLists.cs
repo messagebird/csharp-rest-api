@@ -3,9 +3,9 @@ using MessageBird.Objects.Voice;
 
 namespace MessageBird.Resources.Voice
 {
-    public class VoiceCallFlowsBaseLists : VoiceCallFlowsResource
+    public class CallFlowsBaseLists : CallFlowsResource
     {
-        public VoiceCallFlowsBaseLists(string name, VoiceCallFlowList attachedObject)
+        public CallFlowsBaseLists(string name, CallFlowList attachedObject)
             : base(name, attachedObject)
         {
         }
@@ -14,7 +14,7 @@ namespace MessageBird.Resources.Voice
         {
             get
             {
-                var baseList = (VoiceCallFlowList)Object;
+                var baseList = (CallFlowList)Object;
 
                 var builder = new StringBuilder();
 

@@ -5,10 +5,10 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources.Voice
 {
-    public class VoiceCallFlows : VoiceCallFlowsResource
+    public class CallFlows : CallFlowsResource
     {
-        public VoiceCallFlows(VoiceCallFlow voiceCallFlow) : base("call-flows", voiceCallFlow) { }
-        public VoiceCallFlows() : this(new VoiceCallFlow()) { }
+        public CallFlows(CallFlow callFlow) : base("call-flows", callFlow) { }
+        public CallFlows() : this(new CallFlow()) { }
         
         public override UpdateMode UpdateMode
         {
@@ -19,7 +19,7 @@ namespace MessageBird.Resources.Voice
         {
             try
             {
-                Object = JsonConvert.DeserializeObject<VoiceCallFlowResponse>(resource);
+                Object = JsonConvert.DeserializeObject<CallFlowResponse>(resource);
             }
             catch (JsonSerializationException e)
             {
