@@ -5,7 +5,7 @@
       "format": "wav",
       "type": "ivr",
       "legId": "317bd14d-3eee-4380-b01f-fe7723c6913a",
-      "state": "done",
+      "status": "done",
       "duration": 42,
       "createdAt": "2017-05-17T11:42:57Z",
       "updatedAt": "2017-05-17T11:43:04Z",

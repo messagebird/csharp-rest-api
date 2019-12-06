@@ -18,8 +18,8 @@ namespace MessageBird.Objects.Voice
         [JsonProperty("legId")]
         public string LegId { get; set; }
 
-        [JsonProperty("state")]
-        public string State { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
 
         [JsonProperty("duration")]
         public int? Duration { get; set; }

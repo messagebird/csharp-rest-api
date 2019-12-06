@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using MessageBird;
+using MessageBird.Exceptions;
 using MessageBird.Resources.Voice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -33,7 +35,7 @@ namespace MessageBirdUnitTests.Resources
             Assert.AreEqual("317bd14d-3eee-4380-b01f-fe7723c6913a", recording.LegId);
             Assert.AreEqual("wav", recording.Format);
             Assert.AreEqual("ivr", recording.Type);
-            Assert.AreEqual("done", recording.State);
+            Assert.AreEqual("done", recording.Status);
             Assert.AreEqual(42, recording.Duration);
             Assert.IsNotNull(recording.CreatedAt);
             Assert.IsNotNull(recording.UpdatedAt);
@@ -78,7 +80,7 @@ namespace MessageBirdUnitTests.Resources
             Assert.AreEqual("3b4ac358-9467-4f7a-a6c8-6157ad181123", recording.Id);
             Assert.AreEqual("cc3bd14d-3eee-4380-b01f-fe7723c69a31", recording.LegId);
             Assert.AreEqual("wav", recording.Format); 
-            Assert.AreEqual("done", recording.State);
+            Assert.AreEqual("done", recording.Status);
             Assert.AreEqual(7, recording.Duration);
             Assert.IsNotNull(recording.CreatedAt);
             Assert.IsNotNull(recording.UpdatedAt);        
