@@ -192,7 +192,7 @@ namespace MessageBird.Net
             }
         }
                
-        public virtual T PerformHttpRequest<T>(string method, string uri, string body, HttpStatusCode expectedStatusCode, string baseUrl, Func<HttpWebRequest, HttpStatusCode, T> processFunc)
+        public virtual T PerformHttpRequest<T>(string method, string uri, string body, HttpStatusCode expectedStatusCode, string baseUrl, Func<HttpWebRequest, HttpStatusCode, T> processRequest)
         {
             var request = PrepareRequest(method, uri, baseUrl);
 
@@ -206,7 +206,7 @@ namespace MessageBird.Net
                     }
                 }
 
-                return processFunc(request, expectedStatusCode);
+                return processRequest(request, expectedStatusCode);
             }
             catch (WebException e)
             {
