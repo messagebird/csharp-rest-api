@@ -1,65 +1,12 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-
 using MessageBird.Json.Converters;
 
 namespace MessageBird.Objects
 {
-
-    public enum Language
-    {
-        [EnumMember(Value = "nl-nl")]
-        Dutch,
-        [EnumMember(Value = "de-de")]
-        German,
-        [EnumMember(Value = "en-gb")]
-        English,
-        [EnumMember(Value = "en-us")]
-        AmericanEnglish,
-        [EnumMember(Value = "en-au")]
-        AustralianEnglish,
-        [EnumMember(Value = "fr-fr")]
-        French,
-        [EnumMember(Value = "fr-ca")]
-        CanadianFrench,
-        [EnumMember(Value = "es-es")]
-        Spanish,
-        [EnumMember(Value = "es-mx")]
-        MexicanSpanish,
-        [EnumMember(Value = "es-us")]
-        AmericanSpanish,
-        [EnumMember(Value = "ru-ru")]
-        Russian,
-        [EnumMember(Value = "zh-cn")]
-        Chinese,
-        [EnumMember(Value = "is-is")]
-        Icelandic,
-        [EnumMember(Value = "it-it")]
-        Italian,
-        [EnumMember(Value = "ja-jp")]
-        Japanese,
-        [EnumMember(Value = "ko-kr")]
-        Korean,
-        [EnumMember(Value = "pl-pl")]
-        Polish,
-        [EnumMember(Value = "pt-br")]
-        BrazilianPortugese,
-        [EnumMember(Value = "ro-ro")]
-        Romanian
-    };
-
-    public enum Voice
-    {
-        [EnumMember(Value = "male")]
-        Male,
-        [EnumMember(Value = "female")]
-        Female,
-    };
-
     public enum IfMachineOptions
     {
         [EnumMember(Value = "continue")]
@@ -75,16 +22,16 @@ namespace MessageBird.Objects
         public string Reference { get; set; }
         public string ReportUrl { get; set; }
         public string Originator { get; set; }
-        public Language Language { get; set; }
-        public Voice Voice { get; set; }
+        public Common.Language Language { get; set; }
+        public Common.Voice Voice { get; set; }
         public int Repeat { get; set; }
         public IfMachineOptions IfMachine { get; set; }
         public DateTime? Scheduled { get; set; }
 
         public VoiceMessageOptionalArguments()
         {
-            Language = Language.English;
-            Voice = Voice.Female;
+            Language = Common.Language.English;
+            Voice = Common.Voice.Female;
             Repeat = 1;
             IfMachine = IfMachineOptions.Continue;
         }
@@ -149,10 +96,10 @@ namespace MessageBird.Objects
         }
 
         [JsonProperty("language"), JsonConverter(typeof(StringEnumConverter))]
-        public Language Language { get; set; }
+        public Common.Language Language { get; set; }
 
         [JsonProperty("voice"), JsonConverter(typeof(StringEnumConverter))]
-        public Voice Voice { get; set; }
+        public Common.Voice Voice { get; set; }
 
         [JsonProperty("repeat")]
         public int Repeat { get; set; }

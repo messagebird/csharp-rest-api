@@ -1,16 +1,15 @@
-﻿using MessageBird.Net.ProxyConfigurationInjector;
-using MessageBird.Objects;
-using MessageBird.Resources;
-using MessageBird.Net;
-using MessageBird.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using MessageBird.Objects.VoiceCalls;
-using MessageBird.Resources.VoiceCalls;
+using MessageBird.Net;
+using MessageBird.Net.ProxyConfigurationInjector;
+using MessageBird.Objects;
+using MessageBird.Objects.Voice;
+using MessageBird.Resources;
+using MessageBird.Resources.Voice;
+using MessageBird.Utilities;
 
 namespace MessageBird
 {
-
     public partial class Client
     {
         public enum Features
@@ -381,17 +380,17 @@ namespace MessageBird
         /// <param name="limit">Set how many records will return from the server</param>
         /// <param name="offset">Identify the starting point to return rows from a result</param>
         /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
-        public VoiceCallFlowList ListVoiceCallFlows(int limit = 20, int offset = 0)
+        public CallFlowList ListCallFlows(int limit = 20, int offset = 0)
         {
-            var resource = new VoiceCallFlowLists();
+            var resource = new CallFlowLists();
 
-            var list = (VoiceCallFlowList)resource.Object;
+            var list = (CallFlowList)resource.Object;
             list.Limit = limit;
             list.Offset = offset;
 
             restClient.Retrieve(resource);
 
-            return (VoiceCallFlowList)resource.Object;
+            return (CallFlowList)resource.Object;
         }
 
         /// <summary>
@@ -400,14 +399,14 @@ namespace MessageBird
         /// </summary>
         /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
         /// <returns></returns>
-        public VoiceCallFlow ViewVoiceCallFlow(string id)
+        public CallFlowResponse ViewCallFlow(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
 
-            var resource = new VoiceCallFlows(new VoiceCallFlow() { Id = id });
+            var resource = new CallFlows(new CallFlow() { Id = id });
             restClient.Retrieve(resource);
 
-            return (VoiceCallFlow)resource.Object;
+            return (CallFlowResponse)resource.Object;
         }
 
         /// <summary>
@@ -415,15 +414,15 @@ namespace MessageBird
         /// </summary>
         /// <param name="request"></param>
         /// <returns>If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.</returns>
-        public VoiceCallFlow CreateVoiceCallFlow(VoiceCallFlow request)
+        public CallFlowResponse CreateCallFlow(CallFlow request)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(request.Title, "title");
             ParameterValidator.IsNotNull(request.Steps, "steps");
 
-            var voiceCallFlows = new VoiceCallFlows(new VoiceCallFlow { Title = request.Title, Steps = request.Steps, Record = request.Record });
-            var result = restClient.Create(voiceCallFlows);
+            var callFlows = new CallFlows(new CallFlow { Title = request.Title, Steps = request.Steps, Record = request.Record });
+            var result = restClient.Create(callFlows);
 
-            return (VoiceCallFlow)result.Object;
+            return (CallFlowResponse)result.Object;
         }
 
         /// <summary>
@@ -431,13 +430,13 @@ namespace MessageBird
         /// If successful, this request will return an HTTP header of 204 No Content and an empty response. If the request failed, an error object will be returned.
         /// </summary>
         /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
-        public void DeleteVoiceCallFlow(string id)
+        public void DeleteCallFlow(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
 
-            var voiceCallFlows = new VoiceCallFlows(new VoiceCallFlow { Id = id });
+            var callFlows = new CallFlows(new CallFlow { Id = id });
 
-            restClient.Delete(voiceCallFlows);
+            restClient.Delete(callFlows);
         }
 
         /// <summary>
@@ -445,17 +444,17 @@ namespace MessageBird
         /// If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.
         /// </summary>
         /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
-        /// <param name="voiceCallFlow"></param>
+        /// <param name="callFlow"></param>
         /// <returns></returns>
-        public VoiceCallFlow UpdateVoiceCallFlow(string id, VoiceCallFlow voiceCallFlow)
+        public CallFlowResponse UpdateCallFlow(string id, CallFlow callFlow)
         {
+            ParameterValidator.IsNotNullOrWhiteSpace(callFlow.Title, "title");
+            ParameterValidator.IsNotNull(callFlow.Steps, "steps");
 
-            ParameterValidator.IsNotNullOrWhiteSpace(voiceCallFlow.Title, "title");
-            ParameterValidator.IsNotNull(voiceCallFlow.Steps, "steps");
+            var callFlows = new CallFlows(new CallFlow { Id = id, Title = callFlow.Title, Steps = callFlow.Steps, Record = callFlow.Record });
+            var result = restClient.Update(callFlows);
 
-            var voiceCallFlows = new VoiceCallFlows(new VoiceCallFlow { Id = id, Title = voiceCallFlow.Title, Steps = voiceCallFlow.Steps, Record = voiceCallFlow.Record });
-            var result = restClient.Update(voiceCallFlows);
-            return (VoiceCallFlow)result.Object;
+            return (CallFlowResponse)result.Object;
         }
     }
 

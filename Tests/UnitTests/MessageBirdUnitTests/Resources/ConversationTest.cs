@@ -7,7 +7,7 @@ using MessageBird.Resources;
 using MessageBird.Resources.Conversations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MessageBirdTests.Resources
+namespace MessageBirdUnitTests.Resources
 {
     [TestClass]
     public class ConversationTest

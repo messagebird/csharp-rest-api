@@ -6,7 +6,7 @@ using MessageBird.Resources;
 using Moq;
 using Newtonsoft.Json.Linq;
 
-namespace MessageBirdTests
+namespace MessageBirdUnitTests
 {
     /// <summary>
     /// Helper that offers a convenient way to create and configure a RestClient mock with a fluent API.

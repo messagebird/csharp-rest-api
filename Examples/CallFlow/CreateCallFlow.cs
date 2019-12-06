@@ -1,27 +1,32 @@
-﻿using MessageBird;
+﻿using System;
+using System.Linq;
+using MessageBird;
 using MessageBird.Exceptions;
-using MessageBird.Objects.VoiceCalls;
-using System;
+using MessageBird.Objects.Voice;
 
-namespace Examples.VoiceCallFlow
+namespace Examples.CallFlow
 {
-    internal class CreateVoiceCallFlow
+    internal class CreateCallFlow
     {
         private const string YourAccessKey = "YOUR_ACCESS_KEY";
 
         internal static void Main(string[] args)
         {
             var client = Client.CreateDefault(YourAccessKey);
-            var newVoiceCallFlow = new MessageBird.Objects.VoiceCalls.VoiceCallFlow
+            var newCallFlow = new MessageBird.Objects.Voice.CallFlow
             {
                 Title = "Forward call to 1234567890",
                 Record = true
-            };
-            newVoiceCallFlow.Steps.Add(new Step { Action = "transfer", Options = new Options { Destination = "1234567890" } });
+            };            
+            newCallFlow.Steps.Add(new Step { Action = "transfer", Options = new Options { Destination = "1234567890" } });
+            
             try
             {
-                var voiceCallFlow = client.CreateVoiceCallFlow(newVoiceCallFlow);
-                Console.WriteLine("The Voice Call Flow Created with Id = {0}", voiceCallFlow.Id);
+                var callFlowResponse = client.CreateCallFlow(newCallFlow);
+                var callFlow = callFlowResponse.Data.FirstOrDefault();
+
+                Console.WriteLine("The Voice Call Flow with Id = {0} has been created", callFlow.Id);
+                Console.WriteLine("The Voice Call Flow Title is: {0}", callFlow.Title);
             }
             catch (ErrorException e)
             {

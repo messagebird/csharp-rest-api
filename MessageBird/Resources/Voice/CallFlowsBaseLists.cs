@@ -1,23 +1,20 @@
 ﻿using System.Text;
-using MessageBird.Objects;
-using MessageBird.Objects.VoiceCalls;
+using MessageBird.Objects.Voice;
 
-namespace MessageBird.Resources.VoiceCalls
+namespace MessageBird.Resources.Voice
 {
-    public class VoiceCallFlowsBaseLists<T> : VoiceCallFlowsResource
+    public class CallFlowsBaseLists : CallFlowsResource
     {
-        public VoiceCallFlowsBaseLists(string name, VoiceCallFlowList attachedObject)
+        public CallFlowsBaseLists(string name, CallFlowList attachedObject)
             : base(name, attachedObject)
         {
-            //
         }
-
 
         public override string QueryString
         {
             get
             {
-                var baseList = (VoiceCallFlowList)Object;
+                var baseList = (CallFlowList)Object;
 
                 var builder = new StringBuilder();
 
