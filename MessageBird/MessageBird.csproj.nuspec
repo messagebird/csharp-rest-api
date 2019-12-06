@@ -3,14 +3,14 @@
   <metadata>
     <id>MessageBird</id>
     <title>MessageBird's REST API for C#</title>
-    <version>1.6.1.0</version>
+    <version>2.0.0.0</version>
     <authors>MessageBird,Remco Vermeulen</authors>
     <owners>MessageBird</owners>
     <licenseUrl>https://github.com/messagebird/csharp-rest-api/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/messagebird/csharp-rest-api</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This package contains the open source C# client for MessageBird's REST API. Documentation can be found at: https://www.messagebird.com/developers</description>
-    <copyright>Copyright (c) 2014, MessageBird</copyright>
+    <copyright>Copyright (c) 2019, MessageBird</copyright>
     <tags>SMS MMS OTP 2FA Voice MessageBird Telecom</tags>
     <dependencies>
       <group>
