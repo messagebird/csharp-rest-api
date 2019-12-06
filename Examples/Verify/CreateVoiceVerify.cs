@@ -1,7 +1,8 @@
-﻿using MessageBird;
+﻿using System;
+using MessageBird;
 using MessageBird.Exceptions;
 using MessageBird.Objects;
-using System;
+using MessageBird.Objects.Common;
 
 namespace Examples.Verify
 {

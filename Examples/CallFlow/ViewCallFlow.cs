@@ -1,27 +1,25 @@
-﻿using MessageBird;
+﻿using System;
+using System.Linq;
+using MessageBird;
 using MessageBird.Exceptions;
-using MessageBird.Objects.VoiceCalls;
-using System;
 
-namespace Examples.VoiceCallFlow
+namespace Examples.CallFlow
 {
-    internal class UpdateVoiceCallFlow
+    internal class ViewCallFlow
     {
         const string YOUR_ACCESS_KEY = "YOUR_ACCESS_KEY";
 
         internal static void Main(string[] args)
         {
             var client = Client.CreateDefault(YOUR_ACCESS_KEY);
-            var voiceCallFlow = new MessageBird.Objects.VoiceCalls.VoiceCallFlow
-            {
-                Title = "PUT YOUR TITLE HERE",
-                Record = true
-            };
-            voiceCallFlow.Steps.Add(new Step { Action = "transfer", Options = new Options { Destination = "1234567890" } });
+
             try
             {
-                var updatedVoiceCallFlow = client.UpdateVoiceCallFlow("ID", voiceCallFlow);
-                Console.WriteLine("The Voice Call Flow with Id = {0} Updated.", updatedVoiceCallFlow.Id);
+                var callFlowResponse = client.ViewCallFlow("PUT YOUR REQUEST ID HERE");
+                var callFlow = callFlowResponse.Data.FirstOrDefault();
+
+                Console.WriteLine("The Voice Call Flow Id is: {0}", callFlow.Id);
+                Console.WriteLine("The Voice Call Flow Title is: {0}", callFlow.Title);
             }
             catch (ErrorException e)
             {

@@ -2,36 +2,11 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace MessageBird.Objects.VoiceCalls
+namespace MessageBird.Objects.Voice
 {
-
-    public class Options
+    public class CallFlow : IIdentifiable<string>
     {
-        [JsonProperty("destination")] 
-        public string Destination { get; set; }
-    }
-
-    public class Step
-    {
-        [JsonProperty("id")] 
-        public string Id { get; set; }
-
-        [JsonProperty("action")] 
-        public string Action { get; set; }
-
-        [JsonProperty("options")] 
-        public Options Options { get; set; }
-    }
-
-    public class Links
-    {
-        [JsonProperty("self")] 
-        public string Self { get; set; }
-    }
-
-    public class VoiceCallFlow : IIdentifiable<string>
-    {
-        public VoiceCallFlow()
+        public CallFlow()
         {
             Steps = new List<Step>();
             Record = null;
@@ -105,19 +80,70 @@ namespace MessageBird.Objects.VoiceCalls
             [JsonProperty("_links")] 
             public Links Links { get; set; }
 
-            public RequestObject(VoiceCallFlow voiceCallFlow)
+            public RequestObject(CallFlow callFlow)
             {
-                Title = voiceCallFlow.Title;
-                Record = voiceCallFlow.Record;
-                Steps = voiceCallFlow.Steps;
-            }
+                Title = callFlow.Title;
+                Record = callFlow.Record;
+                Steps = callFlow.Steps;
             }
         }
-    
+    }
 
+    public class CallFlowResponse : IIdentifiable<string>
+    {
+        [JsonProperty("data")]
+        public List<CallFlow> Data { get; set; }
+
+        [JsonProperty("_links")]
+        public Links Links { get; set; }
+
+        public string Id
+        {
+            get
+            {
+                return string.Empty;
+            }
+        }
+    }
+
+    public class CallFlowList : CallFlowResponse
+    {
+        [JsonProperty("pagination")]
+        public Pagination Pagination { get; set; }
+
+        [JsonProperty("limit")]
+        public int Limit { get; set; }
+
+        [JsonProperty("offset")]
+        public int Offset { get; set; }
+    }   
+    
+    public class Options
+    {
+        [JsonProperty("destination")] 
+        public string Destination { get; set; }
+    }
+
+    public class Step
+    {
+        [JsonProperty("id")] 
+        public string Id { get; set; }
+
+        [JsonProperty("action")] 
+        public string Action { get; set; }
+
+        [JsonProperty("options")] 
+        public Options Options { get; set; }
+    }
+
+    public class Links
+    {
+        [JsonProperty("self")] 
+        public string Self { get; set; }
+    }
+    
     public class Pagination
     {
-
         [JsonProperty("totalCount")] 
         public int TotalCount { get; set; }
 
@@ -129,32 +155,5 @@ namespace MessageBird.Objects.VoiceCalls
 
         [JsonProperty("perPage")] 
         public int PerPage { get; set; }
-    }
-
-    public class VoiceCallFlowList : IIdentifiable<string>
-    {
-
-        [JsonProperty("data")]
-        public List<VoiceCallFlow> Data { get; set; }
-
-        [JsonProperty("_links")] 
-        public Links Links { get; set; }
-
-        [JsonProperty("pagination")]
-        public Pagination Pagination { get; set; }
-
-        [JsonProperty("limit")]
-        public int Limit { get; set; }
-
-        [JsonProperty("offset")]
-        public int Offset { get; set; }
-
-        public string Id
-        {
-            get
-            {
-                return string.Empty;
-            }
-        }
     }
 }

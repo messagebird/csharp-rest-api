@@ -1,12 +1,10 @@
 using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-
+using MessageBird.Json.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-
-using MessageBird.Json.Converters;
-using System.ComponentModel;
 
 namespace MessageBird.Objects
 {
@@ -33,8 +31,8 @@ namespace MessageBird.Objects
         public MessageType Type { get; set; }
         public int Timeout { get; set; }
         public int TokenLength { get; set; }
-        public Voice Voice { get; set; }
-        public Language Language { get; set; }
+        public Common.Voice Voice { get; set; }
+        public Common.Language Language { get; set; }
 
         public VerifyOptionalArguments()
         {
@@ -42,8 +40,8 @@ namespace MessageBird.Objects
             Encoding = DataEncoding.Plain;
             Timeout = 30;
             TokenLength = 6;
-            Language = Language.English;
-            Voice = Voice.Female;
+            Language = Common.Language.English;
+            Voice = Common.Voice.Female;
         }
     }
 
@@ -111,10 +109,10 @@ namespace MessageBird.Objects
         public int Timeout { get; set; }
 
         [JsonProperty("voice"), JsonConverter(typeof(StringEnumConverter))]
-        public Voice Voice { get; set; }
+        public Common.Voice Voice { get; set; }
 
         [JsonProperty("language"), JsonConverter(typeof(StringEnumConverter))]
-        public Language Language { get; set; }
+        public Common.Language Language { get; set; }
 
         [JsonProperty("Token")]
         public string Token { get; private set; }
@@ -125,8 +123,8 @@ namespace MessageBird.Objects
             Timeout = 30;
             Type = MessageType.Sms;
             Encoding = DataEncoding.Plain;
-            Language = Language.English;
-            Voice = Voice.Female;
+            Language = Common.Language.English;
+            Voice = Common.Voice.Female;
         }
 
         public Verify(string id)
