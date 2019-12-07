@@ -702,5 +702,20 @@ namespace MessageBird
 
             return (CallResponse)resource.Object;
         }
+
+        /// <summary>
+        /// This request deletes a call. The parameters are the unique ID of the call, the leg and the call with which the call is associated.
+        /// If successful, this request will return an HTTP header of 204 No Content and an empty response.
+        /// If the request failed, an error object will be returned.
+        /// </summary>
+        /// <param name="callId">The unique ID of a call generated upon creation.</param>
+        public void DeleteCall(string callId)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
+
+            var resource = new Calls(new Call { Id = callId });
+
+            restClient.Delete(resource);
+        }
     }
 }
