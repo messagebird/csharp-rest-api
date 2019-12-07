@@ -1,24 +1,23 @@
-using MessageBird.Objects;
 using System.Text;
+using MessageBird.Objects.Voice;
 
 namespace MessageBird.Resources.Voice
 {
-    public abstract class CallBaseLists<T> : CallsResource
+    public class CallBaseLists : CallsResource
     {
-        public CallBaseLists(string name, BaseList<T> attachedObject)
+        public CallBaseLists(string name, CallList attachedObject)
             : base(name, attachedObject)
         {
-            //
         }
 
         public override string QueryString
         {
             get
             {
-                var baseList = (BaseList<T>)Object;
+                var baseList = (CallList)Object;
 
                 var builder = new StringBuilder();
-                
+
                 if (!string.IsNullOrEmpty(base.QueryString))
                 {
                     builder.AppendFormat("{0}&", base.QueryString);
@@ -32,4 +31,4 @@ namespace MessageBird.Resources.Voice
             }
         }
     }
-}
+} 

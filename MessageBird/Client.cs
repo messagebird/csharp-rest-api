@@ -570,9 +570,7 @@ namespace MessageBird
             restClient.PerformHttpRequest("DELETE", uri, HttpStatusCode.NoContent, baseUrl: Resource.DefaultBaseUrl);
         }
 
-<<<<<<< HEAD
         #endregion
-=======
         /// <summary>
         /// This request retrieves a listing of all call flows.
         /// </summary>
@@ -673,6 +671,26 @@ namespace MessageBird
 
             return (CallResponse)result.Object;
         }
->>>>>>> Create Call
+
+
+        /// <summary>
+        /// This request retrieves a listing of all calls.
+        /// If successful, this request returns an object with a data property, which is an array that has 0 or more recording objects.
+        /// </summary>
+        /// <param name="limit">Set how many records will return from the server</param>
+        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
+        public CallList ListCalls(int limit = 20, int offset = 0)
+        {
+            var resource = new CallLists();
+
+            var list = (CallList)resource.Object;
+            list.Limit = limit;
+            list.Offset = offset;
+
+            restClient.Retrieve(resource);
+
+            return (CallList)resource.Object;
+        }
     }
 }

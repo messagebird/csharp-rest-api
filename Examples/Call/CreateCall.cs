@@ -4,7 +4,6 @@ using MessageBird;
 using MessageBird.Exceptions;
 using System.Collections.Generic;
 using MessageBird.Objects.Voice;
-using MessageBird.Resources.Voice;
 
 namespace Examples.Call
 {

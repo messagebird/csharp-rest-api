@@ -70,4 +70,16 @@ namespace MessageBird.Objects.Voice
             }
         }
     }
+
+    public class CallList : CallResponse
+    {
+        [JsonProperty("pagination")]
+        public Pagination Pagination { get; set; }
+
+        [JsonProperty("limit")]
+        public int Limit { get; set; }
+
+        [JsonProperty("offset")]
+        public int Offset { get; set; }
+    }
 }
