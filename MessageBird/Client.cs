@@ -692,5 +692,15 @@ namespace MessageBird
 
             return (CallList)resource.Object;
         }
+
+        public CallResponse ViewCall(string callId)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
+
+            var resource = new Calls(new Call { Id = callId });
+            restClient.Retrieve(resource);
+
+            return (CallResponse)resource.Object;
+        }
     }
 }
