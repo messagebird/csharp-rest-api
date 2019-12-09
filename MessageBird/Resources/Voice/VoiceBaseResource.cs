@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources.Voice
 {
-    public class CallsResource : Resource
+    public class VoiceBaseResource<T> : Resource
     {
-        public static string CallBaseUrl = "https://voice.messagebird.com";
+        public static string baseUrl = "https://voice.messagebird.com";
 
-        public CallsResource(string name, IIdentifiable<string> attachedObject) :
+        public VoiceBaseResource(string name, IIdentifiable<string> attachedObject) :
             base(name, attachedObject)
         {
             //
@@ -19,7 +19,7 @@ namespace MessageBird.Resources.Voice
         {
             get
             {
-                return CallBaseUrl;
+                return baseUrl;
             }
         }
     }

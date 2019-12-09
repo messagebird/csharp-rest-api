@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources.Voice
 {
-    public class Calls : CallsResource
+    public class Calls : VoiceBaseResource<Call>
     {
         public Calls(Objects.Voice.Call call) : base("calls", call) { }
         public Calls() : this(new Objects.Voice.Call()) { }

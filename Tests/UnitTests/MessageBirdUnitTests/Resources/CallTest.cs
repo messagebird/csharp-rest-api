@@ -15,13 +15,14 @@ namespace MessageBirdUnitTests.Resources
 
     public class CallTest
     {
+        private string baseUrl = VoiceBaseResource<Call>.baseUrl;
         [TestMethod]
         public void Create()
         {
             var restClient = MockRestClient
                 .ThatExpects("{\"source\":\"31644556677\",\"destination\":\"33766723144\",\"callFlow\":{\"title\":\"Forward call to 31612345678\",\"record\":true,\"steps\":[{\"action\":\"transfer\",\"options\":{\"destination\":\"31612345678\"}}]},\"duration\":0}")
                 .AndReturns(filename: "CallCreate.json")
-                .FromEndpoint("POST", "calls", CallsResource.CallBaseUrl)
+                .FromEndpoint("POST", "calls", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);
@@ -52,7 +53,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "CallList.json")
-                .FromEndpoint("GET", "calls?limit=20&offset=0", CallsResource.CallBaseUrl)
+                .FromEndpoint("GET", "calls?limit=20&offset=0", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);
@@ -87,5 +88,48 @@ namespace MessageBirdUnitTests.Resources
             Assert.AreEqual(10, pagination.PerPage);
         }
 
+        [TestMethod]
+        public void View()
+        {
+            var restClient = MockRestClient
+                .ThatReturns(filename: "CallView.json")
+                .FromEndpoint("GET", "calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", baseUrl)
+                .Get();
+
+            var client = Client.Create(restClient.Object);
+
+            var callResponse = client.ViewCall("f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58");
+            restClient.Verify();
+
+            Assert.IsNotNull(callResponse.Data);
+            Assert.IsNotNull(callResponse.Links);
+
+            var selfLink = callResponse.Links["self"];
+            Assert.AreEqual("/calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", selfLink);
+
+            var call = callResponse.Data.FirstOrDefault();
+            Assert.AreEqual("f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", call.Id);
+            Assert.AreEqual(CallStatus.Ended, call.Status);
+            Assert.AreEqual("31644556677", call.Source);
+            Assert.AreEqual("31612345678", call.Destination);
+            Assert.IsNotNull(call.CreatedAt);
+            Assert.IsNotNull(call.UpdatedAt);
+            Assert.IsNotNull(call.EndedAt);     
+            Assert.IsNull(call.Links);
+        }
+
+        [TestMethod]
+        public void Delete()
+        {
+            var restClient = MockRestClient
+                .ThatReturns(string.Empty)
+                .FromEndpoint("DELETE", "calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", baseUrl)
+                .Get();
+
+            var client = Client.Create(restClient.Object);
+
+            client.DeleteCall("f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58");
+            restClient.Verify();
+        }
     }
 }

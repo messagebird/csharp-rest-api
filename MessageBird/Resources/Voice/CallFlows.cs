@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources.Voice
 {
-    public class CallFlows : CallFlowsResource
+    public class CallFlows : VoiceBaseResource<CallFlow>
     {
         public CallFlows(CallFlow callFlow) : base("call-flows", callFlow) { }
         public CallFlows() : this(new CallFlow()) { }
