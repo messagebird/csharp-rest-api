@@ -1,0 +1,17 @@
+{
+  "data": [
+    {
+      "id": "3b4ac358-9467-4f7a-a6c8-6157ad181123",
+      "format": "wav",
+      "legId": "cc3bd14d-3eee-4380-b01f-fe7723c69a31",
+      "status": "done",
+      "duration": 7,
+      "createdAt": "2017-05-17T11:42:57Z",
+      "updatedAt": "2017-05-17T11:43:04Z"
+    }
+  ],
+  "_links": {
+    "self": "/calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123",
+    "file": "/calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123.wav"
+  }
+}

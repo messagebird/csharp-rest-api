@@ -1,10 +1,11 @@
 ﻿using MessageBird;
 using MessageBird.Exceptions;
 using System;
+using System.IO;
 
-namespace Examples.CallFlow
+namespace Examples.Recording
 {
-    internal class ListCallFlow
+    internal class DownloadRecording
     {
         const string YOUR_ACCESS_KEY = "YOUR_ACCESS_KEY";
 
@@ -12,13 +13,14 @@ namespace Examples.CallFlow
         {
             var client = Client.CreateDefault(YOUR_ACCESS_KEY);
 
-            var callFlowList = client.ListCallFlows();
             try
             {
-                foreach (var item in callFlowList.Data)
-                {
-                    Console.WriteLine("The Voice Call Flow Id is: {0}", item.Id);
-                    Console.WriteLine("The Voice Call Flow Title is: {0}", item.Title);
+                using (var recordingDataStream = client.DownloadRecording("CALL ID", "LEG ID", "RECORDING ID"))
+                { 
+                    using (var fileStream = File.OpenWrite(@"PATH TO FILE ON YOUR LOCAL MACHINE"))
+                    {
+                        recordingDataStream.CopyTo(fileStream);
+                    }
                 }
             }
             catch (ErrorException e)

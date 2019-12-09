@@ -1,0 +1,27 @@
+{
+  "data": [
+    {
+      "id": "4c2ac358-b467-4f7a-a6c8-6157ad181142",
+      "format": "wav",
+      "type": "ivr",
+      "legId": "317bd14d-3eee-4380-b01f-fe7723c6913a",
+      "status": "done",
+      "duration": 42,
+      "createdAt": "2017-05-17T11:42:57Z",
+      "updatedAt": "2017-05-17T11:43:04Z",
+      "_links": {
+        "self": "/calls/fdcf0391-4fdc-4e38-9551-e8a01602984f/legs/317bd14d-3eee-4380-b01f-fe7723c6913a/recordings/4c2ac358-b467-4f7a-a6c8-6157ad181142",
+        "file": "/calls/fdcf0391-4fdc-4e38-9551-e8a01602984f/legs/317bd14d-3eee-4380-b01f-fe7723c6913a/recordings/4c2ac358-b467-4f7a-a6c8-6157ad181142.wav"
+      }
+    }
+  ],
+  "_links": {
+    "self": "/calls/fdcf0391-4fdc-4e38-9551-e8a01602984f/legs/317bd14d-3eee-4380-b01f-fe7723c6913a/recordings/4c2ac358-b467-4f7a-a6c8-6157ad181142?page=1"
+  },
+  "pagination": {
+    "totalCount": 1,
+    "pageCount": 1,
+    "currentPage": 1,
+    "perPage": 10
+  }
+}

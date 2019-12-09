@@ -32,6 +32,7 @@ namespace MessageBirdUnitTests
 
         private string RequestBody { get; set; }
         private string ResponseBody { get; set; }
+        private Stream ResponseStream { get; set; }
         private string Method { get; set; }
         private string Uri { get; set; }
         private string BaseUrl { get; set; }
@@ -55,9 +56,9 @@ namespace MessageBirdUnitTests
         {
             var restClient = mockRepository.Create<RestClient>(AccessKey, ProxyConfigurationInjector);
             
-            if (ResponseBody == null)
+            if (ResponseBody == null && ResponseStream == null)
             {
-                throw new Exception("Mock must be configured to return a response body.");
+                throw new Exception("Mock must be configured to return a response body or stream.");
             }
             
             if (Method == null || Uri == null)
@@ -66,7 +67,11 @@ namespace MessageBirdUnitTests
             }
 
             // Handle the overload...
-            if (RequestBody == null)
+            if (ResponseStream != null)
+            {
+                restClient.Setup(c => c.PerformHttpRequest(Uri, It.IsAny<HttpStatusCode>(), BaseUrl)).Returns(ResponseStream).Verifiable();
+            }
+            else if (RequestBody == null)
             {
                 restClient.Setup(c => c.PerformHttpRequest(Method, Uri, It.IsAny<HttpStatusCode>(), BaseUrl)).Returns(ResponseBody).Verifiable();
             }
@@ -91,12 +96,23 @@ namespace MessageBirdUnitTests
         /// <summary>
         /// Creates a mock client and sets the expected response body.
         /// </summary>
-        public static MockRestClient ThatReturns(string responseBody = null, string filename = null)
+        public static MockRestClient ThatReturns(string responseBody = null, string filename = null, Stream stream = null)
         {
+            string mockResponseBody = string.Empty;
+
+            if (!string.IsNullOrEmpty(responseBody))
+            {
+                mockResponseBody = responseBody;
+            }
+            else if (!string.IsNullOrEmpty(filename))
+            {
+                mockResponseBody = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses", filename));
+            }
+
             return new MockRestClient
             {
-                ResponseBody = responseBody ??
-                               File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses", filename))
+                ResponseBody = mockResponseBody,
+                ResponseStream = stream
             };
         }
 
