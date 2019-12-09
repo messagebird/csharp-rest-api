@@ -20,7 +20,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatExpects("{\"source\":\"31644556677\",\"destination\":\"33766723144\",\"callFlow\":{\"title\":\"Forward call to 31612345678\",\"record\":true,\"steps\":[{\"action\":\"transfer\",\"options\":{\"destination\":\"31612345678\"}}]},\"duration\":0}")
-                .AndReturns("{\"data\":[{\"id\":\"cac63a43-ff05-4cc3-b8e3-fca82e97975c\",\"source\":\"31644556677\",\"destination\":\"33766723144\",\"createdAt\":\"2019-12-06T15:56:39Z\",\"updatedAt\":\"2019-12-06T15:56:39Z\",\"endedAt\":null}],\"_links\":{\"self\":\"/calls/cac63a43-ff05-4cc3-b8e3-fca82e97975c\"},\"pagination\":{\"totalCount\":0,\"pageCount\":0,\"currentPage\":0,\"perPage\":0}}\n")
+                .AndReturns(filename: "CallCreate.json")
                 .FromEndpoint("POST", "calls", CallsResource.CallBaseUrl)
                 .Get();
 
@@ -34,9 +34,9 @@ namespace MessageBirdUnitTests.Resources
             };
             var newCall = new Call
             {   
-                source = "31644556677",
-                destination = "33766723144",
-                callFlow = newCallFlow
+                Source = "31644556677",
+                Destination = "33766723144",
+                CallFlow = newCallFlow
             };
             var callResponse = client.CreateCall(newCall);
             restClient.Verify();
@@ -45,6 +45,46 @@ namespace MessageBirdUnitTests.Resources
 
             var call = callResponse.Data.FirstOrDefault();
             Assert.AreEqual("cac63a43-ff05-4cc3-b8e3-fca82e97975c", call.Id);
+        }
+
+        [TestMethod]
+        public void List()
+        {
+            var restClient = MockRestClient
+                .ThatReturns(filename: "CallList.json")
+                .FromEndpoint("GET", "calls?limit=20&offset=0", CallsResource.CallBaseUrl)
+                .Get();
+
+            var client = Client.Create(restClient.Object);
+
+            var callList = client.ListCalls();
+            restClient.Verify();
+
+            Assert.IsNotNull(callList.Data);
+            Assert.IsNotNull(callList.Links);
+            Assert.IsNotNull(callList.Pagination);
+
+            var selfLink = callList.Links["self"];
+            Assert.AreEqual("/calls?page=1", selfLink);
+
+            var call = callList.Data.FirstOrDefault();
+            Assert.AreEqual("f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", call.Id);
+            Assert.AreEqual(CallStatus.Ended, call.Status);
+            Assert.AreEqual("31644556677", call.Source);
+            Assert.AreEqual("31612345678", call.Destination);
+            Assert.IsNotNull(call.CreatedAt);
+            Assert.IsNotNull(call.UpdatedAt);
+            Assert.IsNotNull(call.EndedAt);
+            Assert.IsNotNull(call.Links);
+
+            var callSelfLink = call.Links["self"];
+            Assert.AreEqual("/calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", callSelfLink);
+
+            var pagination = callList.Pagination;
+            Assert.AreEqual(2, pagination.TotalCount);
+            Assert.AreEqual(1, pagination.PageCount);
+            Assert.AreEqual(1, pagination.CurrentPage);
+            Assert.AreEqual(10, pagination.PerPage);
         }
 
     }

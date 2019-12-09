@@ -15,7 +15,7 @@ namespace MessageBird.Resources.Voice
         {
             try
             {
-                Object = JsonConvert.DeserializeObject<CallResponse>(resource);
+                Object = JsonConvert.DeserializeObject<VoiceResponse<Call>>(resource);
             }
             catch (JsonSerializationException e)
             {

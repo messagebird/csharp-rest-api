@@ -27,59 +27,37 @@ namespace MessageBird.Objects.Voice
 
         [JsonProperty("status")]
         [JsonConverter(typeof(StringEnumConverter))]
-        public CallStatus? status { get; set; }
+        public CallStatus? Status { get; set; }
 
         [JsonProperty("source")] 
-        public string source { get; set; }
+        public string Source { get; set; }
 
         [JsonProperty("destination")] 
-        public string destination { get; set; }      
+        public string Destination { get; set; }      
          
         [JsonProperty("webhook")] 
-        public Webhook webhook { get; set; }
+        public Webhook Webhook { get; set; }
 
         [JsonProperty("callFlow")] 
-        public CallFlow callFlow { get; set; }
+        public CallFlow CallFlow { get; set; }
 
         [JsonProperty("duration")] 
-        public int duration { get; set; }
+        public int Duration { get; set; }
 
         [JsonProperty("createdAt")] 
-        public DateTime? createdAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         [JsonProperty("updatedAt")] 
-        public DateTime? updatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         [JsonProperty("endedAt")] 
-        public DateTime? endedAt { get; set; }
-    }
-
-    public class CallResponse : IIdentifiable<string>
-    {
-        [JsonProperty("data")]
-        public List<Call> Data { get; set; }
-
+        public DateTime? EndedAt { get; set; }
+        
         [JsonProperty("_links")]
         public Dictionary<string, string> Links { get; set; }
-
-        public string Id
-        {
-            get
-            {
-                return string.Empty;
-            }
-        }
     }
 
-    public class CallList : CallResponse
+    public class CallList : VoiceBaseList<Call>
     {
-        [JsonProperty("pagination")]
-        public Pagination Pagination { get; set; }
-
-        [JsonProperty("limit")]
-        public int Limit { get; set; }
-
-        [JsonProperty("offset")]
-        public int Offset { get; set; }
     }
 }

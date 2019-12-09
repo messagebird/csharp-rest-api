@@ -35,7 +35,7 @@ namespace MessageBirdUnitTests.Resources
             Assert.IsNotNull(callFlowResponse.Links);
 
             var links = callFlowResponse.Links;
-            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.Self);
+            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.GetValueOrDefault("self"));
 
             var callFlow = callFlowResponse.Data.FirstOrDefault();
             Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", callFlow.Id);
@@ -83,7 +83,7 @@ namespace MessageBirdUnitTests.Resources
             Assert.IsNotNull(callFlowList.Pagination);
 
             var listLinks = callFlowList.Links;
-            Assert.AreEqual("/call-flows?page=1", listLinks.Self);
+            Assert.AreEqual("/call-flows?page=1", listLinks.GetValueOrDefault("self"));
 
             var callFlow = callFlowList.Data.FirstOrDefault();
             Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", callFlow.Id);
@@ -95,7 +95,7 @@ namespace MessageBirdUnitTests.Resources
             Assert.IsNotNull(callFlow.Links);
 
             var links = callFlow.Links;
-            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.Self);
+            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links["self"]);
 
             var step = callFlow.Steps.FirstOrDefault();
             Assert.AreEqual("3538a6b8-5a2e-4537-8745-f72def6bd393", step.Id);
@@ -133,7 +133,7 @@ namespace MessageBirdUnitTests.Resources
             Assert.IsNotNull(callFlowResponse.Links);
 
             var links = callFlowResponse.Links;
-            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.Self);
+            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.GetValueOrDefault("self"));
 
             var updatedCallFlow = callFlowResponse.Data.FirstOrDefault();
             Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", updatedCallFlow.Id);
@@ -166,7 +166,7 @@ namespace MessageBirdUnitTests.Resources
             Assert.IsNotNull(callFlowResponse.Links);
 
             var links = callFlowResponse.Links;
-            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.Self);
+            Assert.AreEqual("/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", links.GetValueOrDefault("self"));
 
             var callFlow = callFlowResponse.Data.FirstOrDefault();
             Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", callFlow.Id);

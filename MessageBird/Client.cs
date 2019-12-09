@@ -596,14 +596,14 @@ namespace MessageBird
         /// </summary>
         /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
         /// <returns></returns>
-        public CallFlowResponse ViewCallFlow(string id)
+        public VoiceResponse<CallFlow> ViewCallFlow(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
 
             var resource = new CallFlows(new CallFlow() { Id = id });
             restClient.Retrieve(resource);
 
-            return (CallFlowResponse)resource.Object;
+            return (VoiceResponse<CallFlow>)resource.Object;
         }
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace MessageBird
         /// </summary>
         /// <param name="request"></param>
         /// <returns>If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.</returns>
-        public CallFlowResponse CreateCallFlow(CallFlow request)
+        public VoiceResponse<CallFlow> CreateCallFlow(CallFlow request)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(request.Title, "title");
             ParameterValidator.IsNotNull(request.Steps, "steps");
@@ -619,7 +619,7 @@ namespace MessageBird
             var callFlows = new CallFlows(new CallFlow { Title = request.Title, Steps = request.Steps, Record = request.Record });
             var result = restClient.Create(callFlows);
 
-            return (CallFlowResponse)result.Object;
+            return (VoiceResponse<CallFlow>)result.Object;
         }
 
         /// <summary>
@@ -643,7 +643,7 @@ namespace MessageBird
         /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
         /// <param name="callFlow"></param>
         /// <returns></returns>
-        public CallFlowResponse UpdateCallFlow(string id, CallFlow callFlow)
+        public VoiceResponse<CallFlow> UpdateCallFlow(string id, CallFlow callFlow)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(callFlow.Title, "title");
             ParameterValidator.IsNotNull(callFlow.Steps, "steps");
@@ -651,7 +651,7 @@ namespace MessageBird
             var callFlows = new CallFlows(new CallFlow { Id = id, Title = callFlow.Title, Steps = callFlow.Steps, Record = callFlow.Record });
             var result = restClient.Update(callFlows);
 
-            return (CallFlowResponse)result.Object;
+            return (VoiceResponse<CallFlow>)result.Object;
         }
 
         /// <summary>
@@ -659,17 +659,17 @@ namespace MessageBird
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public CallResponse CreateCall(Call request)
+        public VoiceResponse<Call> CreateCall(Call request)
         {
-            ParameterValidator.IsNotNullOrWhiteSpace(request.source, "source");
-            ParameterValidator.IsNotNullOrWhiteSpace(request.destination, "destination");
-            ParameterValidator.IsNotNull(request.callFlow, "callFlow");
+            ParameterValidator.IsNotNullOrWhiteSpace(request.Source, "source");
+            ParameterValidator.IsNotNullOrWhiteSpace(request.Destination, "destination");
+            ParameterValidator.IsNotNull(request.CallFlow, "callFlow");
 
             var callResource = new Calls(request);
             var result = restClient.Create(callResource);
 
 
-            return (CallResponse)result.Object;
+            return (VoiceResponse<Call>)result.Object;
         }
 
 
@@ -693,14 +693,14 @@ namespace MessageBird
             return (CallList)resource.Object;
         }
 
-        public CallResponse ViewCall(string callId)
+        public VoiceResponse<Call> ViewCall(string callId)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
 
             var resource = new Calls(new Call { Id = callId });
             restClient.Retrieve(resource);
 
-            return (CallResponse)resource.Object;
+            return (VoiceResponse<Call>)resource.Object;
         }
 
         /// <summary>
