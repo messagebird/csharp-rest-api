@@ -1,17 +1,17 @@
-using System;
-using System.IO;
 using MessageBird;
 using MessageBird.Exceptions;
-using System.Collections.Generic;
 using MessageBird.Objects.Voice;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Examples.Call
 {
-    class CreateCall
+    internal class CreateCall
     {
         const string YourAccessKey = "YOUR_ACCESS_KEY"; // your access key here.
 
-        static void Main(string[] args)
+        internal static void Main(string[] args)
         {
 
             var client = Client.CreateDefault(YourAccessKey);

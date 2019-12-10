@@ -1,18 +1,14 @@
 using MessageBird;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System;
-using System.IO;
 using System.Linq;
 using MessageBird.Objects.Voice;
 using MessageBird.Resources.Voice;
-using MessageBird.Exceptions;
 
 
 namespace MessageBirdUnitTests.Resources
 {
     [TestClass]
-
     public class CallTest
     {
         private string baseUrl = VoiceBaseResource<Call>.baseUrl;

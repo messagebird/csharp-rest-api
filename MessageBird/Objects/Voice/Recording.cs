@@ -38,5 +38,8 @@ namespace MessageBird.Objects.Voice
 
     public class RecordingList : VoiceBaseList<Recording>
     {
+        public string LegId { get; set; }
+
+        public string CallId { get; set; }
     }
 }

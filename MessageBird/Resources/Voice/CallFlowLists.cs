@@ -7,5 +7,7 @@ namespace MessageBird.Resources.Voice
         public CallFlowLists()
             : base("call-flows", new CallFlowList())
         { }
+
+        public CallFlowLists(Objects.Voice.CallFlowList list) : base("call-flows", list) { }
     }
 }
