@@ -12,7 +12,7 @@ namespace Examples.Recording
         {
             var client = Client.CreateDefault(YOUR_ACCESS_KEY);
 
-            var recordings = client.ListRecordings();
+            var recordings = client.ListRecordings(callId: "CALL ID", legId: "LEG ID");
             try
             {
                 foreach (var item in recordings.Data)

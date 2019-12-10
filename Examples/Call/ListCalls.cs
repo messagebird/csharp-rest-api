@@ -18,9 +18,9 @@ namespace Examples.Call
                 foreach (var item in calls.Data)
                 {
                     Console.WriteLine("The Call Id is: {0}", item.Id);
-                    Console.WriteLine("The Call source is: {0}", item.source);
-                    Console.WriteLine("The Call destination is: {0}", item.destination);
-                    Console.WriteLine("The Call ended at: {0}", item.endedAt);
+                    Console.WriteLine("The Call source is: {0}", item.Source);
+                    Console.WriteLine("The Call destination is: {0}", item.Destination);
+                    Console.WriteLine("The Call ended at: {0}", item.EndedAt);
                 }
             }
             catch (ErrorException e)

@@ -19,9 +19,9 @@ namespace Examples.Call
                 var call = callResponse.Data.FirstOrDefault();
 
                 Console.WriteLine("The Call Id is: {0}", call.Id);
-                Console.WriteLine("The Call source is: {0}", call.source);
-                Console.WriteLine("The Call destination is: {0}", call.destination);
-                Console.WriteLine("The Call ended at: {0}", call.endedAt);
+                Console.WriteLine("The Call source is: {0}", call.Source);
+                Console.WriteLine("The Call destination is: {0}", call.Destination);
+                Console.WriteLine("The Call ended at: {0}", call.EndedAt);
             }
             catch (ErrorException e)
             {
