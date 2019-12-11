@@ -1,10 +1,11 @@
-﻿using MessageBird;
-using MessageBird.Exceptions;
 using System;
+using System.Linq;
+using MessageBird;
+using MessageBird.Exceptions;
 
-namespace Examples.Recording
-{
-    internal class ListRecording
+namespace Examples.Call
+{ 
+    internal class ViewCall
     {
         const string YOUR_ACCESS_KEY = "YOUR_ACCESS_KEY";
 
@@ -12,15 +13,15 @@ namespace Examples.Recording
         {
             var client = Client.CreateDefault(YOUR_ACCESS_KEY);
 
-            var recordings = client.ListRecordings(callId: "CALL ID", legId: "LEG ID");
             try
             {
-                foreach (var item in recordings.Data)
-                {
-                    Console.WriteLine("The Recording Id is: {0}", item.Id);
-                    Console.WriteLine("The Recording Format is: {0}", item.Format);
-                    Console.WriteLine("The Recording Duration is: {0}", item.Duration);
-                }
+                var callResponse = client.ViewCall("CALL ID");
+                var call = callResponse.Data.FirstOrDefault();
+
+                Console.WriteLine("The Call Id is: {0}", call.Id);
+                Console.WriteLine("The Call source is: {0}", call.Source);
+                Console.WriteLine("The Call destination is: {0}", call.Destination);
+                Console.WriteLine("The Call ended at: {0}", call.EndedAt);
             }
             catch (ErrorException e)
             {

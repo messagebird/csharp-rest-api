@@ -2,6 +2,7 @@
 using System.Linq;
 using MessageBird;
 using MessageBird.Resources.Voice;
+using MessageBird.Objects.Voice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MessageBirdUnitTests.Resources
@@ -9,17 +10,19 @@ namespace MessageBirdUnitTests.Resources
     [TestClass]
     public class RecordingTest
     {
+        private string baseUrl = VoiceBaseResource<Recording>.baseUrl;  
         [TestMethod]
         public void List()
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "RecordingList.json")
-                .FromEndpoint("GET", "recordings?limit=20&offset=0", RecordingsResource.RecordingsBaseUrl)
+                .FromEndpoint("GET", "calls/fdcf0391-4fdc-4e38-9551-e8a01602984f/legs/317bd14d-3eee-4380-b01f-fe7723c6913a/recordings?limit=5&offset=2", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);
-
-            var recordingList = client.ListRecordings();
+            var callId = "fdcf0391-4fdc-4e38-9551-e8a01602984f";
+            var legId = "317bd14d-3eee-4380-b01f-fe7723c6913a";
+            var recordingList = client.ListRecordings(callId: callId, legId: legId, limit: 5, offset: 2);
             restClient.Verify();
 
             Assert.IsNotNull(recordingList.Data);
@@ -58,7 +61,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "RecordingView.json")
-                .FromEndpoint("GET", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123", RecordingsResource.RecordingsBaseUrl)
+                .FromEndpoint("GET", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);
@@ -91,7 +94,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(string.Empty)
-                .FromEndpoint("DELETE", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123", RecordingsResource.RecordingsBaseUrl)
+                .FromEndpoint("DELETE", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);
@@ -105,7 +108,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(stream: new MemoryStream())
-                .FromEndpoint("GET", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123.wav", RecordingsResource.RecordingsBaseUrl)
+                .FromEndpoint("GET", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123.wav", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);

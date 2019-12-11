@@ -1,10 +1,10 @@
-﻿using MessageBird;
+using MessageBird;
 using MessageBird.Exceptions;
 using System;
 
-namespace Examples.Recording
+namespace Examples.Call
 {
-    internal class ListRecording
+    internal class DeleteCall
     {
         const string YOUR_ACCESS_KEY = "YOUR_ACCESS_KEY";
 
@@ -12,15 +12,10 @@ namespace Examples.Recording
         {
             var client = Client.CreateDefault(YOUR_ACCESS_KEY);
 
-            var recordings = client.ListRecordings(callId: "CALL ID", legId: "LEG ID");
             try
             {
-                foreach (var item in recordings.Data)
-                {
-                    Console.WriteLine("The Recording Id is: {0}", item.Id);
-                    Console.WriteLine("The Recording Format is: {0}", item.Format);
-                    Console.WriteLine("The Recording Duration is: {0}", item.Duration);
-                }
+                client.DeleteCall("CALL ID");
+                Console.WriteLine("The Call was deleted successfully.");
             }
             catch (ErrorException e)
             {

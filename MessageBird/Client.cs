@@ -91,15 +91,11 @@ namespace MessageBird
         /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
         public CallFlowList ListCallFlows(int limit = 20, int offset = 0)
         {
-            var resource = new CallFlowLists();
+            var resource = new CallFlowLists(new CallFlowList { Limit = limit, Offset = offset });
 
-            var list = (CallFlowList)resource.Object;
-            list.Limit = limit;
-            list.Offset = offset;
+            var result = restClient.Retrieve(resource);
 
-            restClient.Retrieve(resource);
-
-            return (CallFlowList)resource.Object;
+            return (CallFlowList)result.Object;
         }
 
         /// <summary>
@@ -108,14 +104,14 @@ namespace MessageBird
         /// </summary>
         /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
         /// <returns></returns>
-        public CallFlowResponse ViewCallFlow(string id)
+        public VoiceResponse<CallFlow> ViewCallFlow(string id)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
 
             var resource = new CallFlows(new CallFlow() { Id = id });
-            restClient.Retrieve(resource);
+            var result = restClient.Retrieve(resource);
 
-            return (CallFlowResponse)resource.Object;
+            return (VoiceResponse<CallFlow>)result.Object;
         }
 
         /// <summary>
@@ -123,7 +119,7 @@ namespace MessageBird
         /// </summary>
         /// <param name="request"></param>
         /// <returns>If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.</returns>
-        public CallFlowResponse CreateCallFlow(CallFlow request)
+        public VoiceResponse<CallFlow> CreateCallFlow(CallFlow request)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(request.Title, "title");
             ParameterValidator.IsNotNull(request.Steps, "steps");
@@ -131,7 +127,7 @@ namespace MessageBird
             var callFlows = new CallFlows(new CallFlow { Title = request.Title, Steps = request.Steps, Record = request.Record });
             var result = restClient.Create(callFlows);
 
-            return (CallFlowResponse)result.Object;
+            return (VoiceResponse<CallFlow>)result.Object;
         }
 
         /// <summary>
@@ -155,7 +151,7 @@ namespace MessageBird
         /// <param name="id">The unique ID which was returned upon creation of a call flow.</param>
         /// <param name="callFlow"></param>
         /// <returns></returns>
-        public CallFlowResponse UpdateCallFlow(string id, CallFlow callFlow)
+        public VoiceResponse<CallFlow> UpdateCallFlow(string id, CallFlow callFlow)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(callFlow.Title, "title");
             ParameterValidator.IsNotNull(callFlow.Steps, "steps");
@@ -163,7 +159,65 @@ namespace MessageBird
             var callFlows = new CallFlows(new CallFlow { Id = id, Title = callFlow.Title, Steps = callFlow.Steps, Record = callFlow.Record });
             var result = restClient.Update(callFlows);
 
-            return (CallFlowResponse)result.Object;
+            return (VoiceResponse<CallFlow>)result.Object;
+        }
+
+
+        /// <summary>
+        /// Creating a call
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public VoiceResponse<Call> CreateCall(Call request)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(request.Source, "source");
+            ParameterValidator.IsNotNullOrWhiteSpace(request.Destination, "destination");
+            ParameterValidator.IsNotNull(request.CallFlow, "callFlow");
+
+            var callResource = new Calls(request);
+            var result = restClient.Create(callResource);
+
+
+            return (VoiceResponse<Call>)result.Object;
+        }
+
+
+        /// <summary>
+        /// This request retrieves a listing of all calls.
+        /// If successful, this request returns an object with a data property, which is an array that has 0 or more recording objects.
+        /// </summary>
+        /// <param name="limit">Set how many records will return from the server</param>
+        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
+        public CallList ListCalls(int limit = 20, int offset = 0)
+        {
+            var resource = new CallLists(new CallList { Limit = limit, Offset = offset });
+            var result = restClient.Retrieve(resource);
+            return (CallList)result.Object;
+        }
+
+        public VoiceResponse<Call> ViewCall(string callId)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
+
+            var resource = new Calls(new Call { Id = callId });
+            var result = restClient.Retrieve(resource);
+
+            return (VoiceResponse<Call>)result.Object;
+        }
+
+        /// <summary>
+        /// This request deletes a call. The parameters are the unique ID of the call, the leg and the call with which the call is associated.
+        /// If successful, this request will return an HTTP header of 204 No Content and an empty response.
+        /// </summary>
+        /// <param name="callId">The unique ID of a call generated upon creation.</param>
+        public void DeleteCall(string callId)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
+
+            var resource = new Calls(new Call { Id = callId });
+
+            restClient.Delete(resource);
         }
 
         /// <summary>
@@ -173,17 +227,14 @@ namespace MessageBird
         /// <param name="limit">Set how many records will return from the server</param>
         /// <param name="offset">Identify the starting point to return rows from a result</param>
         /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
-        public RecordingList ListRecordings(int limit = 20, int offset = 0)
+        public RecordingList ListRecordings(string callId, string legId, int limit = 20, int offset = 0)
         {
-            var resource = new RecordingLists();
+            ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
+            ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");
+            var resource = new RecordingLists(new RecordingList { Limit = limit, Offset = offset, CallId = callId, LegId = legId });
+            var result = restClient.Retrieve(resource);
 
-            var list = (RecordingList)resource.Object;
-            list.Limit = limit;
-            list.Offset = offset;
-
-            restClient.Retrieve(resource);
-
-            return (RecordingList)resource.Object;
+            return (RecordingList)result.Object;
         }
 
         /// <summary>
@@ -194,17 +245,17 @@ namespace MessageBird
         /// <param name="callId">The unique ID of a call generated upon creation.</param>
         /// <param name="legId">The unique ID of a leg generated upon creation.</param>
         /// <param name="recordingId">The unique ID of a recording generated upon creation.</param>
-        /// <returns>RecordingResponse</returns>
-        public RecordingResponse ViewRecording(string callId, string legId, string recordingId)
+        /// <returns>VoiceResponse -Recording-</returns>
+        public VoiceResponse<Recording> ViewRecording(string callId, string legId, string recordingId)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
             ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");
             ParameterValidator.IsNotNullOrWhiteSpace(recordingId, "recordingId");
 
             var resource = new Recordings(new Recording { CallId = callId, LegId = legId, Id = recordingId });
-            restClient.Retrieve(resource);
+            var result = restClient.Retrieve(resource);
 
-            return (RecordingResponse)resource.Object;
+            return (VoiceResponse<Recording>)result.Object;
         }
 
         /// <summary>

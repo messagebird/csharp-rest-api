@@ -1,0 +1,21 @@
+{
+    "data":[
+        {
+            "id":"cac63a43-ff05-4cc3-b8e3-fca82e97975c",
+            "source":"31644556677",
+            "destination":"33766723144",
+            "createdAt":"2019-12-06T15:56:39Z",
+            "updatedAt":"2019-12-06T15:56:39Z",
+            "endedAt":null
+        }
+     ],
+    "_links": {
+        "self":"/calls/cac63a43-ff05-4cc3-b8e3-fca82e97975c"
+    },
+    "pagination":{
+        "totalCount":0,
+        "pageCount":0,
+        "currentPage":0,
+        "perPage":0
+    }
+}

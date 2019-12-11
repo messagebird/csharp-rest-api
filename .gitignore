@@ -233,3 +233,6 @@ _Pvt_Extensions
 
 # NuGet binary
 .nuget/NuGet.exe
+
+# Visual Studio Code files
+.vscode/

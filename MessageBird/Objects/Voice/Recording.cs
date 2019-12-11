@@ -36,32 +36,10 @@ namespace MessageBird.Objects.Voice
         public string CallId { get; set; }
     }
 
-    public class RecordingResponse : IIdentifiable<string>
+    public class RecordingList : VoiceBaseList<Recording>
     {
-        [JsonProperty("data")]
-        public List<Recording> Data { get; set; }
+        public string LegId { get; set; }
 
-        [JsonProperty("_links")]
-        public Dictionary<string, string> Links { get; set; }
-
-        public string Id
-        {
-            get
-            {
-                return string.Empty;
-            }
-        }
-    }
-
-    public class RecordingList : RecordingResponse
-    {
-        [JsonProperty("pagination")]
-        public Pagination Pagination { get; set; }
-
-        [JsonProperty("limit")]
-        public int Limit { get; set; }
-
-        [JsonProperty("offset")]
-        public int Offset { get; set; }
+        public string CallId { get; set; }
     }
 }

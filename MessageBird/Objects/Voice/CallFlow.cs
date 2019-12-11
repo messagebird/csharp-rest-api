@@ -30,8 +30,8 @@ namespace MessageBird.Objects.Voice
         [JsonProperty("updatedAt")] 
         public DateTime? UpdatedAt { get; set; }
 
-        [JsonProperty("_links")] 
-        public Links Links { get; set; }
+        [JsonProperty("_links")]
+        public Dictionary<string, string> Links { get; set; }
 
         /// <summary>
         /// Requests to the Contacts API use a different format than responses.
@@ -77,8 +77,8 @@ namespace MessageBird.Objects.Voice
             [JsonProperty("steps")] 
             public List<Step> Steps { get; set; }
 
-            [JsonProperty("_links")] 
-            public Links Links { get; set; }
+            [JsonProperty("_links")]
+            public Dictionary<string, string> Links { get; set; }
 
             public RequestObject(CallFlow callFlow)
             {
@@ -89,33 +89,8 @@ namespace MessageBird.Objects.Voice
         }
     }
 
-    public class CallFlowResponse : IIdentifiable<string>
+    public class CallFlowList : VoiceBaseList<CallFlow>
     {
-        [JsonProperty("data")]
-        public List<CallFlow> Data { get; set; }
-
-        [JsonProperty("_links")]
-        public Links Links { get; set; }
-
-        public string Id
-        {
-            get
-            {
-                return string.Empty;
-            }
-        }
-    }
-
-    public class CallFlowList : CallFlowResponse
-    {
-        [JsonProperty("pagination")]
-        public Pagination Pagination { get; set; }
-
-        [JsonProperty("limit")]
-        public int Limit { get; set; }
-
-        [JsonProperty("offset")]
-        public int Offset { get; set; }
     }   
     
     public class Options
@@ -134,26 +109,5 @@ namespace MessageBird.Objects.Voice
 
         [JsonProperty("options")] 
         public Options Options { get; set; }
-    }
-
-    public class Links
-    {
-        [JsonProperty("self")] 
-        public string Self { get; set; }
-    }
-    
-    public class Pagination
-    {
-        [JsonProperty("totalCount")] 
-        public int TotalCount { get; set; }
-
-        [JsonProperty("pageCount")] 
-        public int PageCount { get; set; }
-
-        [JsonProperty("currentPage")] 
-        public int CurrentPage { get; set; }
-
-        [JsonProperty("perPage")] 
-        public int PerPage { get; set; }
     }
 }

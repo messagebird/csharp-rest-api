@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources.Voice
 {
-    public class Recordings : RecordingsResource
+    public class Recordings : VoiceBaseResource<Recording>
     {
         public Recordings(Recording recording)
             : base("calls", recording)
@@ -32,7 +32,7 @@ namespace MessageBird.Resources.Voice
         {
             try
             {
-                Object = JsonConvert.DeserializeObject<RecordingResponse>(resource);
+                Object = JsonConvert.DeserializeObject<VoiceResponse<Recording>>(resource);
             }
             catch (JsonSerializationException e)
             {
