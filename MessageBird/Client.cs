@@ -221,7 +221,7 @@ namespace MessageBird
         }
 
         /// <summary>
-        /// This request retrieves a listing of all recordings.
+        /// This request retrieves a listing of all recordings from a specific leg.
         /// If successful, this request returns an object with a data property, which is an array that has 0 or more recording objects.
         /// </summary>
         /// <param name="limit">Set how many records will return from the server</param>
@@ -292,6 +292,91 @@ namespace MessageBird
 
             var resource = new Recordings(new Recording { CallId = callId, LegId = legId, Id = recordingId });
 
+            return restClient.PerformHttpRequest(resource.DownloadUri, HttpStatusCode.OK, resource.BaseUrl);
+        }
+
+        /// <summary>
+        /// This request creates a transcription.
+        /// </summary>
+        /// <param name="callId">The unique ID of a call generated upon creation.</param>
+        /// <param name="legId">The unique ID of a leg generated upon creation.</param>
+        /// <param name="recordingId">The unique ID of a recording generated upon creation.</param>
+        /// <param name="language">The language of the recording that is to be transcribed.</param>
+        /// <returns>If successful, this request will return an object with a data property, which is an array that has a single transcription object. If the request failed, an error object will be returned.</returns>
+        public VoiceResponse<Transcription> CreateTranscription(string callId, string legId, string recordingId, string language)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
+            ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");
+            ParameterValidator.IsNotNullOrWhiteSpace(recordingId, "recordingId");
+            ParameterValidator.IsNotNullOrWhiteSpace(language, "language");
+
+            var resource = new Transcriptions(new Transcription { CallId = callId, LegId = legId, RecordingId = recordingId, Language = language });
+            var result = restClient.Create(resource);
+
+            return (VoiceResponse<Transcription>)result.Object;
+        }
+
+        /// <summary>
+        /// This request retrieves a listing of all transcriptions from a specific recording.
+        /// If successful, this request returns an object with a data property, which is an array that has 0 or more transcription objects.
+        /// </summary>
+        /// <param name="callId">The unique ID of a call generated upon creation.</param>
+        /// <param name="legId">The unique ID of a leg generated upon creation.</param>
+        /// <param name="recordingId">The unique ID of a recording generated upon creation.</param>
+        /// <param name="limit">Set how many records will return from the server</param>
+        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
+        public TranscriptionList ListTranscriptions(string callId, string legId, string recordingId, int limit = 20, int offset = 0)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
+            ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");
+            ParameterValidator.IsNotNullOrWhiteSpace(recordingId, "recordingId");
+
+            var resource = new TranscriptionsLists(new TranscriptionList { Limit = limit, Offset = offset, CallId = callId, LegId = legId, RecordingId = recordingId });
+            var result = restClient.Retrieve(resource);
+
+            return (TranscriptionList)result.Object;
+        }
+
+        /// <summary>
+        /// This request retrieves a transcription resource. The parameters are the unique ID of the transcription, the recording, the leg and the call with which the transcription is associated.
+        /// If successful, this request returns an object with a data property, which is an array that has a single transcription object.
+        /// If the request failed, an error object will be returned.
+        /// </summary>
+        /// <param name="callId">The unique ID of a call generated upon creation.</param>
+        /// <param name="legId">The unique ID of a leg generated upon creation.</param>
+        /// <param name="recordingId">The unique ID of a recording generated upon creation.</param>
+        /// /// <param name="transcriptionId">The unique ID of a transcription generated upon creation.</param>
+        /// <returns>VoiceResponse -Recording-</returns>
+        public VoiceResponse<Transcription> ViewTranscription(string callId, string legId, string recordingId, string transcriptionId)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
+            ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");
+            ParameterValidator.IsNotNullOrWhiteSpace(recordingId, "recordingId");
+            ParameterValidator.IsNotNullOrWhiteSpace(transcriptionId, "transcriptionId");
+
+            var resource = new Transcriptions(new Transcription { CallId = callId, LegId = legId, RecordingId = recordingId, Id = transcriptionId });
+            var result = restClient.Retrieve(resource);
+
+            return (VoiceResponse<Transcription>)result.Object;
+        }
+
+        /// <summary>
+        /// The file HATEOAS link has the appropriate URI for downloading a text file for the transcription.
+        /// The file is accessible only if you provide the correct API access key for your account and the transcription is for a recording/leg/call in your account.
+        /// </summary>
+        /// <param name="callId">The unique ID of a call generated upon creation.</param>
+        /// <param name="legId">The unique ID of a leg generated upon creation.</param>
+        /// <param name="recordingId">The unique ID of a recording generated upon creation.</param>
+        /// <param name="transcriptionId">The unique ID of a transcription generated upon creation.</param>
+        public Stream DownloadTranscription(string callId, string legId, string recordingId, string transcriptionId)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
+            ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");
+            ParameterValidator.IsNotNullOrWhiteSpace(recordingId, "recordingId");
+            ParameterValidator.IsNotNullOrWhiteSpace(transcriptionId, "transcriptionId");
+
+            var resource = new Transcriptions(new Transcription { CallId = callId, LegId = legId, RecordingId = recordingId, Id = transcriptionId });
             return restClient.PerformHttpRequest(resource.DownloadUri, HttpStatusCode.OK, resource.BaseUrl);
         }
 
