@@ -22,4 +22,8 @@ namespace MessageBird.Objects.Voice
         [JsonProperty("updatedAt")] 
         public DateTime? updatedAt { get; set; }
     }
+
+    public class WebhookList : VoiceBaseList<Webhook>
+    {
+    }
 }
