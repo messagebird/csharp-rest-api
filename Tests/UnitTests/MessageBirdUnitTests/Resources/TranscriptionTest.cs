@@ -13,6 +13,27 @@ namespace MessageBirdUnitTests.Resources
         private readonly string baseUrl = VoiceBaseResource<Transcription>.baseUrl;
 
         [TestMethod]
+        public void Create()
+        {
+            var restClient = MockRestClient
+                .ThatExpects("{\"Language\":\"en-EN\"}")
+                .AndReturns(filename: "TranscriptionCreate.json")
+                .FromEndpoint("POST", "calls/373395cc-382b-4a33-b372-cc31f0fdf242/legs/8dd347a4-11ee-44f2-bee3-7fbda300b2cd/recordings/cfa9ae96-e034-4db7-91cb-e58a8392c7bd/transcriptions/", baseUrl)
+                .Get();
+
+            var client = Client.Create(restClient.Object);
+            var transcriptionResponse = client.CreateTranscription("373395cc-382b-4a33-b372-cc31f0fdf242", "8dd347a4-11ee-44f2-bee3-7fbda300b2cd", "cfa9ae96-e034-4db7-91cb-e58a8392c7bd", "en-EN");
+            restClient.Verify();
+
+            Assert.IsNotNull(transcriptionResponse.Data);
+
+            var transcription = transcriptionResponse.Data.FirstOrDefault();
+            Assert.AreEqual("2ce04c83-ca4f-4d94-8310-02968da41318", transcription.Id);
+            Assert.AreEqual("cfa9ae96-e034-4db7-91cb-e58a8392c7bd", transcription.RecordingId);
+            Assert.AreEqual("transcribing", transcription.Status);
+        }
+
+        [TestMethod]
         public void List()
         {
             var restClient = MockRestClient

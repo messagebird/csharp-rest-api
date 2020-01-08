@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "2ce04c83-ca4f-4d94-8310-02968da41318",
+      "recordingId": "cfa9ae96-e034-4db7-91cb-e58a8392c7bd",
+      "status": "transcribing",
+      "createdAt": "2020-01-08T15:33:59Z",
+      "updatedAt": "2020-01-08T15:34:00.2625109Z",
+      "_links": {
+        "file": "/transcriptions/00000000-0000-0000-0000-000000000000.txt",
+        "self": "/transcriptions/00000000-0000-0000-0000-000000000000"
+      },
+      "CallId": null,
+      "LegId": "00000000-0000-0000-0000-000000000000",
+      "Language": null
+    }
+  ]
+}
