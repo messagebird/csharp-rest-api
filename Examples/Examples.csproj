@@ -7,5 +7,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Recording\" />
+    <Folder Include="Webhooks\" />
   </ItemGroup>
 </Project>
