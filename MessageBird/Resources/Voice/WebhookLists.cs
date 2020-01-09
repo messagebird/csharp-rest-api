@@ -7,8 +7,8 @@ namespace MessageBird.Resources.Voice
     {
         public WebhookLists()
             : base("webhooks", new WebhookList())
-    { }
+        { }
 
-    public WebhookLists(Objects.Voice.WebhookList webhookList) : base("webhooks", webhookList) { }
-}
+        public WebhookLists(Objects.Voice.WebhookList webhookList) : base("webhooks", webhookList) { }
+    }
 }

@@ -25,4 +25,10 @@
     <None Remove="Responses\VoiceCallFlowUpdate.json" />
     <None Remove="Responses\VoiceCallFlowView.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Responses\WebhooksList.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Responses\WebhooksList.json" />
+  </ItemGroup>
 </Project>

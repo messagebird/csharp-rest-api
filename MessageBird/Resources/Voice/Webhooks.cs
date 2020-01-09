@@ -22,7 +22,6 @@ namespace MessageBird.Resources.Voice
             }
         }
 
-
         /// <summary>
         /// Override the serialize function to remove the ID from the body of an update message (PUT)
         /// </summary>
