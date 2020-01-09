@@ -87,11 +87,11 @@ namespace MessageBird
         /// This request retrieves a listing of all call flows.
         /// </summary>
         /// <param name="limit">Set how many records will return from the server</param>
-        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <param name="page">Identify the starting point to return rows from a result</param>
         /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
-        public CallFlowList ListCallFlows(int limit = 20, int offset = 0)
+        public CallFlowList ListCallFlows(int limit = 20, int page = 0)
         {
-            var resource = new CallFlowLists(new CallFlowList { Limit = limit, Offset = offset });
+            var resource = new CallFlowLists(new CallFlowList { Limit = limit, Page = page });
 
             var result = restClient.Retrieve(resource);
 
@@ -187,11 +187,11 @@ namespace MessageBird
         /// If successful, this request returns an object with a data property, which is an array that has 0 or more recording objects.
         /// </summary>
         /// <param name="limit">Set how many records will return from the server</param>
-        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <param name="page">Identify the starting point to return rows from a result</param>
         /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
-        public CallList ListCalls(int limit = 20, int offset = 0)
+        public CallList ListCalls(int limit = 20, int page = 0)
         {
-            var resource = new CallLists(new CallList { Limit = limit, Offset = offset });
+            var resource = new CallLists(new CallList { Limit = limit, Page = page });
             var result = restClient.Retrieve(resource);
             return (CallList)result.Object;
         }
@@ -225,13 +225,13 @@ namespace MessageBird
         /// If successful, this request returns an object with a data property, which is an array that has 0 or more recording objects.
         /// </summary>
         /// <param name="limit">Set how many records will return from the server</param>
-        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <param name="page">Identify the starting point to return rows from a result</param>
         /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
-        public RecordingList ListRecordings(string callId, string legId, int limit = 20, int offset = 0)
+        public RecordingList ListRecordings(string callId, string legId, int limit = 20, int page = 0)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
             ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");
-            var resource = new RecordingLists(new RecordingList { Limit = limit, Offset = offset, CallId = callId, LegId = legId });
+            var resource = new RecordingLists(new RecordingList { Limit = limit, Page = page, CallId = callId, LegId = legId });
             var result = restClient.Retrieve(resource);
 
             return (RecordingList)result.Object;
