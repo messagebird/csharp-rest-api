@@ -1,0 +1,14 @@
+﻿{
+  "data": [
+    {
+      "id": "dff95aec-c11f-423c-82f3-1f391d78d716",
+      "url": "https://example.com/update",
+      "token": "new token",
+      "createdAt": "2020-01-09T10:10:11Z",
+      "updatedAt": "2020-01-09T10:34:48Z"
+    }
+  ],
+  "_links": {
+    "self": "/webhooks/dff95aec-c11f-423c-82f3-1f391d78d716"
+  }
+}

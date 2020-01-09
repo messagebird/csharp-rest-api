@@ -163,7 +163,7 @@ namespace MessageBird
         }
 
 
-        /// <summary>
+        /// <summary>                                                                                                                                                                                                                                                                               
         /// Creating a call
         /// </summary>
         /// <param name="request"></param>
@@ -294,6 +294,82 @@ namespace MessageBird
 
             return restClient.PerformHttpRequest(resource.DownloadUri, HttpStatusCode.OK, resource.BaseUrl);
         }
+
+        /// <summary>
+        /// This request retrieves a listing of all webhooks.
+        /// If successful, this request returns an object with a data property, which is an array that has 0 or more recording objects.
+        /// </summary>
+        /// <param name="limit">Set how many records will return from the server</param>
+        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
+        public WebhookList ListWebhooks(int limit = 20, int offset = 0)
+        {
+            var resource = new WebhookLists(new WebhookList { Limit = limit, Offset = offset });
+            var result = restClient.Retrieve(resource);
+            return (WebhookList)result.Object;
+        }
+
+        /// <summary>
+        /// Create a Webhook
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public VoiceResponse<Webhook> CreateWebhook(Webhook request)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(request.url, "url");
+
+            var webhookResource = new Webhooks(request);
+            var result = restClient.Create(webhookResource);
+
+            return (VoiceResponse<Webhook>)result.Object;
+        }
+
+        /// <summary>
+        /// This request retrieves a Webhook
+        /// </summary>
+        /// <param name="webhookId"></param>Unique identifier of the webhook
+        /// <returns></returns>
+        public VoiceResponse<Webhook> ViewWebhook(string webhookId)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(webhookId, "webhookId");
+
+            var resource = new Webhooks(new Webhook { Id = webhookId });
+            var result = restClient.Retrieve(resource);
+
+            return (VoiceResponse<Webhook>)result.Object;
+        }
+
+        /// <summary>
+        /// This request updates a webhook resource. The single parameter is the unique ID that was returned upon creation.<br/>
+        /// If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.
+        /// </summary>
+        /// <param name="id">The unique ID which was returned upon creation of a webhook.</param>
+        /// <param name="webhook"></param>
+        /// <returns></returns>
+        public VoiceResponse<Webhook> UpdateWebhook(string id, Webhook webhook)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(id, "id");
+
+            var resource = new Webhooks(new Webhook { Id = id, url = webhook.url, token = webhook.token });
+            var result = restClient.Update(resource);
+
+            return (VoiceResponse<Webhook>)result.Object;
+        }
+
+        /// <summary>
+        /// This request deletes a webhook. The parameter is the unique ID of the webhook.
+        /// If successful, this request will return an HTTP header of 204 No Content and an empty response.
+        /// </summary>
+        /// <param name="webhookId">The unique ID of a call generated upon creation.</param>
+        public void DeleteWebhook(string webhookId)
+        {
+            ParameterValidator.IsNotNullOrWhiteSpace(webhookId, "webhookId");
+
+            var resource = new Webhooks(new Webhook { Id = webhookId });
+
+            restClient.Delete(resource);
+        }
+
 
         #endregion
 
