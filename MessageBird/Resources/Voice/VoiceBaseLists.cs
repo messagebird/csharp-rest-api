@@ -25,7 +25,7 @@ namespace MessageBird.Resources.Voice
 
                 builder.AppendFormat("limit={0}", baseList.Limit);
                 builder.AppendFormat("&");
-                builder.AppendFormat("offset={0}", baseList.Offset);
+                builder.AppendFormat("page={0}", baseList.Page);
 
                 return builder.ToString();
             }

@@ -49,7 +49,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "CallList.json")
-                .FromEndpoint("GET", "calls?limit=20&offset=0", baseUrl)
+                .FromEndpoint("GET", "calls?limit=20&page=0", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);

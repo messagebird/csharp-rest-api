@@ -26,8 +26,8 @@ namespace MessageBird.Objects.Voice
         [JsonProperty("limit")]
         public int Limit { get; set; }
 
-        [JsonProperty("offset")]
-        public int Offset { get; set; }
+        [JsonProperty("page")]
+        public int Page { get; set; }
 
     }
 }

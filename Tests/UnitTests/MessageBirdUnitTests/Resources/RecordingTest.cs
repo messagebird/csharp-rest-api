@@ -16,13 +16,13 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "RecordingList.json")
-                .FromEndpoint("GET", "calls/fdcf0391-4fdc-4e38-9551-e8a01602984f/legs/317bd14d-3eee-4380-b01f-fe7723c6913a/recordings?limit=5&offset=2", baseUrl)
+                .FromEndpoint("GET", "calls/fdcf0391-4fdc-4e38-9551-e8a01602984f/legs/317bd14d-3eee-4380-b01f-fe7723c6913a/recordings?limit=5&page=2", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);
             var callId = "fdcf0391-4fdc-4e38-9551-e8a01602984f";
             var legId = "317bd14d-3eee-4380-b01f-fe7723c6913a";
-            var recordingList = client.ListRecordings(callId: callId, legId: legId, limit: 5, offset: 2);
+            var recordingList = client.ListRecordings(callId: callId, legId: legId, limit: 5, page: 2);
             restClient.Verify();
 
             Assert.IsNotNull(recordingList.Data);
