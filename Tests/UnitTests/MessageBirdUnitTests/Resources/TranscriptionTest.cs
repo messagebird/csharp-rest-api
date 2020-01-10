@@ -38,7 +38,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "TranscriptionList.json")
-                .FromEndpoint("GET", "calls/373395cc-382b-4a33-b372-cc31f0fdf242/legs/8dd347a4-11ee-44f2-bee3-7fbda300b2cd/recordings/cfa9ae96-e034-4db7-91cb-e58a8392c7bd/transcriptions?limit=5&offset=1", baseUrl)
+                .FromEndpoint("GET", "calls/373395cc-382b-4a33-b372-cc31f0fdf242/legs/8dd347a4-11ee-44f2-bee3-7fbda300b2cd/recordings/cfa9ae96-e034-4db7-91cb-e58a8392c7bd/transcriptions?limit=5&page=1", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);

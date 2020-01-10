@@ -50,7 +50,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "WebhooksList.json")
-                .FromEndpoint("GET", "webhooks?limit=20&offset=0", baseUrl)
+                .FromEndpoint("GET", "webhooks?limit=20&page=0", baseUrl)
                 .Get();
 
             var client = Client.Create(restClient.Object);

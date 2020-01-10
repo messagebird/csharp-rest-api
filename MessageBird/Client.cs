@@ -324,15 +324,15 @@ namespace MessageBird
         /// <param name="legId">The unique ID of a leg generated upon creation.</param>
         /// <param name="recordingId">The unique ID of a recording generated upon creation.</param>
         /// <param name="limit">Set how many records will return from the server</param>
-        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <param name="page">Identify the starting point to return rows from a result</param>
         /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
-        public TranscriptionList ListTranscriptions(string callId, string legId, string recordingId, int limit = 20, int offset = 0)
+        public TranscriptionList ListTranscriptions(string callId, string legId, string recordingId, int limit = 20, int page = 0)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(callId, "callId");
             ParameterValidator.IsNotNullOrWhiteSpace(legId, "legId");
             ParameterValidator.IsNotNullOrWhiteSpace(recordingId, "recordingId");
 
-            var resource = new TranscriptionsLists(new TranscriptionList { Limit = limit, Offset = offset, CallId = callId, LegId = legId, RecordingId = recordingId });
+            var resource = new TranscriptionsLists(new TranscriptionList { Limit = limit, Page = page, CallId = callId, LegId = legId, RecordingId = recordingId });
             var result = restClient.Retrieve(resource);
 
             return (TranscriptionList)result.Object;
@@ -385,11 +385,11 @@ namespace MessageBird
         /// If successful, this request returns an object with a data property, which is an array that has 0 or more recording objects.
         /// </summary>
         /// <param name="limit">Set how many records will return from the server</param>
-        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <param name="page">Identify the starting point to return rows from a result</param>
         /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
-        public WebhookList ListWebhooks(int limit = 20, int offset = 0)
+        public WebhookList ListWebhooks(int limit = 20, int page = 0)
         {
-            var resource = new WebhookLists(new WebhookList { Limit = limit, Offset = offset });
+            var resource = new WebhookLists(new WebhookList { Limit = limit, Page = page });
             var result = restClient.Retrieve(resource);
             return (WebhookList)result.Object;
         }
