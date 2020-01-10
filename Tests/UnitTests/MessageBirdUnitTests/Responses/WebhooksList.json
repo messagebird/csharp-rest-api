@@ -1,0 +1,27 @@
+﻿{
+  "data": [
+    {
+      "id": "25fde85f-5e8f-42ef-9709-92241ae3789d",
+      "url": "https://newurl.com",
+      "token": "test title",
+      "createdAt": "2020-01-08T09:51:44Z",
+      "updatedAt": "2020-01-08T09:51:44Z"
+    },
+    {
+      "id": "85d17c71-714d-4261-85b7-df6c34e52455",
+      "url": "https://test3.com",
+      "token": "another title",
+      "createdAt": "2020-01-07T13:41:41Z",
+      "updatedAt": "2020-01-07T13:41:41Z"
+    }
+  ],
+  "_links": {
+    "self": "/webhooks?page=1"
+  },
+  "pagination": {
+    "totalCount": 2,
+    "pageCount": 1,
+    "currentPage": 1,
+    "perPage": 10
+  }
+}

@@ -15,18 +15,18 @@ namespace Examples.Call
         {
 
             var client = Client.CreateDefault(YourAccessKey);
-            var newCallFlow = new CallFlow
+            var newCallFlow = new MessageBird.Objects.Voice.CallFlow
             {
                 Title = "Forward call to 31612345678",
                 Record = true,
                 Steps = new List<Step> { new Step { Action = "transfer", Options = new Options { Destination = "31612345678" } } }
             };
 
-            var newCall = new Call
+            var newCall = new MessageBird.Objects.Voice.Call
             {
-                source = "31644556677",
-                destination = "33766723144",
-                callFlow = newCallFlow
+                Source = "31644556677",
+                Destination = "33766723144",
+                CallFlow = newCallFlow
 
             };
             try
