@@ -79,6 +79,15 @@ namespace MessageBird
             return result.Object as Message;
         }
 
+        public MessageList ListMessages(string status = "", int limit = 20, int offset = 0)
+        {
+            var messageLists = new MessageLists();
+            var messageList = new MessageLists(new MessageList { Limit = limit, Offset = offset, Status = status });
+            
+            restClient.Retrieve(messageList);
+            return messageList.Object as MessageList;
+        }
+
         #endregion
 
         #region Programmable Voice API
