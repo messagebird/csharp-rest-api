@@ -5,6 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
 
+using MessageBird;
+
 namespace MessageBirdUnitTests.Resources
 {
     [TestClass]
@@ -58,6 +60,36 @@ namespace MessageBirdUnitTests.Resources
             JsonConvert.DeserializeObject<Message>(messages.Object.ToString());
         }
 
+        [TestMethod]
+        public void ListMessages()
+        {
+            var restClient = MockRestClient
+                .ThatReturns(filename: "ListMessages.json")
+                .FromEndpoint("GET", "messages?limit=20&offset=0")
+                .Get();
+            var client = Client.Create(restClient.Object);
+
+            var messages = client.ListMessages();
+            restClient.Verify();
+
+            Assert.AreEqual(1, messages.Items.Count);
+            Assert.AreEqual(1, messages.Count);
+            Assert.AreEqual("YourName", messages.Items[0].Originator);
+        }
+
+        [TestMethod]
+        public void ListScheduledMessages()
+        {
+            var restClient = MockRestClient
+                .ThatReturns(filename: "ListMessages.json")
+                .FromEndpoint("GET", "messages?limit=20&offset=0&status=scheduled")
+                .Get();
+            var client = Client.Create(restClient.Object);
+
+            client.ListMessages("scheduled");
+            restClient.Verify();
+        }
+                     
         [TestMethod]
         public void DeserializeRecipientsAsMsisdnsArray()
         {
