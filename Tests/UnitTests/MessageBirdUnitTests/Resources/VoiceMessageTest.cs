@@ -10,6 +10,22 @@ namespace MessageBirdUnitTests.Resources
     public class VoiceMessageTest
     {
         [TestMethod]
+        public void ListVoiceMessages()
+        {
+            var restClient = MockRestClient
+                .ThatReturns(filename: "ListVoiceMessages.json")
+                .FromEndpoint("GET", "voicemessages?limit=20&offset=0")
+                .Get();
+            var client = Client.Create(restClient.Object);
+
+            var voicemessages = client.ListVoiceMessages();
+            restClient.Verify();
+
+            Assert.AreEqual(2, voicemessages.Items.Count);
+            Assert.AreEqual(2, voicemessages.Count);
+            Assert.AreEqual("12345678-9012-3456-7890-123456789012", voicemessages.Items[0].Id);
+        }
+        [TestMethod]
         public void DeserializeAndSerialize()
         {
             const string JsonResultFromCreateVoiceMessageExample = @"{
