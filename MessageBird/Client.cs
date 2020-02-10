@@ -491,6 +491,22 @@ namespace MessageBird
             return result.Object as VoiceMessage;
         }
 
+        /// <summary>
+        /// This request retrieves a listing of all voice messages from the account.
+        /// If successful, this request returns an object with a data property, which is an array that has 0 or more voice message objects.
+        /// </summary>
+        /// <param name="limit">Set how many records will return from the server</param>
+        /// <param name="offset">Identify the starting point to return rows from a result</param>
+        /// <returns>If successful, this request will return an object with a data, _links and pagination properties.</returns>
+        public VoiceMessageList ListVoiceMessages(int limit = 20, int offset = 0)
+        {
+            var voiceMessageLists = new VoiceMessageLists();
+            var voiceMessageList = new VoiceMessageLists(new VoiceMessageList { Limit = limit, Offset = offset });
+            
+            restClient.Retrieve(voiceMessageList);
+            return voiceMessageList.Object as VoiceMessageList;
+        }
+
         #endregion
 
         #region Verify API
