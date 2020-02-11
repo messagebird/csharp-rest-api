@@ -13,8 +13,6 @@ namespace Examples.VoiceMessage
         static void Main(string[] args)
         {
             IProxyConfigurationInjector proxyConfigurationInjector = null; // for no web proxies, or web proxies not requiring authentication
-            //proxyConfigurationInjector = new InjectDefaultCredentialsForProxiedUris(); // for NTLM based web proxies
-            //proxyConfigurationInjector = new InjectCredentialsForProxiedUris(new NetworkCredential("domain\\user", "password")); // for username/password based web proxies
 
             Client client = Client.CreateDefault(YourAccessKey, proxyConfigurationInjector);
 
