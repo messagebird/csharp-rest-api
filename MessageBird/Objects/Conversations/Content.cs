@@ -12,6 +12,7 @@ namespace MessageBird.Objects.Conversations
         [EnumMember(Value = "location")] Location,
         [EnumMember(Value = "text")] Text,
         [EnumMember(Value = "video")] Video,
+        [EnumMember(Value = "event")] Event,
     }
 
     public class Content
