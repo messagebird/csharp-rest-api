@@ -2,11 +2,15 @@ using MessageBird.Objects.Conversations;
 
 namespace MessageBird.Resources.Conversations
 {
-    public class WebhookLists : ConversationsBaseLists<ConversationWebhook>
+    public class WebhookLists : BaseLists<ConversationWebhook>
     {
-        public WebhookLists(bool useWhatsAppSandbox = false)
-            : base("webhooks", new ConversationWebhookList(), useWhatsAppSandbox)
+        public WebhookLists()
+            : base("webhooks", new ConversationWebhookList())
         { }
         
+        public override string BaseUrl
+        {
+            get { return ConverstationsBaseUrl; }
+        }
     }
 }
