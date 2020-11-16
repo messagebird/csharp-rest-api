@@ -5,10 +5,10 @@
     <Title>MessageBird</Title>
     <Company>MessageBird</Company>
     <Copyright>Copyright © 2019</Copyright>
-    <FileVersion>2.1.0.0</FileVersion>
-    <InformationalVersion>2.1.0.0</InformationalVersion>
-    <Version>2.1.0.0</Version>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <FileVersion>3.0.0.0</FileVersion>
+    <InformationalVersion>3.0.0.0</InformationalVersion>
+    <Version>3.0.0.0</Version>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
 
