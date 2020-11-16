@@ -4,7 +4,6 @@ using System.IO;
 using MessageBird;
 using MessageBird.Objects.Conversations;
 using MessageBird.Resources;
-using MessageBird.Resources.Conversations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MessageBirdUnitTests.Resources
@@ -23,7 +22,7 @@ namespace MessageBirdUnitTests.Resources
                 .ThatExpects(
                     @"{""to"":""+31612345678"",""type"":""text"",""content"":{""text"":""Hello!""},""channelId"":""619747f69cf940a98fb443140ce9aed2""}")
                 .AndReturns(filename: "ConversationView.json")
-                .FromEndpoint("POST", "conversations/start", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("POST", "conversations/start", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -50,7 +49,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "ConversationList.json")
-                .FromEndpoint("GET", "conversations?limit=20&offset=0", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("GET", "conversations?limit=20&offset=0", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -66,7 +65,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns("{}")
-                .FromEndpoint("GET", "conversations?limit=50&offset=10", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("GET", "conversations?limit=50&offset=10", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -79,7 +78,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "ConversationView.json")
-                .FromEndpoint("GET", "conversations/2e15efafec384e1c82e9842075e87beb", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("GET", "conversations/2e15efafec384e1c82e9842075e87beb", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -97,7 +96,7 @@ namespace MessageBirdUnitTests.Resources
             var restClient = MockRestClient
                 .ThatExpects(@"{""id"":""2e15efafec384e1c82e9842075e87beb"",""status"": ""archived""}")
                 .AndReturns(filename: "ConversationView.json")
-                .FromEndpoint("PATCH", $"conversations/{ConvId}", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("PATCH", $"conversations/{ConvId}", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -115,7 +114,7 @@ namespace MessageBirdUnitTests.Resources
             var restClient = MockRestClient
                 .ThatReturns(filename: "ConversationMessagesList.json")
                 .FromEndpoint("GET", $"conversations/{ConvId}/messages?limit=20&offset=0",
-                    ConversationsResource.ConverstationsBaseUrl)
+                    Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -133,7 +132,7 @@ namespace MessageBirdUnitTests.Resources
             var restClient = MockRestClient
                 .ThatReturns("{}")
                 .FromEndpoint("GET", $"conversations/{ConvId}/messages?limit=50&offset=10",
-                    ConversationsResource.ConverstationsBaseUrl)
+                    Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -147,7 +146,7 @@ namespace MessageBirdUnitTests.Resources
             var restClient = MockRestClient
                 .ThatExpects(@"{""type"": ""text"",""content"":{""text"": ""Hello!""}}")
                 .AndReturns(filename: "ConversationMessage.json")
-                .FromEndpoint("POST", $"conversations/{ConvId}/messages", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("POST", $"conversations/{ConvId}/messages", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -172,7 +171,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "ConversationMessage.json")
-                .FromEndpoint("GET", $"messages/{MsgId}", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("GET", $"messages/{MsgId}", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -193,7 +192,7 @@ namespace MessageBirdUnitTests.Resources
                 .ThatExpects(
                     @"{""events"":[""message.created"", ""message.updated""],""channelId"": ""853eeb5348e541a595da93b48c61a1ae"",""url"":""https://example.com/webhook""}")
                 .AndReturns(filename: "WebhookView.json")
-                .FromEndpoint("POST", "webhooks", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("POST", "webhooks", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -222,7 +221,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(filename: "WebhookView.json")
-                .FromEndpoint("GET", $"webhooks/{WebhookId}", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("GET", $"webhooks/{WebhookId}", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -240,7 +239,7 @@ namespace MessageBirdUnitTests.Resources
         {
             var restClient = MockRestClient
                 .ThatReturns(string.Empty)
-                .FromEndpoint("DELETE", $"webhooks/{WebhookId}", ConversationsResource.ConverstationsBaseUrl)
+                .FromEndpoint("DELETE", $"webhooks/{WebhookId}", Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -254,7 +253,7 @@ namespace MessageBirdUnitTests.Resources
             var restClient = MockRestClient
                 .ThatReturns(filename: "WebhookList.json")
                 .FromEndpoint("GET", $"webhooks?limit=20&offset=0",
-                    ConversationsResource.ConverstationsBaseUrl)
+                    Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
@@ -271,72 +270,12 @@ namespace MessageBirdUnitTests.Resources
             var restClient = MockRestClient
                 .ThatReturns("{}")
                 .FromEndpoint("GET", $"webhooks?limit=50&offset=10",
-                    ConversationsResource.ConverstationsBaseUrl)
+                    Resource.ConverstationsBaseUrl)
                 .Get();
             var client = Client.Create(restClient.Object);
 
             client.ListConversationWebhooks(50, 10);
             restClient.Verify();
-        }
-
-
-
-
-
-        [TestMethod]
-        public void StartWhatsAppSandbox()
-        {
-            var restClient = MockRestClient
-                .ThatExpects(
-                    @"{""to"":""+31612345678"",""type"":""text"",""content"":{""text"":""Hello!""},""channelId"":""619747f69cf940a98fb443140ce9aed2""}")
-                .AndReturns(filename: "ConversationView.json")
-                .FromEndpoint("POST", "conversations/start", ConversationsResource.ConverstationsWhatsAppSandboxBaseUrl)
-                .Get();
-            var client = Client.Create(restClient.Object, new Client.Features[] { Client.Features.EnableWhatsAppSandboxConversations });
-
-            var req = new ConversationStartRequest
-            {
-                ChannelId = "619747f69cf940a98fb443140ce9aed2",
-                Content = new Content
-                {
-                    Text = "Hello!"
-                },
-                Type = ContentType.Text,
-                To = "+31612345678"
-            };
-            var conversation = client.StartConversation(req);
-            restClient.Verify();
-
-            Assert.AreEqual(req.ChannelId, conversation.LastUsedChannelId);
-            Assert.AreEqual("31612345678", conversation.Contact.Msisdn);
-            Assert.AreEqual(2, conversation.Channels.Count);
-        }
-
-
-        [TestMethod]
-        public void PostMessageWhatsAppSandbox()
-        {
-            var restClient = MockRestClient
-                .ThatExpects(@"{""type"": ""text"",""content"":{""text"": ""Hello!""}}")
-                .AndReturns(filename: "ConversationMessage.json")
-                .FromEndpoint("POST", $"conversations/{ConvId}/messages", ConversationsResource.ConverstationsWhatsAppSandboxBaseUrl)
-                .Get();
-            var client = Client.Create(restClient.Object, new Client.Features[] { Client.Features.EnableWhatsAppSandboxConversations });
-
-            var req = new ConversationMessageSendRequest
-            {
-                Type = ContentType.Text,
-                Content = new Content
-                {
-                    Text = "Hello!"
-                }
-            };
-            var message = client.SendConversationMessage(ConvId, req);
-            restClient.Verify();
-
-            Assert.AreEqual(ConvId, message.ConversationId);
-            Assert.AreEqual(ConversationMessageStatus.Pending, message.Status);
-            Assert.AreEqual(ConversationMessageDirection.Sent, message.Direction);
         }
     }
 }

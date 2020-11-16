@@ -4,12 +4,12 @@ using Newtonsoft.Json;
 
 namespace MessageBird.Resources.Conversations
 {
-    public class ConversationStart : ConversationsResource
+    public class ConversationStart : Resource
     {
         public ConversationStartRequest Request { get; protected set; }
 
-        public ConversationStart(ConversationStartRequest request, bool useWhatsAppSandbox = false)
-            : base("conversations", new Conversation(), useWhatsAppSandbox)
+        public ConversationStart(ConversationStartRequest request)
+            : base("conversations", new Conversation())
         {
             Request = request;
         }
@@ -23,6 +23,10 @@ namespace MessageBird.Resources.Conversations
         {
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
             return JsonConvert.SerializeObject(Request, settings);
+        }
+        public override string BaseUrl
+        {
+            get { return Conversations.ConverstationsBaseUrl; }
         }
     }
 }

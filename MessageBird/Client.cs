@@ -13,38 +13,25 @@ namespace MessageBird
 {
     public partial class Client
     {
-        public enum Features
-        {
-            EnableWhatsAppSandboxConversations = 1
-        }
-
         private readonly IRestClient restClient;
-        private readonly Features[] features;
 
-        private bool useConversationsWhatsAppSandbox;
-
-        private Client(IRestClient restClient, Features[] features = null)
+        private Client(IRestClient restClient)
         {
             this.restClient = restClient;
-            this.features = features;
-            if (this.features != null && Array.IndexOf(this.features, Features.EnableWhatsAppSandboxConversations) >= 0)
-            {
-                this.useConversationsWhatsAppSandbox = true;
-            }
         }
 
-        public static Client Create(IRestClient restClient, Features[] features = null)
+        public static Client Create(IRestClient restClient)
         {
             ParameterValidator.IsNotNull(restClient, "restClient");
 
-            return new Client(restClient, features);
+            return new Client(restClient);
         }
 
-        public static Client CreateDefault(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector = null, Features[] features = null)
+        public static Client CreateDefault(string accessKey, IProxyConfigurationInjector proxyConfigurationInjector = null)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(accessKey, "accessKey");
 
-            return new Client(new RestClient(accessKey, proxyConfigurationInjector), features);
+            return new Client(new RestClient(accessKey, proxyConfigurationInjector));
         }
 
         #region Programmable SMS API
