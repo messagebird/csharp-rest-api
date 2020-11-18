@@ -8,7 +8,7 @@ namespace MessageBird.Utilities
     {
         public static void IsNotNullOrWhiteSpace(string param, string paramName)
         {
-            if (String.IsNullOrWhiteSpace(param))
+            if (string.IsNullOrEmpty(param) || param.Trim() == "")
             {
                 throw new ArgumentException("Invalid string parameter, cannot be null, empty, or contain only whitespace", paramName);
             }
