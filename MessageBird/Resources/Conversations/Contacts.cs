@@ -8,7 +8,7 @@ namespace MessageBird.Resources.Conversations
         public Contacts() : this(new Objects.Conversations.Contact()) { }
         public override string BaseUrl
         {
-            get { return Conversations.ConverstationsBaseUrl; }
+            get { return Conversations.ConversationsBaseUrl; }
         }
     }
 }
