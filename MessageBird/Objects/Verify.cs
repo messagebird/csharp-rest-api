@@ -56,6 +56,9 @@ namespace MessageBird.Objects
         [JsonProperty("recipient")]
         public long Recipient { get; set; }
 
+        [JsonProperty("recipientEmail")]
+        public string RecipientEmail { get; set; }
+
         [JsonProperty("reference")]
         public string Reference { get; set; }
 
@@ -139,14 +142,26 @@ namespace MessageBird.Objects
         }
 
         // Alias for the old constructor so that it remains backwards compatible
-        public Verify(string recipient, VerifyOptionalArguments arguments = null) : this(Convert.ToInt64(recipient), arguments)
+        public Verify(long recipientMsisdn, VerifyOptionalArguments arguments = null) : this(arguments)
         {
+            Recipient = recipientMsisdn;
         }
 
-        public Verify(long recipient, VerifyOptionalArguments arguments = null)
+        public Verify(string recipient, VerifyOptionalArguments arguments = null) : this(arguments)
         {
-            Recipient = recipient;
+            long recipientMsisdn;
+            if (long.TryParse(recipient, out recipientMsisdn))
+            {
+                Recipient = recipientMsisdn;
+            }
+            else
+            {
+                RecipientEmail = recipient;
+            }
+        }
 
+        private Verify(VerifyOptionalArguments arguments = null)
+        {
             arguments = arguments ?? new VerifyOptionalArguments();
 
             Template = arguments.Template;

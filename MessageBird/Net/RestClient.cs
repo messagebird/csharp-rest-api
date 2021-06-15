@@ -19,7 +19,7 @@ namespace MessageBird.Net
 
         public string ClientVersion
         {
-            get { return "3.0.0.0"; }
+            get { return "3.1.0.0"; }
         }
 
         public string ApiVersion
