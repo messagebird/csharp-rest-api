@@ -515,16 +515,16 @@ namespace MessageBird
         {
             ParameterValidator.IsNotNullOrWhiteSpace(recipient, "recipient");
 
-            return CreateVerify(Convert.ToInt64(recipient), arguments);
-        }
-
-        public Objects.Verify CreateVerify(long recipient, VerifyOptionalArguments arguments = null)
-        {
             var verify = new Objects.Verify(recipient, arguments);
             var verifyResource = new Resources.Verify(verify);
             var result = restClient.Create(verifyResource);
 
             return result.Object as Objects.Verify;
+        }
+
+        public Objects.Verify CreateVerify(long recipient, VerifyOptionalArguments arguments = null)
+        {
+            return CreateVerify(recipient.ToString(), arguments);
         }
 
         public void DeleteVerify(string id)

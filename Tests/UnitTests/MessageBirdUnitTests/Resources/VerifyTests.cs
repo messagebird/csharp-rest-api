@@ -32,7 +32,7 @@ namespace MessageBirdUnitTests.Resources
 
             Assert.AreEqual("4e213b01155d1e35a9d9571v00162985", verify.Id);
             Assert.AreEqual("https://rest.messagebird.com/messages/31bce2a1155d1f7c1db9df6b32167259", verify.Message.Href);
-            Assert.AreEqual(31612345678, verify.Recipient);
+            Assert.AreEqual("31612345678", verify.Recipient);
             Assert.AreEqual("https://rest.messagebird.com/verify/4e213b01155d1e35a9d9571v00162985", verify.Href);
             Assert.AreEqual(null, verify.Reference);
             Assert.AreEqual(VerifyStatus.Sent, verify.Status);

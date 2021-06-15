@@ -54,7 +54,7 @@ namespace MessageBird.Objects
         public string Href { get; set; }
 
         [JsonProperty("recipient")]
-        public long Recipient { get; set; }
+        public string Recipient { get; set; }
 
         [JsonProperty("reference")]
         public string Reference { get; set; }
@@ -139,11 +139,11 @@ namespace MessageBird.Objects
         }
 
         // Alias for the old constructor so that it remains backwards compatible
-        public Verify(string recipient, VerifyOptionalArguments arguments = null) : this(Convert.ToInt64(recipient), arguments)
+        public Verify(long recipient, VerifyOptionalArguments arguments = null) : this(recipient.ToString(), arguments)
         {
         }
 
-        public Verify(long recipient, VerifyOptionalArguments arguments = null)
+        public Verify(string recipient, VerifyOptionalArguments arguments = null)
         {
             Recipient = recipient;
 
