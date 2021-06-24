@@ -63,12 +63,15 @@ namespace MessageBird.Utilities
                 var alphanumericWithWhitespace = new Regex("^[A-Za-z0-9]+(?:\\s[A-Za-z0-9]+)*$");
                 var isNumeric = numeric.IsMatch(originator);
                 var isAlphanumericWithWhitespace = alphanumericWithWhitespace.IsMatch(originator);
+                var email = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+                var isEmail = email.IsMatch(originator);
 
-                if (!isNumeric && !isAlphanumericWithWhitespace)
+                if (!isNumeric && !isAlphanumericWithWhitespace && !isEmail)
                 {
                     throw new ArgumentException("Originator can only contain numeric or whitespace separated alphanumeric characters.");
                 }
-                else if (!isNumeric && isAlphanumericWithWhitespace && originator.Length > ORIGINATOR_ALPHANUMERIC_MAXLENGTH)
+
+                if (!isNumeric && isAlphanumericWithWhitespace && originator.Length > ORIGINATOR_ALPHANUMERIC_MAXLENGTH)
                 {
                     throw new ArgumentException(string.Format("Alphanumeric originator is limited to {0} characters.", ORIGINATOR_ALPHANUMERIC_MAXLENGTH));
                 }
