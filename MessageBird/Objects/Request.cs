@@ -11,7 +11,9 @@ namespace MessageBird.Objects
      *  * and request body
      *
      * @see more on https://developers.messagebird.com/docs/verify-http-requests 
+     * @deprecated 
      */
+    [Obsolete("Use RequestValidator instead.", false)]
     public class Request
     {
         internal string Timestamp { get; private set; }
@@ -28,6 +30,7 @@ namespace MessageBird.Objects
          * @param queryParameters Query parameters in abc=foo&def=ghi format.
          * @param data Raw body of this request.
          */
+         [Obsolete("Use RequestValidator instead.", false)]
         public Request(string timestamp, string queryParameters, byte[] data) {
             if (string.IsNullOrEmpty(timestamp)) {
                 throw new ArgumentNullException("timestamp");
@@ -37,8 +40,8 @@ namespace MessageBird.Objects
             QueryParameters = queryParameters;
             Data = data;
         }
-        
-        
+
+
         internal string SortedQueryParameters() {
             var queryParams = QueryParameters.Split(QueryParametersDelimiter);
             Array.Sort(queryParams);
