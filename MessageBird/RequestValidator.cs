@@ -9,16 +9,16 @@ using MessageBird.Exceptions;
 namespace MessageBird
 {
     /// <summary>
-    /// Class RequestValidator validates request signature signed by MessageBird services.
+    /// Validates request signature signed by MessageBird services.
     /// </summary>
     ///
     /// <see href="https://developers.messagebird.com/docs/verify-http-requests" />
     public class RequestValidator
     {
+        private const string TokenIssuer = "MessageBird";
         private readonly JwtBuilder _jwtBuilder;
 
         /// <summary>
-        /// This field instructs Validator to not validate url_hash claim.
         /// It is recommended to not skip URL validation to ensure high security.
         /// but the ability to skip URL validation is necessary in some cases, e.g.
         /// your service is behind proxy or when you want to validate it yourself.
@@ -107,14 +107,14 @@ namespace MessageBird
                 throw new RequestValidationException(String.Format("invalid jwt: claim {0} is missing", claim));
             }
 
-            if (!payload["iss"].Equals("MessageBird"))
+            if (!payload["iss"].Equals(TokenIssuer))
             {
                 throw new RequestValidationException("invalid jwt: claim iss has wrong value");
             }
 
             if (!_skipURLValidation)
             {
-                string expectedURLHash = GetSHA256Hash(Encoding.UTF8.GetBytes(url));
+                string expectedURLHash = GetSHA256Hash(Encoding.ASCII.GetBytes(url));
                 if (!payload["url_hash"].Equals(expectedURLHash))
                 {
                     throw new RequestValidationException("invalid jwt: claim url_hash is invalid");
@@ -127,11 +127,11 @@ namespace MessageBird
             {
                 throw new RequestValidationException("invalid jwt: claim payload_hash is set but actual payload is missing");
             }
-            else if (bodyExist && !payloadHashExist)
+            if (bodyExist && !payloadHashExist)
             {
                 throw new RequestValidationException("invalid jwt: claim payload_hash is not set but payload is present");
             }
-            else if (bodyExist && !payload["payload_hash"].Equals(GetSHA256Hash(body)))
+            if (bodyExist && !payload["payload_hash"].Equals(GetSHA256Hash(body)))
             {
                 throw new RequestValidationException("invalid jwt: claim payload_hash is invalid");
             }
