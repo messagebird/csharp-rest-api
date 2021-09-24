@@ -6,10 +6,11 @@ using MessageBird.Objects;
 
 namespace MessageBird
 {
+    [Obsolete("Use RequestValidator instead", false)]
     public class RequestSigner
     {
         private readonly byte[] _secret;
-        
+
         /**
          * Constructs a new RequestSigner instance.
          *
@@ -19,12 +20,13 @@ namespace MessageBird
          *
          * @see https://developers.messagebird.com/docs/verify-http-requests
          */
+        [Obsolete("Use RequestValidator instead", false)]
         public RequestSigner(byte[] secret)
         {
             _secret = secret;
         }
 
-        
+
         /**
          * Computes the signature for the provided request and determines whether
          * it matches the expected signature (from the raw MessageBird-Signature header).
@@ -34,6 +36,7 @@ namespace MessageBird
          * @param request Request containing the values from the incoming webhook.
          * @return True if the computed signature matches the expected signature.
          */
+        [Obsolete("Use RequestValidator instead", false)]
         public bool IsMatch(string encodedSignature, Request request)
         {
             using (var base64Transform = new FromBase64Transform())
@@ -44,7 +47,7 @@ namespace MessageBird
                 return IsMatch(decodedSignature, request);
             }
         }
-        
+
         /**
          * Computes the signature for the provided request and determines whether
          * it matches the expected signature
@@ -54,6 +57,7 @@ namespace MessageBird
          * @param request Request containing the values from the incoming webhook.
          * @return True if the computed signature matches the expected signature.
          */
+        [Obsolete("Use RequestValidator instead", false)]
         public bool IsMatch(byte[] expectedSignature, Request request)
         {
             var actualSignature = ComputeSignature(request);
@@ -66,15 +70,16 @@ namespace MessageBird
          * @param request Request to compute signature for.
          * @return HMAC-SHA2556 signature for the provided request.
          */
-        private byte[] ComputeSignature(Request request) {
+        private byte[] ComputeSignature(Request request)
+        {
             var timestampAndQuery = request.Timestamp + '\n' + request.SortedQueryParameters() + '\n';
             var timestampAndQueryBytes = Encoding.UTF8.GetBytes(timestampAndQuery);
             var bodyHashBytes = SHA256.Create().ComputeHash(request.Data);
-            
+
             var signPayload = new byte[timestampAndQueryBytes.Length + bodyHashBytes.Length];
             Array.Copy(timestampAndQueryBytes, signPayload, timestampAndQueryBytes.Length);
             Array.Copy(bodyHashBytes, 0, signPayload, timestampAndQueryBytes.Length, bodyHashBytes.Length);
-            
+
             return new HMACSHA256(_secret).ComputeHash(signPayload, 0, signPayload.Length);
         }
     }
