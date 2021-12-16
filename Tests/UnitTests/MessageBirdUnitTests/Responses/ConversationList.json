@@ -39,7 +39,8 @@
       "lastUsedChannelId": "619747f69cf940a98fb443140ce9aed2",
       "messages": {
         "totalCount": 10,
-        "href": "https://conversations.messagebird.com/v1/conversations/fbbdde79129f45e3a179458a91e2ead6/messages"
+        "href": "https://conversations.messagebird.com/v1/conversations/fbbdde79129f45e3a179458a91e2ead6/messages",
+        "lastMessageId": "9d5d5921f5b34f8db415a2397eb762f8"
       }
     },
     {
@@ -85,7 +86,8 @@
       "lastUsedChannelId": "853eeb5348e541a595da93b48c61a1ae",
       "messages": {
         "totalCount": 23,
-        "href": "https://conversations.messagebird.com/v1/conversations/2e15efafec384e1c82e9842075e87beb/messages"
+        "href": "https://conversations.messagebird.com/v1/conversations/2e15efafec384e1c82e9842075e87beb/messages",
+        "lastMessageId": "9d5d5921f5b34f8db415a2397eb762f9"
       }
     },
   ]
