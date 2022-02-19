@@ -13,6 +13,7 @@ namespace MessageBird.Objects.Conversations
         [EnumMember(Value = "text")] Text,
         [EnumMember(Value = "video")] Video,
         [EnumMember(Value = "event")] Event,
+        [EnumMember(Value = "whatsappSticker")] WhatsAppSticker,
     }
 
     public class Content
@@ -37,5 +38,8 @@ namespace MessageBird.Objects.Conversations
         
         [JsonProperty("video")]
         public MediaContent Video {get;set;}
+
+        [JsonProperty("whatsappSticker")]
+        public WhatsAppStickerContent WhatsAppSticker { get; set; }
     }
 }
