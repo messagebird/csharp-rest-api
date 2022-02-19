@@ -48,6 +48,9 @@ namespace MessageBird.Objects
         [JsonProperty("statusDatetime")]
         public DateTime? StatusDatetime { get; set; }
 
+        [JsonProperty("messagePartCount")]
+        public int MessagePartCount { get; set; }
+
         public Recipient(long msisdn)
         {
             Msisdn = msisdn;
