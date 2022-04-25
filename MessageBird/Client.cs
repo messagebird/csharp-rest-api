@@ -116,11 +116,17 @@ namespace MessageBird
         /// <returns>If successful, this request will return an object with a data property, which is an array that has a single call flow object. If the request failed, an error object will be returned.</returns>
         public VoiceResponse<CallFlow> CreateCallFlow(CallFlow request)
         {
-            ParameterValidator.IsNotNullOrWhiteSpace(request.Title, "title");
+            CallFlows callFlows;
+
             ParameterValidator.IsNotNull(request.Steps, "steps");
 
-            var callFlows = new CallFlows(new CallFlow { Title = request.Title, Steps = request.Steps, Record = request.Record });
+            if (request.Title != null || request.Title != "") {
+                callFlows = new CallFlows(new CallFlow { Title = request.Title, Steps = request.Steps, Record = request.Record });
+            } else {
+                callFlows = new CallFlows(new CallFlow { Steps = request.Steps, Record = request.Record });
+            }
             var result = restClient.Create(callFlows);
+
 
             return (VoiceResponse<CallFlow>)result.Object;
         }
@@ -148,10 +154,15 @@ namespace MessageBird
         /// <returns></returns>
         public VoiceResponse<CallFlow> UpdateCallFlow(string id, CallFlow callFlow)
         {
-            ParameterValidator.IsNotNullOrWhiteSpace(callFlow.Title, "title");
+            CallFlows callFlows;
+
             ParameterValidator.IsNotNull(callFlow.Steps, "steps");
 
-            var callFlows = new CallFlows(new CallFlow { Id = id, Title = callFlow.Title, Steps = callFlow.Steps, Record = callFlow.Record });
+            if (callFlow.Title != null || callFlow.Title != "") {
+                callFlows = new CallFlows(new CallFlow { Id = id, Title = callFlow.Title, Steps = callFlow.Steps, Record = callFlow.Record });
+            } else {
+                callFlows = new CallFlows(new CallFlow { Id = id, Steps = callFlow.Steps, Record = callFlow.Record });
+            }
             var result = restClient.Update(callFlows);
 
             return (VoiceResponse<CallFlow>)result.Object;

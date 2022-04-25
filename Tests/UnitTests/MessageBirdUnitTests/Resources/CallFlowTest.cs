@@ -16,7 +16,7 @@ namespace MessageBirdUnitTests.Resources
         public void Create()
         {
             var restClient = MockRestClient
-                .ThatExpects("{  \"title\": \"Forward call to 31612345678\",  \"record\": true,  \"steps\": [    {      \"options\": {        \"destination\": \"31612345678\"      },      \"action\": \"transfer\"    }  ]}")
+                .ThatExpects("{ \"record\": true,  \"steps\": [    {      \"options\": {        \"destination\": \"31612345678\"      },      \"action\": \"transfer\"    }  ]}")
                 .AndReturns("{  \"data\": [    {      \"id\": \"de3ed163-d5fc-45f4-b8c4-7eea7458c635\",      \"title\": \"Forward call to 31612345678\",      \"record\": true,      \"steps\": [        {          \"id\": \"2fa1383e-6f21-4e6f-8c36-0920c3d0730b\",          \"action\": \"transfer\",          \"options\": {            \"destination\": \"31612345678\"          }        }      ],      \"createdAt\": \"2017-03-06T14:52:22Z\",      \"updatedAt\": \"2017-03-06T14:52:22Z\"    }  ],  \"_links\": {    \"self\": \"/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635\"  }}")
                 .FromEndpoint("POST", "call-flows", baseUrl)
                 .Get();
@@ -25,7 +25,6 @@ namespace MessageBirdUnitTests.Resources
 
             var newCallFlow = new CallFlow
             {
-                Title = "Forward call to 31612345678",
                 Record = true,
                 Steps = new List<Step> { new Step { Action = "transfer", Options = new Options { Destination = "31612345678" } } }
             };
@@ -89,7 +88,6 @@ namespace MessageBirdUnitTests.Resources
 
             var callFlow = callFlowList.Data.FirstOrDefault();
             Assert.AreEqual("de3ed163-d5fc-45f4-b8c4-7eea7458c635", callFlow.Id);
-            Assert.AreEqual("Forward call to 31612345678", callFlow.Title);   
             Assert.AreEqual(false, callFlow.Record); 
             Assert.IsNotNull(callFlow.CreatedAt);
             Assert.IsNotNull(callFlow.UpdatedAt);     

@@ -19,7 +19,6 @@ namespace Examples.CallFlow
                 var callFlow = callFlowResponse.Data.FirstOrDefault();
 
                 Console.WriteLine("The Voice Call Flow Id is: {0}", callFlow.Id);
-                Console.WriteLine("The Voice Call Flow Title is: {0}", callFlow.Title);
             }
             catch (ErrorException e)
             {

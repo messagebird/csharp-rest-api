@@ -15,7 +15,6 @@ namespace Examples.CallFlow
             var client = Client.CreateDefault(YOUR_ACCESS_KEY);
             var callFlow = new MessageBird.Objects.Voice.CallFlow
             {
-                Title = "PUT YOUR TITLE HERE",
                 Record = true
             };
             callFlow.Steps.Add(new Step { Action = "transfer", Options = new Options { Destination = "1234567890" } });
@@ -26,7 +25,6 @@ namespace Examples.CallFlow
                 var updatedCallFlow = callFlowResponse.Data.FirstOrDefault();
 
                 Console.WriteLine("The Voice Call Flow with Id = {0} has been updated", updatedCallFlow.Id);
-                Console.WriteLine("The Voice Call Flow Title is: {0}", updatedCallFlow.Title);
             }
             catch (ErrorException e)
             {
