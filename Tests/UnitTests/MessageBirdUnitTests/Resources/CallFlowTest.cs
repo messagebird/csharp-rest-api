@@ -54,11 +54,6 @@ namespace MessageBirdUnitTests.Resources
         }
 
         [TestMethod]
-        public void AppleOrangesTest() {
-		Assert.AreEqual("apples", "oranges");
-	}
-
-        [TestMethod]
         public void Delete()
         {
             var restClient = MockRestClient
