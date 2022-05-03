@@ -16,7 +16,7 @@ namespace MessageBirdUnitTests.Resources
         public void Create()
         {
             var restClient = MockRestClient
-                .ThatExpects("{\"source\":\"31644556677\",\"destination\":\"33766723144\",\"callFlow\":{\"title\":\"Forward call to 31612345678\",\"record\":true,\"steps\":[{\"action\":\"transfer\",\"options\":{\"destination\":\"31612345678\"}}]},\"duration\":0}")
+                .ThatExpects("{\"source\":\"31644556677\",\"destination\":\"33766723144\",\"callFlow\":{\"record\":true,\"steps\":[{\"action\":\"transfer\",\"options\":{\"destination\":\"31612345678\"}}]},\"duration\":0}")
                 .AndReturns(filename: "CallCreate.json")
                 .FromEndpoint("POST", "calls", baseUrl)
                 .Get();
@@ -25,7 +25,6 @@ namespace MessageBirdUnitTests.Resources
 
             var newCallFlow = new CallFlow
             {
-                Title = "Forward call to 31612345678",
                 Record = true,
                 Steps = new List<Step> { new Step { Action = "transfer", Options = new Options { Destination = "31612345678" } } }
             };

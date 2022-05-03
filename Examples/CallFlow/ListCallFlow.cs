@@ -18,7 +18,6 @@ namespace Examples.CallFlow
                 foreach (var item in callFlowList.Data)
                 {
                     Console.WriteLine("The Voice Call Flow Id is: {0}", item.Id);
-                    Console.WriteLine("The Voice Call Flow Title is: {0}", item.Title);
                 }
             }
             catch (ErrorException e)

@@ -17,7 +17,6 @@ namespace Examples.Call
             var client = Client.CreateDefault(YourAccessKey);
             var newCallFlow = new MessageBird.Objects.Voice.CallFlow
             {
-                Title = "Forward call to 31612345678",
                 Record = true,
                 Steps = new List<Step> { new Step { Action = "transfer", Options = new Options { Destination = "31612345678" } } }
             };
