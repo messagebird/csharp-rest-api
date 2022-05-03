@@ -32,6 +32,8 @@ namespace MessageBird.Objects.Conversations
         Sent,
         [EnumMember(Value = "unsupported")]
         Unsupported,
+        [EnumMember(Value = "rejected")]
+        Rejected,
     }
 
     public class ConversationMessageError
