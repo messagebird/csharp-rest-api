@@ -39,9 +39,37 @@ namespace MessageBird.Objects.Common
         [EnumMember(Value = "pl-pl")]
         Polish,
         [EnumMember(Value = "pt-br")]
-        BrazilianPortugese,
+        BrazilianPortuguese,
         [EnumMember(Value = "ro-ro")]
-        Romanian
+        Romanian,
+        [EnumMember(Value = "da-dk")]
+        Danish,
+        [EnumMember(Value = "en-in")]
+        IndianEnglish,
+        [EnumMember(Value = "cy-gb")]
+        Welsh,
+        [EnumMember(Value = "nb-no")]
+        Norwegian,
+        [EnumMember(Value = "pt-pt")]
+        Portuguese,
+        [EnumMember(Value = "sv-se")]
+        Swedish,
+        [EnumMember(Value = "tr-tr")]
+        Turkish,
+        [EnumMember(Value = "el-gr")]
+        Greek,
+        [EnumMember(Value = "zh-hk")]
+        HongKongChinese,
+        [EnumMember(Value = "id-id")]
+        Indonesian,
+        [EnumMember(Value = "vi-vn")]
+        Vietnamese,
+        [EnumMember(Value = "th-th")]
+        Thai,
+        [EnumMember(Value = "ta-in")]
+        TamilIndian,
+        [EnumMember(Value = "ms-my")]
+        Malay
     }
 
     public enum Voice
