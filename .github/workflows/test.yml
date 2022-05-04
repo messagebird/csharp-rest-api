@@ -8,14 +8,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Dotnet Side by Side testing sample
+    name: Build and test 
     steps:
       - uses: actions/checkout@v3
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: |
-            2.1.x
-            3.1.x
-      - run: dotnet build MessageBird -f netstandard2.0
-      - run: dotnet test Tests/UnitTests/MessageBirdUnitTests -f netcoreapp2.0 
+            6.0.x 
+      - run: dotnet build MessageBird
+      - run: dotnet test Tests/UnitTests/MessageBirdUnitTests
