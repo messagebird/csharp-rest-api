@@ -27,7 +27,7 @@ namespace MessageBirdUnitTests.Resources
         public void TestValidateSignature(TestCase tc)
         {
             string signingKey = tc.secret != null && tc.secret.Length > 0 ? tc.secret : "";
-            RequestValidator requestValidator = new RequestValidator(signingKey, new StaticDateTimeProvider(tc.timestamp));
+            RequestValidator requestValidator = new RequestValidator(signingKey, false, new StaticDateTimeProvider(tc.timestamp));
 
             byte[] body = tc.payload != null && tc.payload.Length > 0 ? Encoding.UTF8.GetBytes(tc.payload) : null;
 
