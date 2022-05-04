@@ -43,6 +43,7 @@ namespace MessageBirdUnitTests.Resources
                 string expectedErrorMessage = errorMap.ContainsKey(tc.reason) ? errorMap[tc.reason] : tc.reason;
 
                 var err = Assert.ThrowsException<RequestValidationException>(runValidateSignature);
+
                 StringAssert.Contains(err.Message, expectedErrorMessage);
             }
         }
