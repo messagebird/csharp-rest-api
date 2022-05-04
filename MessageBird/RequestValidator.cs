@@ -46,7 +46,7 @@ namespace MessageBird
         /// <summary>
         /// Constructor that allows you to overwrite the dateTimeProvider for easier testing
         /// </summary>
-        public RequestValidator(string secret, bool skipURLValidation, IDateTimeProvider dateTimeProvider) : this(secret, skipURLValidation)
+        internal RequestValidator(string secret, IDateTimeProvider dateTimeProvider) : this(secret)
         {
             _jwtBuilder = _jwtBuilder.WithDateTimeProvider(dateTimeProvider);
         }

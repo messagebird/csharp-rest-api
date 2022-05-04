@@ -13,4 +13,9 @@
     <PackageReference Include="JWT" Version="9.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>MessageBirdUnitTests</_Parameter1>
+    </AssemblyAttribute>
+</ItemGroup>
 </Project>
