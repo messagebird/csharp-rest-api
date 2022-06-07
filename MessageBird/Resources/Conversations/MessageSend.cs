@@ -27,7 +27,7 @@ namespace MessageBird.Resources.Conversations
 
         public override string BaseUrl
         {
-            get { return Conversations.ConverstationsBaseUrl; }
+            get { return Conversations.ConversationsBaseUrl; }
         }
     }
 }

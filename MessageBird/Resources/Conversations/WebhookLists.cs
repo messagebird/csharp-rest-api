@@ -10,7 +10,7 @@ namespace MessageBird.Resources.Conversations
         
         public override string BaseUrl
         {
-            get { return ConverstationsBaseUrl; }
+            get { return ConversationsBaseUrl; }
         }
     }
 }
