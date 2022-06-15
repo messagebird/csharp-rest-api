@@ -11,7 +11,7 @@ Requirements
 - [Sign up](https://www.messagebird.com/en/signup) for a free MessageBird account
 - Create a new access_key in the developers sections
 - MessageBird API client for C# requires **.NET Framework >= 4** or **.NET Standard >= 2.0**
-- It has a dependency on **JSON.NET >= 4.5.6**
+- It has a dependencies on **[Newtonsoft.Json (>= 9.0.1)](https://www.nuget.org/packages/Newtonsoft.Json/)** and **[JWT (>= 8.2.3)](https://www.nuget.org/packages/JWT/)**
 
 Installation
 -----
