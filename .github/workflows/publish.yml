@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
-      - run: dotnet build --configuration Release MessageBird 
+      - run: dotnet build --configuration Release MessageBird -f net6.0
       - name: Create the package
         run: dotnet pack --configuration Release /p:Version=${{github.event.release.tag_name}} MessageBird 
       - name: Publish the package to GPR
