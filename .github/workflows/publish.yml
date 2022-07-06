@@ -11,13 +11,19 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-dotnet@v2
+      - name: Checkout csharp-rest-api
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: 6.0.x
+
       - name: Build release
         run: dotnet build --configuration Release MessageBird -f net6.0
+
       - name: Create the package
-        run: dotnet pack --configuration Release /p:Version=${{github.event.release.tag_name}} MessageBird 
+        run: dotnet pack --configuration Release /p:Version=${{github.event.release.tag_name}} MessageBird
+
       - name: Publish the package to GPR
         run: dotnet nuget push MessageBird/bin/Release/*.nupkg --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json

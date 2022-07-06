@@ -3,18 +3,23 @@ name: Tests
 on:
   pull_request:
   push:
-    branches: [master, main]
+    branches: [ master, main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build and test 
+    name: Build and test
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup dotnet
+      - name: Checkout csharp-rest-api
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: |
-            6.0.x 
-      - run: dotnet build MessageBird -f net6.0
-      - run: dotnet test Tests/UnitTests/MessageBirdUnitTests -f net6.0
+          dotnet-version: 6.0.x
+
+      - name: Build
+        run: dotnet build MessageBird -f net6.0
+
+      - name: Test
+        run: dotnet test Tests/MessageBird.Tests -f net6.0
