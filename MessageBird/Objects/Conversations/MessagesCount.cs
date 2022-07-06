@@ -9,5 +9,8 @@ namespace MessageBird.Objects.Conversations
         
         [JsonProperty("totalCount")]
         public int TotalCount {get;set;}
+
+        [JsonProperty("lastMessageId")]
+        public string LastMesssageId {get;set;}
     }
 }

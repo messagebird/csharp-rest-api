@@ -58,6 +58,7 @@ namespace MessageBirdUnitTests.Resources
 
             Assert.AreEqual(2, groups.TotalCount);
             Assert.AreEqual(10, groups.Items[0].Messages.TotalCount);
+            Assert.AreEqual("9d5d5921f5b34f8db415a2397eb762f8", groups.Items[0].Messages.LastMesssageId);
         }
 
         [TestMethod]
