@@ -29,8 +29,7 @@ namespace MessageBird.Exceptions
             get { return !String.IsNullOrEmpty(Reason); }
         }
 
-        public ErrorException(string reason, Exception innerException = null)
-            : base(reason, innerException)
+        public ErrorException(string reason, Exception? innerException = null) : base(reason, innerException)
         {
             Reason = reason;
         }
