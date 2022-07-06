@@ -29,8 +29,7 @@ namespace MessageBird.Objects
             SerializeMsisdnsOnly = true;
         }
 
-        public Recipients(IEnumerable<long> msisdns)
-            : this()
+        public Recipients(IEnumerable<long> msisdns) : this()
         {
             foreach (long msisdn in msisdns)
             {

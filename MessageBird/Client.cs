@@ -35,19 +35,18 @@ namespace MessageBird
 
         #region Programmable SMS API
 
-        public Message SendMessage(string originator, string body, long[] msisdns, MessageOptionalArguments optionalArguments = null)
+        public Message SendMessage(string originator, string body, long[] recipients, MessageOptionalArguments optionalArguments = null)
         {
             ParameterValidator.IsNotNullOrWhiteSpace(originator, "originator");
             ParameterValidator.IsNotNullOrWhiteSpace(body, "body");
-            ParameterValidator.ContainsAtLeast(msisdns, 1, "msisdns");
+            ParameterValidator.ContainsAtLeast(recipients, 1, "recipients");
 
             if (optionalArguments != null)
             {
                 ParameterValidator.IsValidMessageType(optionalArguments.Type);
             }
 
-            var recipients = new Recipients(msisdns);
-            var message = new Message(originator, body, recipients, optionalArguments);
+            var message = new Message(originator, body, new Recipients(recipients), optionalArguments);
 
             var messages = new Messages(message);
             var result = restClient.Create(messages);

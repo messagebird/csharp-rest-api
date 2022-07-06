@@ -6,7 +6,7 @@ using MessageBird.Objects.Voice;
 using MessageBird.Resources.Voice;
 
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class CallTest
@@ -15,7 +15,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Create()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{\"source\":\"31644556677\",\"destination\":\"33766723144\",\"callFlow\":{\"record\":true,\"steps\":[{\"action\":\"transfer\",\"options\":{\"destination\":\"31612345678\"}}]},\"duration\":0}")
                 .AndReturns(filename: "CallCreate.json")
                 .FromEndpoint("POST", "calls", baseUrl)
@@ -46,7 +46,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void List()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "CallList.json")
                 .FromEndpoint("GET", "calls?limit=20&page=0", baseUrl)
                 .Get();
@@ -86,7 +86,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void View()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "CallView.json")
                 .FromEndpoint("GET", "calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", baseUrl)
                 .Get();
@@ -116,7 +116,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Delete()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(string.Empty)
                 .FromEndpoint("DELETE", "calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", baseUrl)
                 .Get();

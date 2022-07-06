@@ -6,7 +6,7 @@ using MessageBird.Resources;
 using Moq;
 using Newtonsoft.Json.Linq;
 
-namespace MessageBirdUnitTests
+namespace MessageBird.Tests
 {
     /// <summary>
     /// Helper that offers a convenient way to create and configure a RestClient mock with a fluent API.
@@ -16,14 +16,14 @@ namespace MessageBirdUnitTests
     /// generate the expected request. Assertions can be made on the response
     /// to assert it is deserialized correctly.
     /// <code>
-    /// var restClient = MockRestClient.ThatExpects(requestBody).AndReturns(responseBody).FromEndpoint("POST", "messages").Get();
+    /// var restClient = MockClient.ThatExpects(requestBody).AndReturns(responseBody).FromEndpoint("POST", "messages").Get();
     /// var client = new Client(restClient);
     /// 
     /// client.SendMessage(...)
     /// </code>
     /// </example>
     /// </summary>
-    public class MockRestClient
+    public class MockClient
     {
         private const string AccessKey = "";
         private const IProxyConfigurationInjector ProxyConfigurationInjector = null;
@@ -37,7 +37,7 @@ namespace MessageBirdUnitTests
         private string Uri { get; set; }
         private string BaseUrl { get; set; }
 
-        private MockRestClient()
+        private MockClient()
         {
             // MockBehavior.Strict configures the mocks to throw exceptions
             // when invoked without a corresponding setup, rather than
@@ -88,15 +88,15 @@ namespace MessageBirdUnitTests
         /// <summary>
         /// Creates a mock client and sets the expected request body.
         /// </summary>
-        public static MockRestClient ThatExpects(string requestBody)
+        public static MockClient ThatExpects(string requestBody)
         {
-            return new MockRestClient { RequestBody = requestBody };
+            return new MockClient { RequestBody = requestBody };
         }
 
         /// <summary>
         /// Creates a mock client and sets the expected response body.
         /// </summary>
-        public static MockRestClient ThatReturns(string responseBody = null, string filename = null, Stream stream = null)
+        public static MockClient ThatReturns(string responseBody = null, string filename = null, Stream stream = null)
         {
             string mockResponseBody = string.Empty;
 
@@ -109,7 +109,7 @@ namespace MessageBirdUnitTests
                 mockResponseBody = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses", filename));
             }
 
-            return new MockRestClient
+            return new MockClient
             {
                 ResponseBody = mockResponseBody,
                 ResponseStream = stream
@@ -119,7 +119,7 @@ namespace MessageBirdUnitTests
         /// <summary>
         /// Sets the expected response body from string or json file name.
         /// </summary>
-        public MockRestClient AndReturns(string responseBody = null, string filename = null)
+        public MockClient AndReturns(string responseBody = null, string filename = null)
         {
             ResponseBody = responseBody ?? File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"Responses", filename));
 
@@ -129,7 +129,7 @@ namespace MessageBirdUnitTests
         /// <summary>
         /// Sets the expected (HTTP) method.
         /// </summary>
-        public MockRestClient FromEndpoint(string method, string uri, string baseUrl = null)
+        public MockClient FromEndpoint(string method, string uri, string baseUrl = null)
         {
             Method = method;
             Uri = uri;

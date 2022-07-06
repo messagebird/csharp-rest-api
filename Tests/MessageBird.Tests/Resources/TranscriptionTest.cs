@@ -5,7 +5,7 @@ using MessageBird.Resources.Voice;
 using MessageBird.Objects.Voice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class TranscriptionTest
@@ -15,7 +15,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Create()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{\"Language\":\"en-EN\"}")
                 .AndReturns(filename: "TranscriptionCreate.json")
                 .FromEndpoint("POST", "calls/373395cc-382b-4a33-b372-cc31f0fdf242/legs/8dd347a4-11ee-44f2-bee3-7fbda300b2cd/recordings/cfa9ae96-e034-4db7-91cb-e58a8392c7bd/transcriptions/", baseUrl)
@@ -36,7 +36,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void List()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "TranscriptionList.json")
                 .FromEndpoint("GET", "calls/373395cc-382b-4a33-b372-cc31f0fdf242/legs/8dd347a4-11ee-44f2-bee3-7fbda300b2cd/recordings/cfa9ae96-e034-4db7-91cb-e58a8392c7bd/transcriptions?limit=5&page=1", baseUrl)
                 .Get();
@@ -76,7 +76,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void View()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "TranscriptionView.json")
                 .FromEndpoint("GET", "calls/373395cc-382b-4a33-b372-cc31f0fdf242/legs/8dd347a4-11ee-44f2-bee3-7fbda300b2cd/recordings/cfa9ae96-e034-4db7-91cb-e58a8392c7bd/transcriptions/2ce04c83-ca4f-4d94-8310-02968da41318", baseUrl)
                 .Get();
@@ -107,7 +107,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Download()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(stream: new MemoryStream())
                 .FromEndpoint("GET", "calls/373395cc-382b-4a33-b372-cc31f0fdf242/legs/8dd347a4-11ee-44f2-bee3-7fbda300b2cd/recordings/cfa9ae96-e034-4db7-91cb-e58a8392c7bd/transcriptions/2ce04c83-ca4f-4d94-8310-02968da41318.txt", baseUrl)
                 .Get();

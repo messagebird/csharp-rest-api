@@ -5,7 +5,7 @@ using MessageBird.Resources.Voice;
 using MessageBird.Objects.Voice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class RecordingTest
@@ -14,7 +14,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void List()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "RecordingList.json")
                 .FromEndpoint("GET", "calls/fdcf0391-4fdc-4e38-9551-e8a01602984f/legs/317bd14d-3eee-4380-b01f-fe7723c6913a/recordings?limit=5&page=2", baseUrl)
                 .Get();
@@ -59,7 +59,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void View()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "RecordingView.json")
                 .FromEndpoint("GET", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123", baseUrl)
                 .Get();
@@ -92,7 +92,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Delete()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(string.Empty)
                 .FromEndpoint("DELETE", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123", baseUrl)
                 .Get();
@@ -106,7 +106,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Download()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(stream: new MemoryStream())
                 .FromEndpoint("GET", "calls/bb3f0391-4fdc-4e38-9551-e8a01602984f/legs/cc3bd14d-3eee-4380-b01f-fe7723c69a31/recordings/3b4ac358-9467-4f7a-a6c8-6157ad181123.wav", baseUrl)
                 .Get();

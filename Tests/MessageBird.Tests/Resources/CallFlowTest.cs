@@ -5,7 +5,7 @@ using MessageBird.Resources.Voice;
 using MessageBird.Objects.Voice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class CallFlowTest
@@ -15,7 +15,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Create()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{ \"record\": true,  \"steps\": [    {      \"options\": {        \"destination\": \"31612345678\"      },      \"action\": \"transfer\"    }  ]}")
                 .AndReturns("{  \"data\": [    {      \"id\": \"de3ed163-d5fc-45f4-b8c4-7eea7458c635\",      \"title\": \"Forward call to 31612345678\",      \"record\": true,      \"steps\": [        {          \"id\": \"2fa1383e-6f21-4e6f-8c36-0920c3d0730b\",          \"action\": \"transfer\",          \"options\": {            \"destination\": \"31612345678\"          }        }      ],      \"createdAt\": \"2017-03-06T14:52:22Z\",      \"updatedAt\": \"2017-03-06T14:52:22Z\"    }  ],  \"_links\": {    \"self\": \"/call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635\"  }}")
                 .FromEndpoint("POST", "call-flows", baseUrl)
@@ -55,7 +55,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Delete()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(string.Empty)
                 .FromEndpoint("DELETE", "call-flows/foo-id", baseUrl)
                 .Get();
@@ -69,7 +69,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void List()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "CallFlowList.json")
                 .FromEndpoint("GET", "call-flows?limit=20&page=0", baseUrl)
                 .Get();
@@ -112,7 +112,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Update()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{\"id\":\"de3ed163-d5fc-45f4-b8c4-7eea7458c635\",\"title\":\"Updated call flow\",\"steps\":[{\"action\":\"transfer\",\"options\":{\"destination\":\"31611223344\"}}]}")
                 .AndReturns(filename: "CallFlowUpdate.json")
                 .FromEndpoint("PUT", "call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", baseUrl)
@@ -152,7 +152,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void View()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "CallFlowView.json")
                 .FromEndpoint("GET", "call-flows/de3ed163-d5fc-45f4-b8c4-7eea7458c635", baseUrl)
                 .Get();

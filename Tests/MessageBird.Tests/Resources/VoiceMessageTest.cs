@@ -5,7 +5,7 @@ using MessageBird.Objects;
 using MessageBird.Resources;
 using Newtonsoft.Json;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class VoiceMessageTest
@@ -13,7 +13,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListVoiceMessages()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "ListVoiceMessages.json")
                 .FromEndpoint("GET", "voicemessages?limit=20&offset=0")
                 .Get();

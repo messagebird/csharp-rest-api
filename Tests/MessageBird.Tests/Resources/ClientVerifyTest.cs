@@ -4,7 +4,7 @@ using MessageBird.Objects.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WireMock.Server;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     /**
      * Using this class to be able to change the base url of the request.
