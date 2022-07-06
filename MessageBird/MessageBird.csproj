@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net35;net40;netstandard2.0</TargetFrameworks>
     <Product>MessageBird</Product>
     <Title>MessageBird</Title>
     <Company>MessageBird</Company>
@@ -11,6 +11,10 @@
     <AssemblyVersion>3.1.0.0</AssemblyVersion>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
+
+  <!-- Conditionally obtain references for the .NET Framework 3.5 target -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
+  </ItemGroup>
 
   <!-- Conditionally obtain references for the .NET Framework 4.0 target -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
