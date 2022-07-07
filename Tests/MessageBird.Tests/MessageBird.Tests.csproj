@@ -9,11 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
-    <PackageReference Include="Moq" Version="4.12.0" />
-    <PackageReference Include="WireMock.Net" Version="1.0.21" />
+    <PackageReference Include="Moq" Version="4.18.1" />
+    <PackageReference Include="WireMock.Net" Version="1.2.18" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Responses\**">
