@@ -1,29 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <Product>MessageBird</Product>
     <Title>MessageBird</Title>
     <Company>MessageBird</Company>
-    <Copyright>Copyright © 2019</Copyright>
-    <FileVersion>3.1.0.0</FileVersion>
-    <InformationalVersion>3.1.0.0</InformationalVersion>
-    <Version>3.1.0.0</Version>
-    <AssemblyVersion>3.1.0.0</AssemblyVersion>
-    <LangVersion>4</LangVersion>
+    <Copyright>Copyright © 2022</Copyright>
+ 
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <!-- Conditionally obtain references for the .NET Framework 4.0 target -->
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="JWT" Version="8.2.3" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Objects\Common\" />
-  </ItemGroup>
-  
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>MessageBirdUnitTests</_Parameter1>

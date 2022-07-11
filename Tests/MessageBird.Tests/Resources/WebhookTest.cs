@@ -5,7 +5,7 @@ using System.Linq;
 using MessageBird.Objects.Voice;
 using MessageBird.Resources.Voice;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class WebhookTest
@@ -14,7 +14,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Create()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{\"url\":\"https://testing.com\",\"token\":\"example token\"}")
                 .AndReturns(filename: "WebhooksCreate.json")
                 .FromEndpoint("POST", "webhooks", baseUrl)
@@ -48,7 +48,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void List()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "WebhooksList.json")
                 .FromEndpoint("GET", "webhooks?limit=20&page=0", baseUrl)
                 .Get();
@@ -81,7 +81,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void View()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "WebhooksView.json")
                 .FromEndpoint("GET", "webhooks/dff95aec-c11f-423c-82f3-1f391d78d716", baseUrl)
                 .Get();
@@ -107,7 +107,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Update()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{\"url\":\"https://example.com/update\",\"token\":\"new token\"}")
                 .AndReturns(filename: "WebhooksUpdate.json")
                 .FromEndpoint("PUT", "webhooks/dff95aec-c11f-423c-82f3-1f391d78d716", baseUrl)
@@ -141,7 +141,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Delete()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(string.Empty)
                 .FromEndpoint("DELETE", "webhooks/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", baseUrl)
                 .Get();

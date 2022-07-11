@@ -2,7 +2,7 @@
 using MessageBird.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class ContactTest
@@ -10,7 +10,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Create()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{\"msisdn\":31612345678,\"firstName\":\"Foo\",\"lastName\":\"Bar\",\"custom1\":\"First\",\"custom2\":\"Second\"}")
                 .AndReturns("{\"id\": \"id\",\"href\": \"https://rest.messagebird.com/contacts/id\",\"msisdn\": 31612345678,\"firstName\": \"Foo\",\"lastName\": \"Bar\",\"customDetails\": {\"custom1\": \"First\",\"custom2\": \"Second\",\"custom3\": null,\"custom4\": null},\"groups\": {\"totalCount\": 0,\"href\": \"https://rest.messagebird.com/contacts/id/groups\"},\"messages\": {\"totalCount\": 0,\"href\": \"https://rest.messagebird.com/contacts/id/messages\"},\"createdDatetime\": \"2018-08-10T13:58:00+00:00\",\"updatedDatetime\": \"2018-08-10T13:58:00+00:00\"}")
                 .FromEndpoint("POST", "contacts")
@@ -34,7 +34,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Delete()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(string.Empty)
                 .FromEndpoint("DELETE", "contacts/some-id")
                 .Get();
@@ -47,7 +47,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void List()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns("{\"offset\": 0,\"limit\": 20,\"count\": 2,\"totalCount\": 2,\"links\": {\"first\": \"https://rest.messagebird.com/contacts?offset=0\",\"previous\": null,\"next\": null,\"last\": \"https://rest.messagebird.com/contacts?offset=0\"},\"items\": [{\"id\": \"first-id\",\"href\": \"https://rest.messagebird.com/contacts/first-id\",\"msisdn\": 31612345678,\"firstName\": \"Foo\",\"lastName\": \"Bar\",\"customDetails\": {\"custom1\": null,\"custom2\": null,\"custom3\": null,\"custom4\": null},\"groups\": {\"totalCount\": 0,\"href\": \"https://rest.messagebird.com/contacts/first-id/groups\"},\"messages\": {\"totalCount\": 0,\"href\": \"https://rest.messagebird.com/contacts/first-id/messages\"},\"createdDatetime\": \"2018-07-13T10:34:08+00:00\",\"updatedDatetime\": \"2018-07-13T10:34:08+00:00\"},{\"id\": \"second-id\",\"href\": \"https://rest.messagebird.com/contacts/second-id\",\"msisdn\": 49612345678,\"firstName\": \"Hello\",\"lastName\": \"World\",\"customDetails\": {\"custom1\": null,\"custom2\": null,\"custom3\": null,\"custom4\": null},\"groups\": {\"totalCount\": 0,\"href\": \"https://rest.messagebird.com/contacts/second-id/groups\"},\"messages\": {\"totalCount\": 0,\"href\": \"https://rest.messagebird.com/contacts/second-id/messages\"},\"createdDatetime\": \"2018-07-13T10:33:52+00:00\",\"updatedDatetime\": null}]}")
                 .FromEndpoint("GET", "contacts?limit=20&offset=0")
                 .Get();
@@ -65,7 +65,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListPagination()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns("{}")
                 .FromEndpoint("GET", "contacts?limit=10&offset=25")
                 .Get();
@@ -78,7 +78,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void View()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns("{\"id\": \"contact-id\",\"href\": \"https://rest.messagebird.com/contacts/contact-id\",\"msisdn\": 31612345678,\"firstName\": \"Foo\",\"lastName\": \"Bar\",\"customDetails\": {\"custom1\": \"First\",\"custom2\": \"Second\",\"custom3\": \"Third\",\"custom4\": \"Fourth\"},\"groups\": {\"totalCount\": 3,\"href\": \"https://rest.messagebird.com/contacts/contact-id/groups\"},\"messages\": {\"totalCount\": 5,\"href\": \"https://rest.messagebird.com/contacts/contact-id/messages\"},\"createdDatetime\": \"2018-07-13T10:34:08+00:00\",\"updatedDatetime\": \"2018-07-13T10:44:08+00:00\"}")
                 .FromEndpoint("GET", "contacts/contact-id")
                 .Get();
@@ -94,7 +94,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Update()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{\"lastName\":\"SomeName\",\"custom4\":\"Fourth\"}")
                 .AndReturns("{\"id\": \"id\",\"href\": \"https://rest.messagebird.com/contacts/id\",\"msisdn\": 31687654321,\"firstName\": \"Foo\",\"lastName\": \"SomeName\",\"customDetails\": {\"custom1\": \"First\",\"custom2\": \"Second\",\"custom3\": null,\"custom4\": \"Fourth\"},\"groups\": {\"totalCount\": 0,\"href\": \"https://rest.messagebird.com/contacts/id/groups\"},\"messages\": {\"totalCount\": 0,\"href\": \"https://rest.messagebird.com/contacts/id/messages\"},\"createdDatetime\": \"2018-08-10T13:58:00+00:00\",\"updatedDatetime\": \"2018-08-10T13:58:00+00:00\"}")
                 .FromEndpoint("PATCH", "contacts/some-id")

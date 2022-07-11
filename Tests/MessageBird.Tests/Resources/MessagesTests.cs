@@ -7,7 +7,7 @@ using System;
 
 using MessageBird;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class MessagesTests
@@ -63,7 +63,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListMessages()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "ListMessages.json")
                 .FromEndpoint("GET", "messages?limit=20&offset=0")
                 .Get();
@@ -80,7 +80,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListScheduledMessages()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "ListMessages.json")
                 .FromEndpoint("GET", "messages?limit=20&offset=0&status=scheduled")
                 .Get();

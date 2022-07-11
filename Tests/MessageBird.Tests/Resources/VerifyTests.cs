@@ -3,7 +3,7 @@ using MessageBird.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class VerifyTests

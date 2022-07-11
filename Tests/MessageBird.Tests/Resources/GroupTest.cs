@@ -1,7 +1,7 @@
 ﻿using MessageBird;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class GroupTest
@@ -9,7 +9,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Create()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{\"name\":\"Friends\"}")
                 .AndReturns("{\"id\": \"group-id\",\"href\": \"https://rest.messagebird.com/groups/group-id\",\"name\": \"Friends\",\"contacts\": {\"totalCount\": 3,\"href\": \"https://rest.messagebird.com/groups/group-id\"},\"createdDatetime\": \"2018-07-25T12:16:10+00:00\",\"updatedDatetime\": \"2018-07-25T12:16:23+00:00\"}")
                 .FromEndpoint("POST", "groups")
@@ -26,7 +26,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Delete()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(string.Empty)
                 .FromEndpoint("DELETE", "groups/foo-id")
                 .Get();
@@ -39,7 +39,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void List()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns("{\"offset\": 0,\"limit\": 20,\"count\": 2,\"totalCount\": 2,\"links\": {\"first\": \"https://rest.messagebird.com/groups?offset=0&limit=20\",\"previous\": null,\"next\": null,\"last\": \"https://rest.messagebird.com/groups?offset=0&limit=20\"},\"items\": [{\"id\": \"first-id\",\"href\": \"https://rest.messagebird.com/groups/first-id\",\"name\": \"First\",\"contacts\": {\"totalCount\": 3,\"href\": \"https://rest.messagebird.com/groups/first-id/contacts\"},\"createdDatetime\": \"2018-07-25T11:47:42+00:00\",\"updatedDatetime\": \"2018-07-25T14:03:09+00:00\"},{\"id\": \"second-id\",\"href\": \"https://rest.messagebird.com/groups/second-id\",\"name\": \"Second\",\"contacts\": {\"totalCount\": 4,\"href\": \"https://rest.messagebird.com/groups/second-id/contacts\"},\"createdDatetime\": \"2018-07-25T11:47:39+00:00\",\"updatedDatetime\": \"2018-07-25T14:03:09+00:00\"}]}")
                 .FromEndpoint("GET", "groups?limit=20&offset=0")
                 .Get();
@@ -56,7 +56,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListPagination()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns("{}")
                 .FromEndpoint("GET", "groups?limit=50&offset=10")
                 .Get();
@@ -69,7 +69,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Update()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects("{\"name\":\"family\"}")
                 .AndReturns("{\"id\": \"group-id\",\"href\": \"https://rest.messagebird.com/groups/group-id\",\"name\": \"family\",\"contacts\": {\"totalCount\": 3,\"href\": \"https://rest.messagebird.com/groups/group-id\"},\"createdDatetime\": \"2018-07-25T12:16:10+00:00\",\"updatedDatetime\": \"2018-07-25T12:16:23+00:00\"}")
                 .FromEndpoint("PATCH", "groups/group-id")
@@ -85,7 +85,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void View()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns("{\"id\": \"group-id\",\"href\": \"https://rest.messagebird.com/groups/group-id\",\"name\": \"Friends\",\"contacts\": {\"totalCount\": 3,\"href\": \"https://rest.messagebird.com/groups/group-id\"},\"createdDatetime\": \"2018-07-25T12:16:10+00:00\",\"updatedDatetime\": \"2018-07-25T12:16:23+00:00\"}")
                 .FromEndpoint("GET", "groups/group-id")
                 .Get();
@@ -101,7 +101,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void AddContactsToGroup()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(string.Empty)
                 .FromEndpoint("GET", "groups/group-id?_method=PUT&ids[]=foo&ids[]=bar")
                 .Get();
@@ -114,7 +114,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void RemoveContactFromGroup()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(string.Empty)
                 .FromEndpoint("DELETE", "groups/group-id/contacts/contact-id")
                 .Get();

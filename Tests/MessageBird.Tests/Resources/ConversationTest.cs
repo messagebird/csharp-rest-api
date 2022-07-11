@@ -6,7 +6,7 @@ using MessageBird.Objects.Conversations;
 using MessageBird.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class ConversationTest
@@ -18,7 +18,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Start()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects(
                     @"{""to"":""+31612345678"",""type"":""text"",""content"":{""text"":""Hello!""},""channelId"":""619747f69cf940a98fb443140ce9aed2""}")
                 .AndReturns(filename: "ConversationView.json")
@@ -47,7 +47,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void List()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "ConversationList.json")
                 .FromEndpoint("GET", "conversations?limit=20&offset=0", Resource.ConverstationsBaseUrl)
                 .Get();
@@ -63,7 +63,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListPagination()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns("{}")
                 .FromEndpoint("GET", "conversations?limit=50&offset=10", Resource.ConverstationsBaseUrl)
                 .Get();
@@ -76,7 +76,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void View()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "ConversationView.json")
                 .FromEndpoint("GET", "conversations/2e15efafec384e1c82e9842075e87beb", Resource.ConverstationsBaseUrl)
                 .Get();
@@ -93,7 +93,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void Update()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects(@"{""id"":""2e15efafec384e1c82e9842075e87beb"",""status"": ""archived""}")
                 .AndReturns(filename: "ConversationView.json")
                 .FromEndpoint("PATCH", $"conversations/{ConvId}", Resource.ConverstationsBaseUrl)
@@ -111,7 +111,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListMessages()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "ConversationMessagesList.json")
                 .FromEndpoint("GET", $"conversations/{ConvId}/messages?limit=20&offset=0",
                     Resource.ConverstationsBaseUrl)
@@ -129,7 +129,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListMessagesPagination()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns("{}")
                 .FromEndpoint("GET", $"conversations/{ConvId}/messages?limit=50&offset=10",
                     Resource.ConverstationsBaseUrl)
@@ -143,7 +143,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void PostMessage()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects(@"{""type"": ""text"",""content"":{""text"": ""Hello!""}}")
                 .AndReturns(filename: "ConversationMessage.json")
                 .FromEndpoint("POST", $"conversations/{ConvId}/messages", Resource.ConverstationsBaseUrl)
@@ -169,7 +169,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ViewMessage()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "ConversationMessage.json")
                 .FromEndpoint("GET", $"messages/{MsgId}", Resource.ConverstationsBaseUrl)
                 .Get();
@@ -188,7 +188,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void PostWebhook()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatExpects(
                     @"{""events"":[""message.created"", ""message.updated""],""channelId"": ""853eeb5348e541a595da93b48c61a1ae"",""url"":""https://example.com/webhook""}")
                 .AndReturns(filename: "WebhookView.json")
@@ -219,7 +219,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ViewWebhook()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "WebhookView.json")
                 .FromEndpoint("GET", $"webhooks/{WebhookId}", Resource.ConverstationsBaseUrl)
                 .Get();
@@ -237,7 +237,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void DeleteWebhook()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(string.Empty)
                 .FromEndpoint("DELETE", $"webhooks/{WebhookId}", Resource.ConverstationsBaseUrl)
                 .Get();
@@ -250,7 +250,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListWebhooks()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns(filename: "WebhookList.json")
                 .FromEndpoint("GET", $"webhooks?limit=20&offset=0",
                     Resource.ConverstationsBaseUrl)
@@ -267,7 +267,7 @@ namespace MessageBirdUnitTests.Resources
         [TestMethod]
         public void ListWebhooksPagination()
         {
-            var restClient = MockRestClient
+            var restClient = MockClient
                 .ThatReturns("{}")
                 .FromEndpoint("GET", $"webhooks?limit=50&offset=10",
                     Resource.ConverstationsBaseUrl)

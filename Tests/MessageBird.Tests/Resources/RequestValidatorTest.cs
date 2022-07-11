@@ -9,7 +9,7 @@ using MessageBird.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
-namespace MessageBirdUnitTests.Resources
+namespace MessageBird.Tests.Resources
 {
     [TestClass]
     public class RequestValidatorTest
@@ -43,6 +43,7 @@ namespace MessageBirdUnitTests.Resources
                 string expectedErrorMessage = errorMap.ContainsKey(tc.reason) ? errorMap[tc.reason] : tc.reason;
 
                 var err = Assert.ThrowsException<RequestValidationException>(runValidateSignature);
+
                 StringAssert.Contains(err.Message, expectedErrorMessage);
             }
         }
