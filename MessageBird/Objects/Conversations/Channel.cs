@@ -21,6 +21,10 @@ namespace MessageBird.Objects.Conversations
         Inactive,
         [EnumMember(Value = "pending")]
         Pending,
+        [EnumMember(Value = "not_verified")]
+        NotVerified,
+        [EnumMember(Value = "unavailable")]
+        Unavailable,
     }
     public class Channel : IIdentifiable<string>
     {
