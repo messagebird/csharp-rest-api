@@ -55,6 +55,7 @@ namespace MessageBird.Objects
         public DataEncoding Encoding { get; set; }
         public MessageClass Class { get; set; }
         public DateTime? Scheduled { get; set; }
+        public bool ShortenUrls { get; set; }
 
         public MessageOptionalArguments()
         {
@@ -135,6 +136,9 @@ namespace MessageBird.Objects
 
         [JsonProperty("recipients"), JsonConverter(typeof(RecipientsConverter))]
         public Recipients Recipients { get; set; }
+        
+        [JsonProperty("shortenUrls")]
+        public bool ShortenUrls { get; set; }
 
         public Message()
         {
@@ -162,6 +166,7 @@ namespace MessageBird.Objects
             Encoding = optionalArguments.Encoding;
             Class = optionalArguments.Class;
             Scheduled = optionalArguments.Scheduled;
+            ShortenUrls = optionalArguments.ShortenUrls;
         }
 
         public override string ToString()
